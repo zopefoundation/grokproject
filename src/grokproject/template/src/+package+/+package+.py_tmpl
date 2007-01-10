@@ -1,0 +1,5 @@
+import grok
+
+class ${project}(grok.Model):
+    pass
+
