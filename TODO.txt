@@ -1,0 +1,11 @@
+* get a better zope3instance recipe that places a startup script in
+  the top-level bin directory (so you won't have to reach into
+  parts/instance/bin)
+
+* pre-install a <grok:grok package="${package}" /> slug in the
+  instance so no ZCML is required.
+
+* pad out example package a bit (perhaps create a few initial files
+  that are typical for grok apps)
+
+* silence buildout output and be more informative on the other hand

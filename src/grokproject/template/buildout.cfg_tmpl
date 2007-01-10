@@ -1,0 +1,51 @@
+[buildout]
+develop = .
+parts = zope3 data instance test
+
+[zope3]
+recipe = zc.recipe.cmmi
+extra_options = --with-python=$${buildout:executable} --force
+url = http://www.zope.org/Products/Zope3/3.3.0/Zope-3.3.0.tgz
+
+[data]
+recipe = zc.recipe.filestorage
+
+[instance]
+recipe = zc.recipe.zope3instance
+database = data
+user = ${user}:${passwd}
+eggs = setuptools
+       grok
+       ${package}
+
+zcml = zope.annotation
+       zope.copypastemove
+       zope.formlib
+       zope.i18n-meta
+       zope.i18n.locales
+       zope.publisher
+       zope.security-meta
+       zope.size
+       zope.traversing
+       zope.traversing.browser
+       zope.app    
+       zope.app-meta
+       zope.app.securitypolicy
+       zope.app.securitypolicy-meta
+       zope.app.authentication
+       zope.app.catalog
+       zope.app.intid
+       zope.app.keyreference
+       zope.app.twisted
+       grok
+       grok-meta
+
+[test]
+recipe = zc.recipe.testrunner
+eggs = grok
+       ${package}
+extra-paths = parts/zope3/src
+working-directory = parts/instance
+defaults = ['--tests-pattern', '^f?tests$$',
+            '-v'
+           ]
