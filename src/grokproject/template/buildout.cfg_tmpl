@@ -39,6 +39,7 @@ zcml = zope.annotation
        zope.app.twisted
        grok
        grok-meta
+       ${package}
 
 [test]
 recipe = zc.recipe.testrunner
