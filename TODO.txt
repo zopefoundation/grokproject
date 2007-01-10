@@ -3,5 +3,3 @@
   parts/instance/bin)
 
 * silence buildout output and be more informative on the other hand
-
-* support svn sandbox creation

@@ -18,9 +18,13 @@ class GrokProject(templates.Template):
 def main():
     usage = "usage: %prog [options] PROJECT"
     parser = optparse.OptionParser(usage=usage)
-    parser.add_option('--dry-run', action="store_true", dest="dry_run",
+    parser.add_option('--no-buildout', action="store_true", dest="no_buildout",
                       default=False, help="Only create project area, do not "
                       "bootstrap the buildout.")
+    parser.add_option('--svn-repository', dest="repos", default=None,
+                      help="Import project to given repository location (this "
+                      "will also create the standard trunk/ tags/ branches/ "
+                      "hierarchy)")
     options, args = parser.parse_args()
     if len(args) != 1:
         parser.print_usage()
@@ -31,10 +35,14 @@ def main():
     commands = command.get_commands()
     cmd = commands['create'].load()
     runner = cmd('create')
-    exit_code = runner.run(['-t', 'grokproject', project])
+
+    extra_args = []
+    if options.repos is not None:
+        extra_args.extend(['--svn-repository', options.repos])
+    exit_code = runner.run(extra_args + ['-t', 'grokproject', project])
     # TODO exit_code
 
-    if options.dry_run:
+    if options.no_buildout:
         return
 
     # bootstrap the buildout
