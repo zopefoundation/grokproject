@@ -1,5 +1,6 @@
-grokproject provides an easy way to get started with a grok web
-application.  Simply install ``grokproject``::
+grokproject provides an easy way to get started with a `grok
+<http://cheeseshop.python.org/pypi/grok>`_ web application.  Simply
+install ``grokproject``::
 
   $ easy_install grokproject
 
