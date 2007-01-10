@@ -4,6 +4,4 @@
 
 * silence buildout output and be more informative on the other hand
 
-* proper arguments parsing (support --help, etc.)
-
 * support svn sandbox creation
