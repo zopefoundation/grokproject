@@ -6,7 +6,7 @@ setup(
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='https://launchpad.net/grok',
-    download_url='svn://svn.zope.org/repos/main/grok/trunk#egg=grok-dev',
+    download_url='svn://svn.zope.org/repos/main/grokproject/trunk#egg=grokproject-dev',
     description='Script that sets up a grok project directory, installs Zope 3 and grok and creates a template for a grok application.',
     long_description=open('README.txt').read(),
     license='ZPL',
@@ -15,7 +15,7 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript'],
+    install_requires=['PasteScript>=1.1.1'],
     entry_points="""
     [console_scripts]
     grokproject = grokproject:main

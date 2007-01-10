@@ -1,6 +1,3 @@
-import pkg_resources
-pkg_resources.require('PasteScript')
-
 from paste.script import templates
 from paste.script.templates import var
 
