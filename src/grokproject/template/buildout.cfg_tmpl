@@ -43,8 +43,7 @@ zcml = zope.annotation
 
 [test]
 recipe = zc.recipe.testrunner
-eggs = grok
-       ${package}
+eggs = ${package}
 extra-paths = parts/zope3/src
 working-directory = parts/instance
 defaults = ['--tests-pattern', '^f?tests$$',
