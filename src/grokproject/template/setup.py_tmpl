@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import sys, os
 
 version = ${repr(version)|"0.0"}
 
@@ -8,7 +7,8 @@ setup(name=${repr(project)},
       description="${description|nothing}",
       long_description="""\
 ${long_description|nothing}""",
-      classifiers=[], # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[], 
       keywords=${repr(keywords)|empty},
       author=${repr(author)|empty},
       author_email=${repr(author_email)|empty},
@@ -18,9 +18,10 @@ ${long_description|nothing}""",
       packages=find_packages('src'),
       include_package_data=True,
       zip_safe=${repr(bool(zip_safe))|False},
-      install_requires=[
-          # -*- Extra requirements: -*-
-      ],
+      install_requires=['setuptools',
+                        'grok',
+                        # -*- Extra requirements: -*-
+                        ],
       entry_points="""
       # -*- Entry points: -*-
       """,
