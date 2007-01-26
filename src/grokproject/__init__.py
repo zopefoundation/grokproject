@@ -10,7 +10,7 @@ class GrokProject(templates.Template):
     required_templates = []
 
     vars = [
-        var('module', 'Name of an demo Python module placed into the package',
+        var('module', 'Name of a demo Python module placed into the package',
             default=NoDefault),
         var('user', 'Name of an initial administrator user', default=NoDefault),
         var('passwd', 'Password for the initial administrator user',
