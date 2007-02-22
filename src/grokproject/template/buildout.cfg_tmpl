@@ -5,7 +5,7 @@ parts = zope3 data instance test
 [zope3]
 recipe = zc.recipe.cmmi
 extra_options = --with-python=$${buildout:executable} --force
-url = http://www.zope.org/Products/Zope3/3.3.0/Zope-3.3.0.tgz
+url = http://www.zope.org/Products/Zope3/3.3.1/Zope-3.3.1.tgz
 
 [data]
 recipe = zc.recipe.filestorage
