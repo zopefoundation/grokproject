@@ -11,7 +11,7 @@ class GrokProject(templates.Template):
 
     vars = [
         var('module', 'Name of a demo Python module placed into the package',
-            default=NoDefault),
+            default='app.py'),
         var('user', 'Name of an initial administrator user', default=NoDefault),
         var('passwd', 'Password for the initial administrator user',
             default=NoDefault),
