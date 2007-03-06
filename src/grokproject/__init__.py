@@ -1,6 +1,7 @@
 import sys
 import os.path
 import optparse
+import ConfigParser
 from paste.script import templates, command
 from paste.script.templates import var, NoDefault
 
@@ -27,6 +28,32 @@ class GrokProject(templates.Template):
                 raise command.BadCommand('Bad module name: %s' % module)
         return vars
 
+    def post(self, command, output_dir, vars):
+        if 'zope3' in vars:
+            # This means the user supplied the --with-zope3 parameter
+            # and has a pre-installed Zope 3 lying around.  Let's edit
+            # buildout.cfg so that it doesn't download Zope 3 but uses
+            # the existing one.
+            buildout_cfg = os.path.join(os.path.abspath(output_dir),
+                                        'buildout.cfg')
+            cfg = ConfigParser.ConfigParser()
+            cfg.read(buildout_cfg)
+
+            # remove 'zope3' from the list of parts as we don't have
+            # to build Zope 3 anymore
+            parts = cfg.get('buildout', 'parts').split()
+            parts.remove('zope3')
+            cfg.set('buildout', 'parts', ' '.join(parts))
+
+            # add a 'location' attribute to the 'zope3' section that
+            # points to the Zope 3 installation.  For clarity, we also
+            # remove all other things from the section.
+            for name in cfg.options('zope3'):
+                cfg.remove_option('zope3', name)
+            cfg.set('zope3', 'location', vars['zope3'])
+
+            cfg.write(open(buildout_cfg, 'w'))
+
 def main():
     usage = "usage: %prog [options] PROJECT"
     parser = optparse.OptionParser(usage=usage)
@@ -37,6 +64,10 @@ def main():
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
                       "hierarchy)")
+    parser.add_option('--with-zope3', dest="zope3", default=None,
+                      help="Location of an existing Zope 3 installation. If "
+                      "provided, grokproject will not download and install "
+                      "Zope 3 itself.")
     options, args = parser.parse_args()
     if len(args) != 1:
         parser.print_usage()
@@ -51,7 +82,15 @@ def main():
     extra_args = []
     if options.repos is not None:
         extra_args.extend(['--svn-repository', options.repos])
-    exit_code = runner.run(extra_args + ['-t', 'grokproject', project])
+    if options.zope3 is not None:
+        zope3 = os.path.expanduser(options.zope3)
+        # TODO do some sanity checks here to see if the directory
+        # actually exists and is a Zope 3 installation
+
+        # add the path to the Zope 3 installation to the variables so
+        # that the template has access to it.
+        extra_args.append('zope3=%s' % zope3)
+    exit_code = runner.run(['-t', 'grokproject', project] + extra_args)
     # TODO exit_code
 
     if options.no_buildout:
