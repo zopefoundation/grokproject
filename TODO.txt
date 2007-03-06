@@ -3,3 +3,5 @@
   parts/instance/bin)
 
 * silence buildout output and be more informative on the other hand
+
+* support an already existing Zope 3 installation with --with-zope3=...
