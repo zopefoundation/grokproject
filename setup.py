@@ -15,13 +15,7 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript==dev,>1.1',
-                      # this is needed only because PasteScript==dev
-                      # depends on a dev version of Paste now.  Once
-                      # these two are released, remove the dependency
-                      # on Paste (TODO).
-                      'Paste==dev,>1.2.1'
-                      ],
+    install_requires=['PasteScript==1.3',],
     entry_points="""
     [console_scripts]
     grokproject = grokproject:main
