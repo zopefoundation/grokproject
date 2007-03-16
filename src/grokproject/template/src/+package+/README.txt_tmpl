@@ -1,8 +1,0 @@
-Put your application code in this Python package.
-
-${module}_templates
-  Place Page Templates (file extension '.pt') in this directory.  They
-  will automatically be associated as views with the model in ${module}.py.
-
-static
-  Place static resources such as CSS, JS, images, etc. in here.
