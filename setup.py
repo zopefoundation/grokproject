@@ -15,7 +15,7 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript==1.3',],
+    install_requires=['PasteScript>=1.3',],
     entry_points="""
     [console_scripts]
     grokproject = grokproject:main
