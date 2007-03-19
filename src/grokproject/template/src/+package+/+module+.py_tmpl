@@ -3,3 +3,5 @@ import grok
 class ${project}(grok.Application, grok.Container):
     pass
 
+class Index(grok.View):
+    pass # see ${module}_templates/index.pt
