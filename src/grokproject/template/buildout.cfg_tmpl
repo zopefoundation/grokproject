@@ -44,7 +44,8 @@ zcml = zope.annotation
 [test]
 recipe = zc.recipe.testrunner
 eggs = ${package}
-extra-paths = parts/zope3/src
+extra-paths = $${zope3:location}/lib/python
+              $${zope3:location}/src
 working-directory = parts/instance
 defaults = ['--tests-pattern', '^f?tests$$',
             '-v'
