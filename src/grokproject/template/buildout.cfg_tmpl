@@ -1,52 +1,61 @@
 [buildout]
 develop = .
-parts = zope3 data instance test
+parts = app data instance test
+find-links = http://download.zope.org/distribution/
 
 [zope3]
-recipe = zc.recipe.cmmi
-extra_options = --with-python=$${buildout:executable} --force
-url = http://www.zope.org/Products/Zope3/3.3.1/Zope-3.3.1.tgz
+# this dead chicken is needed by some other recipe(s)
+location =
+
+[data]
+recipe = zc.recipe.filestorage
+
+[app]
+recipe = zc.zope3recipes:app
+eggs = ${egg}
+site.zcml = <include package="${package}" />
+            <include package="zope.app.twisted" />
+
+            <securityPolicy 
+                component="zope.app.securitypolicy.zopepolicy.ZopeSecurityPolicy" />
+
+            <unauthenticatedPrincipal id="zope.anybody"
+                                      title="Unauthenticated User" />
+            <unauthenticatedGroup id="zope.Anybody"
+                                  title="Unauthenticated Users" />
+            <authenticatedGroup id="zope.Authenticated"
+                                title="Authenticated Users" />
+            <everybodyGroup id="zope.Everybody"
+                            title="All Users" />
+            <principal id="zope.manager"
+                       title="Manager"
+                       login="${user}"
+                       password_manager="Plain Text"
+                       password="${passwd}"
+                       />
+
+            <!-- Replace the following directive if you don't want
+                 public access -->
+            <grant permission="zope.View"
+                   principal="zope.Anybody" />
+            <grant permission="zope.app.dublincore.view"
+                   principal="zope.Anybody" />
+
+            <role id="zope.Manager" title="Site Manager" />
+            <role id="zope.Member" title="Site Member" />
+            <grantAll role="zope.Manager" />
+            <grant role="zope.Manager"
+                   principal="zope.manager" />
 
 [data]
 recipe = zc.recipe.filestorage
 
 [instance]
-recipe = zc.recipe.zope3instance
-database = data
-user = ${user}:${passwd}
-eggs = setuptools
-       grok
-       ${package}
-
-zcml = zope.annotation
-       zope.copypastemove
-       zope.formlib
-       zope.i18n-meta
-       zope.i18n.locales
-       zope.publisher
-       zope.security-meta
-       zope.size
-       zope.traversing
-       zope.traversing.browser
-       zope.app    
-       zope.app-meta
-       zope.app.securitypolicy
-       zope.app.securitypolicy-meta
-       zope.app.authentication
-       zope.app.catalog
-       zope.app.intid
-       zope.app.keyreference
-       zope.app.twisted
-       grok
-       grok-meta
-       ${package}
+recipe = zc.zope3recipes:instance
+application = app
+zope.conf = $${data:zconfig}
 
 [test]
 recipe = zc.recipe.testrunner
-eggs = ${package}
-extra-paths = $${zope3:location}/lib/python
-              $${zope3:location}/src
-working-directory = parts/instance
-defaults = ['--tests-pattern', '^f?tests$$',
-            '-v'
-           ]
+eggs = ${egg}
+defaults = ['--tests-pattern', '^f?tests$$', '-v']
