@@ -32,6 +32,9 @@ Changes
   PasteScript, easy_install and zc.buildout).  Use the -v option for
   verbose mode.
 
+* Fixed https://bugs.launchpad.net/grok/+bug/119805:
+  A new project created with grokproject can't be called 'grok' or 'zope'.
+
 0.4 (2007-09-12)
 ----------------
 
@@ -41,6 +44,9 @@ Changes
 * Don't spawn processes to bootstrap and run the buildout.  Instead,
   try to simply import zc.buildout.  If that doesn't work, call the
   setuptools API to install it and then simply import it.
+
+* Fixed https://bugs.launchpad.net/grok/+bug/113103:
+  Default index template was missing closing html tag.
 
 0.1 thru 0.3
 ------------

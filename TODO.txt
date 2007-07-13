@@ -3,9 +3,9 @@
   See https://bugs.launchpad.net/zc.buildout/+bug/125729.
 
 * generate a buildout.cfg with
-  * eggs-directory = ...
-  * newest = false
-
+  - eggs-directory = ...
+  - newest = false
 * Allow values to be provided thru command line arguments
+  See https://bugs.launchpad.net/grok/+bug/125817.
 
 * Update to newer zc.zope3recipes that doesn't need [zope3] section
