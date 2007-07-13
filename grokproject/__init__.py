@@ -28,6 +28,12 @@ class GrokProject(templates.Template):
                 vars['module'] = module[:-3]
             else:
                 raise command.BadCommand('Bad module name: %s' % module)
+        if vars['package'] in ('grok', 'zope'):
+            print
+            print "Error: The chosen project name results in an invalid " \
+                  "package name: %s." % vars['package']
+            print "Please choose a different project name."
+            sys.exit(1)
         return vars
 
 def main():
