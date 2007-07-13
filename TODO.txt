@@ -1,5 +1,6 @@
 * zc.buildout has a logging initialization bug (it doesn't tear down
   the logging handler, so subsequent logging calls are multiplied).
+  See https://bugs.launchpad.net/zc.buildout/+bug/125729.
 
 * Add a --eggs-directory=... option for the eggs dir.
 
