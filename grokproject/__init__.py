@@ -40,6 +40,8 @@ def main():
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
                       "hierarchy)")
+    parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
+                      default=False, help="Be verbose.")
     options, args = parser.parse_args()
     if len(args) != 1:
         parser.print_usage()
@@ -54,7 +56,9 @@ def main():
     extra_args = []
     if options.repos is not None:
         extra_args.extend(['--svn-repository', options.repos])
-    exit_code = runner.run(['-t', 'grokproject', project] + extra_args)
+    if not options.verbose:
+        extra_args.append('-q')
+    exit_code = runner.run(extra_args + ['-t', 'grokproject', project])
     # TODO exit_code
 
     if options.no_buildout:
@@ -71,7 +75,11 @@ def main():
         import setuptools.command.easy_install
         tmpdir = tempfile.mkdtemp()
         sys.path.append(tmpdir)
-        setuptools.command.easy_install.main(['-mNxd', tmpdir, 'zc.buildout'])
+        extra_args = []
+        if not options.verbose:
+            extra_args.append('-q')
+        setuptools.command.easy_install.main(extra_args +
+                                             ['-mNxd', tmpdir, 'zc.buildout'])
 
         # Add downloaded buildout to PYTHONPATH by requiring it
         # through setuptools (this dance is necessary because the
@@ -81,10 +89,10 @@ def main():
         ws.require('zc.buildout')
 
         import zc.buildout.buildout
-        zc.buildout.buildout.main(['bootstrap'])
+        zc.buildout.buildout.main(extra_args + ['bootstrap'])
         shutil.rmtree(tmpdir)
     else:
-        zc.buildout.buildout.main(['bootstrap'])
+        zc.buildout.buildout.main(extra_args + ['bootstrap'])
 
     print "Invoking zc.buildout..."
-    zc.buildout.buildout.main(['install'])
+    zc.buildout.buildout.main(['-q', 'install'])
