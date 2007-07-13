@@ -18,3 +18,31 @@ After the project area has been created successfully, you will find an
 empty Python package in the ``src`` directory in which you can place
 the code for your web application.  To start the Zope server, execute
 ``bin/zopectl fg``.
+
+Changes
+=======
+
+0.5 (unreleased)
+----------------
+
+* The bin/instance script has been renamed to bin/zopectl for better
+  recognizability.
+
+* grokproject is much quieter by default (by quieting down
+  PasteScript, easy_install and zc.buildout).  Use the -v option for
+  verbose mode.
+
+0.4 (2007-09-12)
+----------------
+
+* As grok now depends on Zope 3.4 eggs, use zc.zope3recipes
+  application and instance recipes.
+
+* Don't spawn processes to bootstrap and run the buildout.  Instead,
+  try to simply import zc.buildout.  If that doesn't work, call the
+  setuptools API to install it and then simply import it.
+
+0.1 thru 0.3
+------------
+
+Initial development versions, supporting Zope 3.3.
