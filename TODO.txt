@@ -2,6 +2,10 @@
   the logging handler, so subsequent logging calls are multiplied).
   See https://bugs.launchpad.net/zc.buildout/+bug/125729.
 
-* Add a --eggs-directory=... option for the eggs dir.
+* generate a buildout.cfg with
+  * eggs-directory = ...
+  * newest = false
 
-* silence buildout output and be more informative on the other hand
+* Allow values to be provided thru command line arguments
+
+* Update to newer zc.zope3recipes that doesn't need [zope3] section
