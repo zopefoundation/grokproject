@@ -22,10 +22,11 @@ the code for your web application.  To start the Zope server, execute
 Changes
 =======
 
-0.5.1 (unreleased)
+0.5.1 (2007-07-14)
 ------------------
 
-* ...
+* Use the new 'application' recipe from zc.zope3recipes so that we can
+  get rid of the dead chicken [zope3] section in buildout.cfg.
 
 0.5 (2007-07-14)
 ----------------
