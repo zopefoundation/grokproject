@@ -22,7 +22,7 @@ the code for your web application.  To start the Zope server, execute
 Changes
 =======
 
-0.5 (unreleased)
+0.5 (2007-09-14)
 ----------------
 
 * The bin/instance script has been renamed to bin/zopectl for better
