@@ -17,7 +17,7 @@ is built on).
 After the project area has been created successfully, you will find an
 empty Python package in the ``src`` directory in which you can place
 the code for your web application.  To start the Zope server, execute
-``bin/zopectl fg``.
+``bin/paster serve deploy.ini``.
 
 Changes
 =======
