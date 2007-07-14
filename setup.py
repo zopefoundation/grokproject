@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='grokproject',
-    version='0.5.2',
+    version='0.6',
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='https://launchpad.net/grok',
@@ -14,11 +14,11 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript>=1.3',],
+    install_requires=['zopeproject'],
     entry_points="""
     [console_scripts]
     grokproject = grokproject:main
     [paste.paster_create_template]
-    grokproject = grokproject:GrokProject
+    grok_app = grokproject:GrokApp
     """,
 )
