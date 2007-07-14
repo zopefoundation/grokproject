@@ -35,6 +35,10 @@ Changes
 * Fixed https://bugs.launchpad.net/grok/+bug/119805:
   A new project created with grokproject can't be called 'grok' or 'zope'.
 
+* By default, zc.buildout will now be told to place eggs in a
+  user-specified shared eggs directory.  Also, it will not look for
+  newer versions of existing eggs by default.
+
 0.4 (2007-09-12)
 ----------------
 

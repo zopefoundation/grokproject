@@ -18,6 +18,8 @@ class GrokProject(templates.Template):
         var('user', 'Name of an initial administrator user', default=NoDefault),
         var('passwd', 'Password for the initial administrator user',
             default=NoDefault),
+        var('eggs_dir', 'Location where zc.buildout will look for and place '
+            'packages', default=os.path.expanduser('~/buildout-eggs'))
         ]
 
     def check_vars(self, vars, cmd):
@@ -34,6 +36,7 @@ class GrokProject(templates.Template):
                   "package name: %s." % vars['package']
             print "Please choose a different project name."
             sys.exit(1)
+        vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
         return vars
 
 def main():
@@ -45,7 +48,9 @@ def main():
     parser.add_option('--svn-repository', dest="repos", default=None,
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
-                      "hierarchy)")
+                      "hierarchy).")
+    parser.add_option('--newer', action="store_true", dest="newest",
+                      default=False, help="Check for newer versions of packages.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
     options, args = parser.parse_args()
@@ -59,18 +64,30 @@ def main():
     cmd = commands['create'].load()
     runner = cmd('create')
 
-    extra_args = []
+    option_args = []
     if options.repos is not None:
-        extra_args.extend(['--svn-repository', options.repos])
+        option_args.extend(['--svn-repository', options.repos])
     if not options.verbose:
-        extra_args.append('-q')
-    exit_code = runner.run(extra_args + ['-t', 'grokproject', project])
+        option_args.append('-q')
+
+    extra_args = []
+    if options.newest:
+        extra_args.append('newest=true')
+    else:
+        extra_args.append('newest=false')
+
+    exit_code = runner.run(option_args + ['-t', 'grokproject', project]
+                           + extra_args)
     # TODO exit_code
 
     if options.no_buildout:
         return
 
     os.chdir(project)
+
+    extra_args = []
+    if not options.verbose:
+        extra_args.append('-q')
 
     try:
         import zc.buildout.buildout
@@ -81,9 +98,6 @@ def main():
         import setuptools.command.easy_install
         tmpdir = tempfile.mkdtemp()
         sys.path.append(tmpdir)
-        extra_args = []
-        if not options.verbose:
-            extra_args.append('-q')
         setuptools.command.easy_install.main(extra_args +
                                              ['-mNxd', tmpdir, 'zc.buildout'])
 

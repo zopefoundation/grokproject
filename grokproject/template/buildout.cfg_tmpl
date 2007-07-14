@@ -2,6 +2,8 @@
 develop = .
 parts = app data zopectl test
 find-links = http://download.zope.org/distribution/
+eggs-directory = ${eggs_dir}
+newest = ${newest}
 
 [zope3]
 # this dead chicken is needed by some other recipe(s)
