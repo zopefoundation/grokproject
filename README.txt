@@ -25,7 +25,7 @@ Changes
 0.5.2 (unreleased)
 ------------------
 
-* ...
+* Updated template for site.zcml, no annoying warning at start
 
 0.5.1 (2007-07-14)
 ------------------
