@@ -23,6 +23,7 @@ ${long_description|nothing}""",
                         # Add extra requirements here
                         ],
       entry_points="""
-      # Add entry points here
+      [paste.app_factory]
+      main = ${package}.application:application_factory
       """,
       )
