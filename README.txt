@@ -27,7 +27,7 @@ Changes
 
 * ...
 
-0.5 (2007-09-14)
+0.5 (2007-07-14)
 ----------------
 
 * The bin/instance script has been renamed to bin/zopectl for better
@@ -44,7 +44,7 @@ Changes
   user-specified shared eggs directory.  Also, it will not look for
   newer versions of existing eggs by default.
 
-0.4 (2007-09-12)
+0.4 (2007-07-12)
 ----------------
 
 * As grok now depends on Zope 3.4 eggs, use zc.zope3recipes
