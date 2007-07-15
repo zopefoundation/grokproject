@@ -4,5 +4,3 @@
 
 * Allow values to be provided thru command line arguments
   See https://bugs.launchpad.net/grok/+bug/125817.
-
-* Update to newer zc.zope3recipes that doesn't need [zope3] section
