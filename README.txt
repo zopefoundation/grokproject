@@ -25,6 +25,9 @@ Changes
 0.5.2 (unreleased)
 ------------------
 
+* Added include package directive to ftesting.zcml_tmpl to enable functional
+  testing of the generated application
+
 * Updated template for site.zcml, no annoying warning at start
 
 0.5.1 (2007-07-14)
