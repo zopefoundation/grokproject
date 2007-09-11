@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = app data zopectl test
+parts = app data zopectl i18n test
 find-links = http://download.zope.org/distribution/
 eggs-directory = ${eggs_dir}
 newest = ${newest}
@@ -57,3 +57,12 @@ zope.conf = $${data:zconfig}
 recipe = zc.recipe.testrunner
 eggs = ${egg}
 defaults = ['--tests-pattern', '^f?tests$$', '-v']
+
+# this section named so that the i18n scripts are called bin/i18n...
+[i18n]
+recipe = lovely.recipe:i18n
+package = ${package}
+domain = ${package}
+location = src/${package}
+output = locales
+maker = z3c.csvvocabulary.csvStrings

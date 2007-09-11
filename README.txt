@@ -30,6 +30,8 @@ Changes
 
 * Updated template for site.zcml, no annoying warning at start
 
+* Added buildout support for i18n (thanks to lovely.recipe.i18n).
+
 0.5.1 (2007-07-14)
 ------------------
 
