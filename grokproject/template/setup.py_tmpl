@@ -21,7 +21,6 @@ ${long_description|nothing}""",
       install_requires=['setuptools',
                         'grok',
                         'z3c.csvvocabulary',
-                        'zope.i18nmessageid',
                         # Add extra requirements here
                         ],
       entry_points="""
