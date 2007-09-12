@@ -20,7 +20,6 @@ ${long_description|nothing}""",
       zip_safe=${repr(bool(zip_safe))|False},
       install_requires=['setuptools',
                         'grok',
-                        'z3c.csvvocabulary',
                         # Add extra requirements here
                         ],
       entry_points="""

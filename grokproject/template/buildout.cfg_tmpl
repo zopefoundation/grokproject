@@ -65,4 +65,3 @@ package = ${package}
 domain = ${package}
 location = src/${package}
 output = locales
-maker = z3c.csvvocabulary.csvStrings
