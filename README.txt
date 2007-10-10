@@ -22,19 +22,21 @@ the code for your web application.  To start the Zope server, execute
 Changes
 =======
 
-0.5.2 (unreleased)
-------------------
+0.6 (2007-10-10)
+----------------
 
 * Added include package directive to ftesting.zcml_tmpl to enable functional
-  testing of the generated application
+  testing of the generated application.
 
-* Updated template for site.zcml, no annoying warning at start
+* Updated template for site.zcml, no annoying warning at start.
 
 * Added buildout support for i18n (thanks to lovely.recipe.i18n).
 
 * The buildout.cfg that is created now has an extends directive that points
   to URL of the version.cfg of the current Grok release. This URL can be
   overridden with the --version-info-url commandline option.
+
+  See http://grok.zope.org/releaseinfo/readme.html for more information.
 
 0.5.1 (2007-07-14)
 ------------------
