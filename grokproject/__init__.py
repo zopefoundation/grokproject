@@ -4,8 +4,12 @@ import optparse
 import shutil
 import tempfile
 import pkg_resources
+import urllib
+import urlparse
 from paste.script import templates, command
 from paste.script.templates import var, NoDefault
+
+VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -19,7 +23,7 @@ class GrokProject(templates.Template):
         var('passwd', 'Password for the initial administrator user',
             default=NoDefault),
         var('eggs_dir', 'Location where zc.buildout will look for and place '
-            'packages', default=os.path.expanduser('~/buildout-eggs'))
+            'packages', default=os.path.expanduser('~/buildout-eggs')),
         ]
 
     def check_vars(self, vars, cmd):
@@ -51,6 +55,9 @@ def main():
                       "hierarchy).")
     parser.add_option('--newer', action="store_true", dest="newest",
                       default=False, help="Check for newer versions of packages.")
+    parser.add_option(
+        '--version-info-url', dest="version_info_url", default=None,
+        help="The URL to a *.cfg file containing a [versions] section.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
     options, args = parser.parse_args()
@@ -75,6 +82,12 @@ def main():
         extra_args.append('newest=true')
     else:
         extra_args.append('newest=false')
+
+    version_info_url = options.version_info_url
+    if not version_info_url:
+        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
+        version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
+    extra_args.append('extends=' + version_info_url)
 
     exit_code = runner.run(option_args + ['-t', 'grokproject', project]
                            + extra_args)
