@@ -22,6 +22,11 @@ the code for your web application.  To start the Zope server, execute
 Changes
 =======
 
+0.6.1 (unreleased)
+------------------
+
+* ...
+
 0.6 (2007-10-10)
 ----------------
 
