@@ -55,11 +55,18 @@ def main():
                       "hierarchy).")
     parser.add_option('--newer', action="store_true", dest="newest",
                       default=False, help="Check for newer versions of packages.")
+    parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
+                      default=False, help="Be verbose.")
     parser.add_option(
         '--version-info-url', dest="version_info_url", default=None,
         help="The URL to a *.cfg file containing a [versions] section.")
-    parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
-                      default=False, help="Be verbose.")
+
+    # Options that override the interactive part of filling the templates.
+    for var in GrokProject.vars:
+        parser.add_option(
+            '--'+var.name.replace('_', '-'), dest=var.name,
+            help=var.description)
+
     options, args = parser.parse_args()
     if len(args) != 1:
         parser.print_usage()
@@ -82,6 +89,13 @@ def main():
         extra_args.append('newest=true')
     else:
         extra_args.append('newest=false')
+
+    # Process the options that override the interactive part of filling
+    # the templates.
+    for var in GrokProject.vars:
+        if parser.has_option(var.name):
+            extra_args.append(
+                '%s=%s' % (var.name, getattr(options, var.name)))
 
     version_info_url = options.version_info_url
     if not version_info_url:
