@@ -25,7 +25,8 @@ Changes
 0.6.1 (unreleased)
 ------------------
 
-* ...
+* Each of the interactive questions can now be set with an commandline
+  option.
 
 0.6 (2007-10-10)
 ----------------

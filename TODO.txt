@@ -1,6 +1,3 @@
 * zc.buildout has a logging initialization bug (it doesn't tear down
   the logging handler, so subsequent logging calls are multiplied).
   See https://bugs.launchpad.net/zc.buildout/+bug/125729.
-
-* Allow values to be provided thru command line arguments
-  See https://bugs.launchpad.net/grok/+bug/125817.
