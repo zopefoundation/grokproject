@@ -6,6 +6,7 @@ import tempfile
 import pkg_resources
 import urllib
 import urlparse
+import xml.sax.saxutils
 from paste.script import templates, command
 from paste.script.templates import var, NoDefault
 
@@ -40,6 +41,9 @@ class GrokProject(templates.Template):
                   "package name: %s." % vars['package']
             print "Please choose a different project name."
             sys.exit(1)
+        for var_name in ['user', 'passwd']:
+            # Esacpe values that go in site.zcml.
+            vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
         return vars
 
