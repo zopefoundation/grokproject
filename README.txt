@@ -28,6 +28,9 @@ Changes
 * Each of the interactive questions can now be set with an commandline
   option.
 
+* Fix https://bugs.launchpad.net/bugs/161947: The buildout.cfg
+  template contained the [data] section twice.
+
 0.6 (2007-10-10)
 ----------------
 

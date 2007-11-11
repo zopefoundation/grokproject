@@ -7,9 +7,6 @@ newest = ${newest}
 extends= ${extends}
 versions = versions
 
-[data]
-recipe = zc.recipe.filestorage
-
 [app]
 recipe = zc.zope3recipes>=0.5.3:application
 eggs = ${egg}
