@@ -7,6 +7,10 @@ Changes
 * Each of the interactive questions can now be set with an commandline
   option.
 
+* No longer ask for the name of the module that will contain the
+  grok.Application subclass.  It's 'app.py' by default now, a rename
+  is easy enough to do later on.
+
 * Fix https://bugs.launchpad.net/bugs/161947: The buildout.cfg
   template contained the [data] section twice.
 
