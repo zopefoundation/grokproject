@@ -14,6 +14,12 @@ Changes
 * Fix https://bugs.launchpad.net/bugs/161947: The buildout.cfg
   template contained the [data] section twice.
 
+* Generate ``<autoinclude package="." />`` statement by default. If
+  new dependencies are added to ``setup.py`` that need ZCML, the ZCML
+  will be automatically loaded. (Depends on a new release of Grok with
+  z3c.autoinclude)
+
+
 0.6 (2007-10-10)
 ----------------
 
