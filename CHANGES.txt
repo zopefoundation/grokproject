@@ -1,7 +1,7 @@
 Changes
 =======
 
-0.7 (unreleased)
+0.7 (2008-04-22)
 ------------------
 
 * Each of the interactive questions can now be set with an commandline
