@@ -29,7 +29,7 @@ site.zcml = <include package="${package}" />
                          password=${passwd}
                          />
 
-              <!-- Replace the following directive if you don't want
+              <!-- Replace the following directive if you do not want
                    public access -->
               <grant permission="zope.View"
                      principal="zope.Anybody" />
