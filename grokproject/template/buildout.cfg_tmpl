@@ -4,7 +4,7 @@ parts = app data zopectl i18n test
 find-links = http://download.zope.org/distribution/
 eggs-directory = ${eggs_dir}
 newest = ${newest}
-extends= ${extends}
+extends = ${extends}
 versions = versions
 
 [app]
