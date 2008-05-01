@@ -4,11 +4,15 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Make sure bin/paster gets added so we can also test only our
+  paster template instead of the command.
+
 * Fix https://bugs.launchpad.net/grok/+bug/223247: grokproject
   generates faulty ftesting.zcml. Replaced
   zope.app.securitypolicy.zopepolicy.ZopeSecurityPolicy with
   zope.securitypolicy.zopepolicy.ZopeSecurityPolicy in ftesting.zcml
   template (Depends on a Grok release > 0.11.1).
+
 
 0.7 (2008-04-22)
 ------------------
