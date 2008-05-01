@@ -23,7 +23,7 @@ class GrokProject(templates.Template):
             default=NoDefault),
         var('eggs_dir', 'Location where zc.buildout will look for and place '
             'packages', default=os.path.expanduser('~/buildout-eggs')),
-        var('newest', 'Check for newer versions of packages', default=False),
+        var('newest', 'Check for newer versions of packages', default='false'),
         var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
             default=None),
@@ -58,7 +58,7 @@ def main():
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
                       "hierarchy).")
-    parser.add_option('--newer', action="store_true", dest="newest",
+    parser.add_option('--newer', action="store_true", dest="newer",
                       default=False, help="Check for newer versions of packages.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
@@ -68,9 +68,11 @@ def main():
 
     # Options that override the interactive part of filling the templates.
     for var in GrokProject.vars:
-        parser.add_option(
-            '--'+var.name.replace('_', '-'), dest=var.name,
-            help=var.description)
+        option_name = '--'+var.name.replace('_', '-')
+        if not parser.has_option(option_name):
+            parser.add_option(
+                option_name, dest=var.name,
+                help=var.description)
 
     options, args = parser.parse_args()
     if len(args) != 1:
@@ -90,7 +92,7 @@ def main():
         option_args.append('-q')
 
     extra_args = []
-    if options.newest:
+    if options.newer:
         extra_args.append('newest=true')
     else:
         extra_args.append('newest=false')
