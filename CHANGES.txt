@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* "bin/paster create -t grokproject" now works again.
+
 * Make sure bin/paster gets added so we can also test only our
   paster template instead of the command.
 

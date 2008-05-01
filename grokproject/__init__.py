@@ -23,6 +23,10 @@ class GrokProject(templates.Template):
             default=NoDefault),
         var('eggs_dir', 'Location where zc.buildout will look for and place '
             'packages', default=os.path.expanduser('~/buildout-eggs')),
+        var('newest', 'Check for newer versions of packages', default=False),
+        var('version_info_url',
+            "The URL to a *.cfg file containing a [versions] section.",
+            default=None),
         ]
 
     def check_vars(self, vars, cmd):
@@ -37,6 +41,11 @@ class GrokProject(templates.Template):
             # Esacpe values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
+        extends = vars.get('version_info_url')
+        if extends is None:
+            info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
+            extends = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
+        vars['extends'] = extends
         return vars
 
 def main():
