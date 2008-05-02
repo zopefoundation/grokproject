@@ -1,16 +1,14 @@
 import sys
 import os
-import os.path
 import optparse
-import shutil
-import tempfile
-import pkg_resources
 import urllib
 import urlparse
 import xml.sax.saxutils
 from paste.script import templates, command
 from paste.script.templates import var, NoDefault
 from grokproject.utils import run_buildout
+from grokproject.utils import default_eggs_dir
+from grokproject.utils import get_buildout_default_eggs_dir
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
@@ -81,6 +79,8 @@ class GrokProject(templates.Template):
                 "bootstrap the buildout.",
                 default=True, should_ask=False,
                 getter=get_boolean_value_for_option),
+        ask_var('eggs_dir', 'Location where zc.buildout will look for and place '
+            'packages', default=default_eggs_dir())
         ]
 
     def check_vars(self, vars, cmd):
@@ -105,6 +105,20 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
+
+        buildout_default = get_buildout_default_eggs_dir()
+        input = os.path.expanduser(vars['eggs_dir'])
+        if input == buildout_default:
+            vars['eggs_dir'] = (
+                '# eggs will be installed in the default buildout location\n'
+                '# (see .buildout/default.cfg in your home directory)')
+        else:
+            vars['eggs_dir'] = (
+                '# Warning: when you share this buildout.cfg with friends\n'
+                '# please remove the eggs-directory line as it is hardcoded.\n'
+                '# Consider adding this to the .buildout/default.cfg in your '
+                'home directory.\n'
+                'eggs-directory = %s') % input
         return vars
 
     def post(self, command, output_dir, vars):

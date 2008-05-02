@@ -11,8 +11,9 @@ Check that the directory does not exist::
 
 Then use paster::
 
-    >>> sh('paster create -t grok grokexample user=a passwd=a --no-interactive')
-    paster create -t grok grokexample user=a passwd=a --no-interactive
+    >>> paster = current_dir + '/bin/paster create -t grok '
+    >>> sh(paster + 'grokexample user=a passwd=a --no-interactive')
+    /.../bin/paster create -t grok grokexample user=a passwd=a --no-interactive
     ...
 
 Let's check the contents

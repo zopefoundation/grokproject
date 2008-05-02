@@ -1,7 +1,28 @@
+import os
 import sys
 import shutil
 import tempfile
 import pkg_resources
+from ConfigParser import ConfigParser
+
+HOME = os.path.expanduser('~')
+
+
+def get_buildout_default_eggs_dir():
+    default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
+    if os.path.isfile(default_cfg):
+        cfg = ConfigParser()
+        cfg.read(default_cfg)
+        if cfg.has_option('buildout', 'eggs-directory'):
+            eggs_dir = cfg.get('buildout', 'eggs-directory').strip()
+            if eggs_dir:
+                return os.path.expanduser(eggs_dir)
+
+def default_eggs_dir():
+    buildout_default = get_buildout_default_eggs_dir()
+    if buildout_default:
+        return buildout_default
+    return os.path.join(HOME, 'buildout-eggs')
 
 
 def run_buildout(verbose=False):
