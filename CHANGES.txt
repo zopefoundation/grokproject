@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* When there is no .buildout/default.cfg file, create it.  Only put
+  eggs_directory in the created buildout.cfg file when the user does
+  not have it in default.cfg yet.
+
 * Do not ask for eggs dir when we have a default already.
 
 * Refactor grokproject/__init__.py by moving things out into main.py,

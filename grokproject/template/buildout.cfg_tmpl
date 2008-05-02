@@ -4,6 +4,9 @@ parts = app data zopectl i18n test
 find-links = http://download.zope.org/distribution/
 newest = ${newest}
 extends = versions.cfg
+# eggs will be installed in the default buildout location
+# (see .buildout/default.cfg in your home directory)
+# unless you specify an eggs_directory option here.
 ${eggs_dir}
 versions = versions
 

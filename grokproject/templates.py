@@ -11,6 +11,7 @@ from grokproject.utils import get_buildout_default_eggs_dir
 from grokproject.utils import ask_var
 from grokproject.utils import get_var
 from grokproject.utils import get_boolean_value_for_option
+from grokproject.utils import create_buildout_defaults_file
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
@@ -73,19 +74,17 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
-        input = os.path.expanduser(vars['eggs_dir'])
-        if input == buildout_default:
-            vars['eggs_dir'] = (
-                '# eggs will be installed in the default buildout location\n'
-                '# (see .buildout/default.cfg in your home directory)')
+        vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
+        if buildout_default is None:
+            create_buildout_defaults_file(vars['eggs_dir'])
+        buildout_default = get_buildout_default_eggs_dir()
+        if vars['eggs_dir'] == buildout_default:
+            vars['eggs_dir'] = ''
         else:
             vars['eggs_dir'] = (
                 '# Warning: when you share this buildout.cfg with friends\n'
                 '# please remove the eggs-directory line as it is hardcoded.\n'
-                '# Consider adding this to the .buildout/default.cfg in your '
-                'home directory.\n'
-                'eggs-directory = %s') % input
-
+                'eggs-directory = %s') % vars['eggs_dir']
         return vars
 
     def post(self, command, output_dir, vars):
