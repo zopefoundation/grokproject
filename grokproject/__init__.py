@@ -12,23 +12,50 @@ from paste.script.templates import var, NoDefault
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
+
+class ask_var(var):
+
+    def __init__(self, name, description,
+                 default='', should_echo=True, should_ask=True):
+        super(ask_var, self).__init__(
+            name, description, default=default,
+            should_echo=should_echo)
+        self.should_ask = should_ask
+
+
 class GrokProject(templates.Template):
     _template_dir = 'template'
     summary = "A grok project"
     required_templates = []
 
     vars = [
-        var('user', 'Name of an initial administrator user', default=NoDefault),
-        var('passwd', 'Password for the initial administrator user',
+        ask_var('user', 'Name of an initial administrator user', default=NoDefault),
+        ask_var('passwd', 'Password for the initial administrator user',
             default=NoDefault, should_echo=False),
-        var('newest', 'Check for newer versions of packages', default='false'),
-        var('version_info_url',
+        ask_var('newest', 'Check for newer versions of packages', default='false'),
+        ask_var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
-            default=None),
+            default=None, should_ask=False),
         ]
 
     def check_vars(self, vars, cmd):
+        #[var.name for var in self.vars if not var.should_ask]
+        skipped_vars = {}
+        for var in self.vars:
+            if not var.should_ask:
+                skipped_vars[var.name] = var.default
+                self.vars.remove(var)
+
         vars = super(GrokProject, self).check_vars(vars, cmd)
+        for name in skipped_vars:
+            vars[name] = skipped_vars[name]
+        extra_args = [v.split('=') for v in cmd.args if v.find('=') != -1]
+        for arg in extra_args:
+            name = arg[0]
+            value = arg[1]
+            if name in skipped_vars:
+                vars[name] = value
+
         if vars['package'] in ('grok', 'zope'):
             print
             print "Error: The chosen project name results in an invalid " \
@@ -101,11 +128,6 @@ def main():
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
 
-    version_info_url = options.version_info_url
-    if not version_info_url:
-        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
-        version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
-    extra_args.append('extends=' + version_info_url)
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     # TODO exit_code

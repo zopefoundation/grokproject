@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Move version_info_url to the template vars without making it a real
+  question.
+
 * Rename the grokproject template to just grok.  Me Grok Like Short Names.
 
 * Do not add eggs-directory to the buildout.cfg, as the absolute paths
