@@ -60,9 +60,6 @@ def main():
                       default=False, help="Check for newer versions of packages.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
-    parser.add_option(
-        '--version-info-url', dest="version_info_url", default=None,
-        help="The URL to a *.cfg file containing a [versions] section.")
 
     # Options that override the interactive part of filling the templates.
     for var in GrokProject.vars:
