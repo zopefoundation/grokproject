@@ -1,3 +1,11 @@
 * zc.buildout has a logging initialization bug (it doesn't tear down
   the logging handler, so subsequent logging calls are multiplied).
   See https://bugs.launchpad.net/zc.buildout/+bug/125729.
+
+* Allow creating projects with dotted names.
+  See https://bugs.launchpad.net/grok/+bug/223560
+
+* WSGI integration (add some lines to buildout.cfg)
+
+* Make the grokproject command a wrapper around the template, pushing
+  stuff into pre and post hooks.
