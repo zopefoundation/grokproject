@@ -7,9 +7,4 @@
 
 * WSGI integration (add some lines to buildout.cfg)
 
-* Make the grokproject command a wrapper around the template, pushing
-  stuff into pre and post hooks.
-
-* Take over the eggs directory handling from zopeproject.
-
 * Once grok.test enters the core, add some lines in our template.
