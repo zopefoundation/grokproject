@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Do not add eggs-directory to the buildout.cfg, as the absolute paths
+  created make the resulting project unusable on other computers.
+
 * "bin/paster create -t grokproject" now works again.
 
 * Make sure bin/paster gets added so we can also test only our

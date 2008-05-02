@@ -21,8 +21,6 @@ class GrokProject(templates.Template):
         var('user', 'Name of an initial administrator user', default=NoDefault),
         var('passwd', 'Password for the initial administrator user',
             default=NoDefault),
-        var('eggs_dir', 'Location where zc.buildout will look for and place '
-            'packages', default=os.path.expanduser('~/buildout-eggs')),
         var('newest', 'Check for newer versions of packages', default='false'),
         var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
@@ -38,9 +36,8 @@ class GrokProject(templates.Template):
             print "Please choose a different project name."
             sys.exit(1)
         for var_name in ['user', 'passwd']:
-            # Esacpe values that go in site.zcml.
+            # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
-        vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
         extends = vars.get('version_info_url')
         if extends is None:
             info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
