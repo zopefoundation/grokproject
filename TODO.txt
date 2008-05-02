@@ -11,3 +11,5 @@
   stuff into pre and post hooks.
 
 * Take over the eggs directory handling from zopeproject.
+
+* Once grok.test enters the core, add some lines in our template.
