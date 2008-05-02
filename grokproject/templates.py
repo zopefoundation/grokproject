@@ -46,6 +46,7 @@ class GrokProject(templates.Template):
             print "Please choose a different project name."
             sys.exit(1)
 
+        explicit_eggs_dir = vars.get('eggs_dir')
         # Do not ask for eggs dir when we have a default already.
         buildout_default = get_buildout_default_eggs_dir()
         if buildout_default is not None:
@@ -74,7 +75,10 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
-        vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
+        if explicit_eggs_dir is None:
+            vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
+        else:
+            vars['eggs_dir'] = os.path.expanduser(explicit_eggs_dir)
         if buildout_default is None:
             create_buildout_defaults_file(vars['eggs_dir'])
         buildout_default = get_buildout_default_eggs_dir()
