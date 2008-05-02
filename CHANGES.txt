@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Add README.txt file to the created static/ dir.  Biggest reason:
+  otherwise 'python setup.py sdist' simply does not add that empty
+  directory.
+
 * Added local download of the current fixed versions as versions.cfg.
 
 * Add bin/test
