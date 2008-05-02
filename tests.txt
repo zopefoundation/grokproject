@@ -1,0 +1,38 @@
+Grokproject tests
+=================
+
+Go to a directory::
+
+    >>> cd(tempdir)
+
+Check that the directory does not exist::
+
+    >>> rmdir('grokexample')
+
+Then use paster::
+
+    >>> sh('paster create -t grok grokexample user=a passwd=a --no-interactive')
+    paster create -t grok grokexample user=a passwd=a --no-interactive
+    ...
+
+Let's check the contents
+
+    >>> package_dir = os.path.join(tempdir, 'grokexample')
+    >>> ls(package_dir)
+    .installed.cfg
+    bin
+    buildout.cfg
+    develop-eggs
+    parts
+    setup.py
+    src
+
+    >>> sofware_dir = os.path.join(package_dir, 'src', 'grokexample')
+    >>> ls(sofware_dir)
+    __init__.py
+    app.py
+    app_templates
+    configure.zcml
+    ftesting.zcml
+    static
+    testing.py

@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Added test.
+
 * Copy the run_buildout function from zopeproject and put it in
   utils.py.  Call that in the post hook of our paste template.  In the
   grokproject command after calling paster just quit.
