@@ -32,7 +32,7 @@ class GrokProject(templates.Template):
                 default=True, should_ask=False,
                 getter=get_boolean_value_for_option),
         ask_var('eggs_dir',
-                'Location where zc.buildout will look for and placepackages',
+                'Location where zc.buildout will look for and place packages',
                 default=default_eggs_dir()),
         ]
 
