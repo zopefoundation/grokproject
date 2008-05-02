@@ -22,6 +22,7 @@ Let's check the contents
     >>> ls(package_dir)
     .installed.cfg
     bin
+    bootstrap.py
     buildout.cfg
     develop-eggs
     parts
