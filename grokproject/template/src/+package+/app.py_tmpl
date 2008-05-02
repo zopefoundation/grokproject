@@ -1,6 +1,6 @@
 import grok
 
-class ${project}(grok.Application, grok.Container):
+class ${app_class_name}(grok.Application, grok.Container):
     pass
 
 class Index(grok.View):

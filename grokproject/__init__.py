@@ -46,6 +46,7 @@ class GrokProject(templates.Template):
             info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
             extends = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
         vars['extends'] = extends
+        vars['app_class_name'] = vars['project'].capitalize()
         return vars
 
 def main():
@@ -81,6 +82,7 @@ def main():
 
     # create sandbox using paste.script
     project = args[0]
+    app_class_name = project.capitalize()
     commands = command.get_commands()
     cmd = commands['create'].load()
     runner = cmd('create')
@@ -92,6 +94,7 @@ def main():
         option_args.append('-q')
 
     extra_args = []
+    extra_args.append('%s=%s' % ('app_class_name', app_class_name))
     if options.newer:
         extra_args.append('newest=true')
     else:
