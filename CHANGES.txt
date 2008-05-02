@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Remove the --newer option for bin/grokproject.  Use the 'newest'
+  option from the template instead.
+
 * Move version_info_url to the template vars without making it a real
   question.
 

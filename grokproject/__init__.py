@@ -32,14 +32,14 @@ class GrokProject(templates.Template):
         ask_var('user', 'Name of an initial administrator user', default=NoDefault),
         ask_var('passwd', 'Password for the initial administrator user',
             default=NoDefault, should_echo=False),
-        ask_var('newest', 'Check for newer versions of packages', default='false'),
+        ask_var('newest', 'Check for newer versions of packages',
+                default='false', should_ask=False),
         ask_var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
             default=None, should_ask=False),
         ]
 
     def check_vars(self, vars, cmd):
-        #[var.name for var in self.vars if not var.should_ask]
         skipped_vars = {}
         for var in self.vars:
             if not var.should_ask:
@@ -71,6 +71,12 @@ class GrokProject(templates.Template):
             extends = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
         vars['extends'] = extends
         vars['app_class_name'] = vars['project'].capitalize()
+
+        # We want to have newest be 'false' or 'true'.
+        if vars['newest'].lower() in ('1', 'true'):
+            vars['newest'] = 'true'
+        else:
+            vars['newest'] = 'false'
         return vars
 
 def main():
@@ -83,8 +89,6 @@ def main():
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
                       "hierarchy).")
-    parser.add_option('--newer', action="store_true", dest="newer",
-                      default=False, help="Check for newer versions of packages.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
 
@@ -116,10 +120,6 @@ def main():
 
     extra_args = []
     extra_args.append('%s=%s' % ('app_class_name', app_class_name))
-    if options.newer:
-        extra_args.append('newest=true')
-    else:
-        extra_args.append('newest=false')
 
     # Process the options that override the interactive part of filling
     # the templates.
