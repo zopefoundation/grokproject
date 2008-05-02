@@ -20,7 +20,7 @@ class GrokProject(templates.Template):
     vars = [
         var('user', 'Name of an initial administrator user', default=NoDefault),
         var('passwd', 'Password for the initial administrator user',
-            default=NoDefault),
+            default=NoDefault, should_echo=False),
         var('newest', 'Check for newer versions of packages', default='false'),
         var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
