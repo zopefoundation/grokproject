@@ -9,3 +9,5 @@
 
 * Make the grokproject command a wrapper around the template, pushing
   stuff into pre and post hooks.
+
+* Take over the eggs directory handling from zopeproject.
