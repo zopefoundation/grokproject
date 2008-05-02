@@ -22,6 +22,11 @@ class ask_var(var):
         if self.getter is None:
             self.getter = lambda x, y: self.default
 
+def get_var(vars, name):
+    for var in vars:
+        if var.name == name:
+            return var
+
 def get_boolean_value_for_option(vars, option):
     value = vars.get(option.name)
     if value is not None:

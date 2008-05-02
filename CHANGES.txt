@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Do not ask for eggs dir when we have a default already.
+
 * Refactor grokproject/__init__.py by moving things out into main.py,
   templates,py and utils.py, like zopeproject does.
 

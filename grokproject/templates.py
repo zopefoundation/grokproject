@@ -9,6 +9,7 @@ from grokproject.utils import run_buildout
 from grokproject.utils import default_eggs_dir
 from grokproject.utils import get_buildout_default_eggs_dir
 from grokproject.utils import ask_var
+from grokproject.utils import get_var
 from grokproject.utils import get_boolean_value_for_option
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
@@ -44,6 +45,12 @@ class GrokProject(templates.Template):
             print "Please choose a different project name."
             sys.exit(1)
 
+        # Do not ask for eggs dir when we have a default already.
+        buildout_default = get_buildout_default_eggs_dir()
+        if buildout_default is not None:
+            var = get_var(self.vars, 'eggs_dir')
+            var.should_ask = False
+
         skipped_vars = {}
         for var in list(self.vars):
             if not var.should_ask:
@@ -66,8 +73,6 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
-        # Handling eggs dir.
-        buildout_default = get_buildout_default_eggs_dir()
         input = os.path.expanduser(vars['eggs_dir'])
         if input == buildout_default:
             vars['eggs_dir'] = (
