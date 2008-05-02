@@ -19,10 +19,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['PasteScript>=1.3',],
-    entry_points="""
-    [console_scripts]
-    grokproject = grokproject:main
-    [paste.paster_create_template]
-    grok = grokproject:GrokProject
-    """,
-)
+    entry_points={
+    'console_scripts': ['grokproject = grokproject:main'],
+    'paste.paster_create_template': ['grok = grokproject:GrokProject']},
+    )
