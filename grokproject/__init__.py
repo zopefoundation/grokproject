@@ -109,7 +109,7 @@ def main():
         info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
         version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
     extra_args.append('extends=' + version_info_url)
-    exit_code = runner.run(option_args + ['-t', 'grokproject', project]
+    exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     # TODO exit_code
 
