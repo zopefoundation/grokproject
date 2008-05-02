@@ -23,6 +23,6 @@ setup(
     [console_scripts]
     grokproject = grokproject:main
     [paste.paster_create_template]
-    grokproject = grokproject:GrokProject
+    grok = grokproject:GrokProject
     """,
 )
