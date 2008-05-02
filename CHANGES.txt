@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Copy the run_buildout function from zopeproject and put it in
+  utils.py.  Call that in the post hook of our paste template.  In the
+  grokproject command after calling paster just quit.
+
 * Do checks before asking questions.  Define getters for some vars.
   Move no_buildout from the command to run_buildout in the template.
   Use version_info_url in the template instead of renaming it to

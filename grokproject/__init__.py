@@ -1,4 +1,5 @@
 import sys
+import os
 import os.path
 import optparse
 import shutil
@@ -9,6 +10,7 @@ import urlparse
 import xml.sax.saxutils
 from paste.script import templates, command
 from paste.script.templates import var, NoDefault
+from grokproject.utils import run_buildout
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
@@ -105,6 +107,11 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
         return vars
 
+    def post(self, command, output_dir, vars):
+        if vars['run_buildout']:
+            os.chdir(vars['project'])
+            run_buildout(command.options.verbose)
+
 
 def main():
     usage = "usage: %prog [options] PROJECT"
@@ -154,40 +161,4 @@ def main():
 
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
-    # TODO exit_code
-
-    os.chdir(project)
-
-    # TODO Handle buildout in post()
-
-    extra_args = []
-    if not options.verbose:
-        extra_args.append('-q')
-
-    try:
-        import zc.buildout.buildout
-    except ImportError:
-        print "Downloading zc.buildout..."
-
-        # Install buildout into a temporary location
-        import setuptools.command.easy_install
-        tmpdir = tempfile.mkdtemp()
-        sys.path.append(tmpdir)
-        setuptools.command.easy_install.main(extra_args +
-                                             ['-mNxd', tmpdir, 'zc.buildout'])
-
-        # Add downloaded buildout to PYTHONPATH by requiring it
-        # through setuptools (this dance is necessary because the
-        # temporary installation was done as multi-version).
-        ws = pkg_resources.working_set
-        ws.add_entry(tmpdir)
-        ws.require('zc.buildout')
-
-        import zc.buildout.buildout
-        zc.buildout.buildout.main(extra_args + ['bootstrap'])
-        shutil.rmtree(tmpdir)
-    else:
-        zc.buildout.buildout.main(extra_args + ['bootstrap'])
-
-    print "Invoking zc.buildout..."
-    zc.buildout.buildout.main(['-q', 'install'])
+    sys.exit(exit_code)
