@@ -27,6 +27,7 @@ Let's check the contents
     parts
     setup.py
     src
+    versions.cfg
 
     >>> sofware_dir = os.path.join(package_dir, 'src', 'grokexample')
     >>> ls(sofware_dir)

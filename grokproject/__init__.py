@@ -52,13 +52,6 @@ def get_boolean_value_for_option(vars, option):
         value = option.default
     return value
 
-def get_version_info_url(vars, option):
-    value = vars.get(option.name, '')
-    if value == '':
-        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
-        value = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
-    return value
-
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -72,9 +65,6 @@ class GrokProject(templates.Template):
         ask_var('newest', 'Check for newer versions of packages',
                 default='false', should_ask=False,
                 getter=get_boolean_value_for_option),
-        ask_var('version_info_url',
-            "The URL to a *.cfg file containing a [versions] section.",
-            default='', should_ask=False, getter=get_version_info_url),
         ask_var('run_buildout', "After creating the project area "
                 "bootstrap the buildout.",
                 default=True, should_ask=False,
@@ -105,7 +95,17 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
+        vars = self.extra_vars(vars)
+        return vars
 
+    def extra_vars(self, vars):
+        # Handling the version.cfg file.
+        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
+        version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
+        vars['version_info_url'] = version_info_url
+        version_info_file_contents = urllib.urlopen(version_info_url).read()
+        vars['version_info_file_contents'] = version_info_file_contents
+        # Handling eggs dir.
         buildout_default = get_buildout_default_eggs_dir()
         input = os.path.expanduser(vars['eggs_dir'])
         if input == buildout_default:
@@ -119,6 +119,7 @@ class GrokProject(templates.Template):
                 '# Consider adding this to the .buildout/default.cfg in your '
                 'home directory.\n'
                 'eggs-directory = %s') % input
+
         return vars
 
     def post(self, command, output_dir, vars):
