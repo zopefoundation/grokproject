@@ -138,7 +138,6 @@ def main():
 
     # create sandbox using paste.script
     project = args[0]
-    app_class_name = project.capitalize()
     commands = command.get_commands()
     cmd = commands['create'].load()
     runner = cmd('create')
@@ -149,16 +148,13 @@ def main():
     if not options.verbose:
         option_args.append('-q')
 
-    extra_args = []
-    extra_args.append('%s=%s' % ('app_class_name', app_class_name))
-
     # Process the options that override the interactive part of filling
     # the templates.
+    extra_args = []
     for var in GrokProject.vars:
         supplied_value = getattr(options, var.name)
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
-
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     sys.exit(exit_code)
