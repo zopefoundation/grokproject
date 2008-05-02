@@ -23,7 +23,7 @@ class GrokProject(templates.Template):
         ask_var('user', 'Name of an initial administrator user',
                 default=NoDefault),
         ask_var('passwd', 'Password for the initial administrator user',
-            default=NoDefault, should_echo=False),
+                default=NoDefault, should_echo=False),
         ask_var('newest', 'Check for newer versions of packages',
                 default='false', should_ask=False,
                 getter=get_boolean_value_for_option),
@@ -58,16 +58,14 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
-        vars = self.extra_vars(vars)
-        return vars
 
-    def extra_vars(self, vars):
         # Handling the version.cfg file.
         info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
         version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
         vars['version_info_url'] = version_info_url
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
+
         # Handling eggs dir.
         buildout_default = get_buildout_default_eggs_dir()
         input = os.path.expanduser(vars['eggs_dir'])
