@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Add bin/test
+
 * Add handling for the eggs-directory option in buildout.cfg, taken
   from zopeproject.
 
