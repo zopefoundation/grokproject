@@ -16,11 +16,48 @@ VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 class ask_var(var):
 
     def __init__(self, name, description,
-                 default='', should_echo=True, should_ask=True):
+                 default='', should_echo=True, should_ask=True,
+                 getter=None):
         super(ask_var, self).__init__(
             name, description, default=default,
             should_echo=should_echo)
         self.should_ask = should_ask
+        self.getter = getter
+        if self.getter is None:
+            self.getter = lambda x, y: self.default
+
+def get_boolean_value_for_option(vars, option):
+    value = vars.get(option.name)
+    if value is not None:
+        if isinstance(option.default, bool):
+            want_boolean = True
+        else:
+            want_boolean = False
+        value = value.lower()
+        if value in ('1', 'true'):
+            if want_boolean:
+                value = True
+            else:
+                value = 'true'
+        elif value in ('0', 'false'):
+            if want_boolean:
+                value = False
+            else:
+                value = 'false'
+        else:
+            print ""
+            print "Error: %s should be true or false." % option.name
+            sys.exit(1)
+    else:
+        value = option.default
+    return value
+
+def get_version_info_url(vars, option):
+    value = vars.get(option.name, '')
+    if value == '':
+        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
+        value = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
+    return value
 
 
 class GrokProject(templates.Template):
@@ -33,58 +70,45 @@ class GrokProject(templates.Template):
         ask_var('passwd', 'Password for the initial administrator user',
             default=NoDefault, should_echo=False),
         ask_var('newest', 'Check for newer versions of packages',
-                default='false', should_ask=False),
+                default='false', should_ask=False,
+                getter=get_boolean_value_for_option),
         ask_var('version_info_url',
             "The URL to a *.cfg file containing a [versions] section.",
-            default=None, should_ask=False),
+            default='', should_ask=False, getter=get_version_info_url),
+        ask_var('run_buildout', "After creating the project area "
+                "bootstrap the buildout.",
+                default=True, should_ask=False,
+                getter=get_boolean_value_for_option),
         ]
 
     def check_vars(self, vars, cmd):
-        skipped_vars = {}
-        for var in self.vars:
-            if not var.should_ask:
-                skipped_vars[var.name] = var.default
-                self.vars.remove(var)
-
-        vars = super(GrokProject, self).check_vars(vars, cmd)
-        for name in skipped_vars:
-            vars[name] = skipped_vars[name]
-        extra_args = [v.split('=') for v in cmd.args if v.find('=') != -1]
-        for arg in extra_args:
-            name = arg[0]
-            value = arg[1]
-            if name in skipped_vars:
-                vars[name] = value
-
         if vars['package'] in ('grok', 'zope'):
             print
             print "Error: The chosen project name results in an invalid " \
                   "package name: %s." % vars['package']
             print "Please choose a different project name."
             sys.exit(1)
+
+        skipped_vars = {}
+        for var in list(self.vars):
+            if not var.should_ask:
+                skipped_vars[var.name] = var.getter(vars, var)
+                self.vars.remove(var)
+
+        vars = super(GrokProject, self).check_vars(vars, cmd)
+        for name in skipped_vars:
+            vars[name] = skipped_vars[name]
+
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
-        extends = vars.get('version_info_url')
-        if extends is None:
-            info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
-            extends = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
-        vars['extends'] = extends
         vars['app_class_name'] = vars['project'].capitalize()
-
-        # We want to have newest be 'false' or 'true'.
-        if vars['newest'].lower() in ('1', 'true'):
-            vars['newest'] = 'true'
-        else:
-            vars['newest'] = 'false'
         return vars
+
 
 def main():
     usage = "usage: %prog [options] PROJECT"
     parser = optparse.OptionParser(usage=usage)
-    parser.add_option('--no-buildout', action="store_true", dest="no_buildout",
-                      default=False, help="Only create project area, do not "
-                      "bootstrap the buildout.")
     parser.add_option('--svn-repository', dest="repos", default=None,
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
@@ -132,10 +156,9 @@ def main():
                            + extra_args)
     # TODO exit_code
 
-    if options.no_buildout:
-        return
-
     os.chdir(project)
+
+    # TODO Handle buildout in post()
 
     extra_args = []
     if not options.verbose:

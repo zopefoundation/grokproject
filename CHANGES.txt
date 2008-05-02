@@ -4,6 +4,11 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Do checks before asking questions.  Define getters for some vars.
+  Move no_buildout from the command to run_buildout in the template.
+  Use version_info_url in the template instead of renaming it to
+  extends.
+
 * Remove the --newer option for bin/grokproject.  Use the 'newest'
   option from the template instead.
 
