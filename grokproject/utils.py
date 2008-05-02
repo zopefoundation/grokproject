@@ -3,9 +3,50 @@ import sys
 import shutil
 import tempfile
 import pkg_resources
+from paste.script.templates import var
 from ConfigParser import ConfigParser
 
 HOME = os.path.expanduser('~')
+
+
+class ask_var(var):
+
+    def __init__(self, name, description,
+                 default='', should_echo=True, should_ask=True,
+                 getter=None):
+        super(ask_var, self).__init__(
+            name, description, default=default,
+            should_echo=should_echo)
+        self.should_ask = should_ask
+        self.getter = getter
+        if self.getter is None:
+            self.getter = lambda x, y: self.default
+
+def get_boolean_value_for_option(vars, option):
+    value = vars.get(option.name)
+    if value is not None:
+        if isinstance(option.default, bool):
+            want_boolean = True
+        else:
+            want_boolean = False
+        value = value.lower()
+        if value in ('1', 'true'):
+            if want_boolean:
+                value = True
+            else:
+                value = 'true'
+        elif value in ('0', 'false'):
+            if want_boolean:
+                value = False
+            else:
+                value = 'false'
+        else:
+            print ""
+            print "Error: %s should be true or false." % option.name
+            sys.exit(1)
+    else:
+        value = option.default
+    return value
 
 
 def get_buildout_default_eggs_dir():
@@ -17,6 +58,7 @@ def get_buildout_default_eggs_dir():
             eggs_dir = cfg.get('buildout', 'eggs-directory').strip()
             if eggs_dir:
                 return os.path.expanduser(eggs_dir)
+
 
 def default_eggs_dir():
     buildout_default = get_buildout_default_eggs_dir()
