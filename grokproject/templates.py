@@ -15,7 +15,7 @@ from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
-
+BOOTSTRAP = 'http://svn.zope.org/*checkout*/zc.buildout/trunk/bootstrap/bootstrap.py'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -30,8 +30,8 @@ class GrokProject(templates.Template):
         ask_var('newest', 'Check for newer versions of packages',
                 default='false', should_ask=False,
                 getter=get_boolean_value_for_option),
-        ask_var('run_buildout', "After creating the project area "
-                "bootstrap the buildout.",
+        ask_var('run_buildout',
+                "After creating the project area, run the buildout.",
                 default=True, should_ask=False,
                 getter=get_boolean_value_for_option),
         ask_var('eggs_dir',
@@ -71,6 +71,10 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
+        # Handling the bootstrap.py file.
+        bootstrap_contents = urllib.urlopen(BOOTSTRAP).read()
+        vars['bootstrap_contents'] = bootstrap_contents
+
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:
             vars['eggs_dir'] = (
@@ -81,7 +85,7 @@ class GrokProject(templates.Template):
             vars['eggs-dir'] = ''
         else:
             create_buildout_default_file()
-            
+
         return vars
 
     def post(self, command, output_dir, vars):
