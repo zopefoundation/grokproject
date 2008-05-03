@@ -11,7 +11,8 @@ from grokproject.utils import get_buildout_default_eggs_dir
 from grokproject.utils import ask_var
 from grokproject.utils import get_var
 from grokproject.utils import get_boolean_value_for_option
-from grokproject.utils import create_buildout_defaults_file
+from grokproject.utils import create_buildout_default_file
+from grokproject.utils import exist_buildout_default_file
 
 VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
 
@@ -35,7 +36,7 @@ class GrokProject(templates.Template):
                 getter=get_boolean_value_for_option),
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
-                default=default_eggs_dir()),
+                default='', should_ask=False),
         ]
 
     def check_vars(self, vars, cmd):
@@ -47,11 +48,6 @@ class GrokProject(templates.Template):
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
-        # Do not ask for eggs dir when we have a default already.
-        buildout_default = get_buildout_default_eggs_dir()
-        if buildout_default is not None:
-            var = get_var(self.vars, 'eggs_dir')
-            var.should_ask = False
 
         skipped_vars = {}
         for var in list(self.vars):
@@ -75,20 +71,17 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
-        if explicit_eggs_dir is None:
-            vars['eggs_dir'] = os.path.expanduser(vars['eggs_dir'])
-        else:
-            vars['eggs_dir'] = os.path.expanduser(explicit_eggs_dir)
-        if buildout_default is None:
-            create_buildout_defaults_file(vars['eggs_dir'])
-        buildout_default = get_buildout_default_eggs_dir()
-        if vars['eggs_dir'] == buildout_default:
-            vars['eggs_dir'] = ''
-        else:
+        buildout_default = exist_buildout_default_file()
+        if explicit_eggs_dir:
             vars['eggs_dir'] = (
                 '# Warning: when you share this buildout.cfg with friends\n'
                 '# please remove the eggs-directory line as it is hardcoded.\n'
-                'eggs-directory = %s') % vars['eggs_dir']
+                'eggs-directory = %s') % explicit_eggs_dir
+        elif buildout_default:
+            vars['eggs-dir'] = ''
+        else:
+            create_buildout_default_file()
+            
         return vars
 
     def post(self, command, output_dir, vars):

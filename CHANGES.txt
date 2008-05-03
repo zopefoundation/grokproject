@@ -4,6 +4,12 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* If the user has a ~/.buildout/default.cfg nothing is added to the
+  created buildout.cfg. If there is no default.cfg one is created
+  with a line specifying the eggs-directory to ~/.buildout/eggs. If
+  the user specified --eggs-dir/eggs_dir on the command line that
+  will be added to buildout.cfg.
+
 * Added bootstrap.py to the buildout.
 
 * When there is no .buildout/default.cfg file, create it.  Only put

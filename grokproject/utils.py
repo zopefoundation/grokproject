@@ -27,14 +27,18 @@ def get_var(vars, name):
         if var.name == name:
             return var
 
-def create_buildout_defaults_file(eggs_dir):
+def create_buildout_default_file():
     default_dir = os.path.join(HOME, '.buildout')
     if not os.path.isdir(default_dir):
         os.mkdir(default_dir)
+    eggs_dir = os.path.join(default_dir, 'eggs')
+    if not os.path.isdir(eggs_dir):
+        os.mkdir(eggs_dir)
     default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
     if not os.path.isfile(default_cfg):
         config_file = open(default_cfg, 'w')
         contents = """[buildout]
+
 #executable = python2.4
 #index = http://download.zope.org/ppix
 eggs-directory = %s
@@ -80,6 +84,9 @@ def get_buildout_default_eggs_dir():
             if eggs_dir:
                 return os.path.expanduser(eggs_dir)
 
+def exist_buildout_default_file():
+    default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
+    return os.path.isfile(default_cfg)
 
 def default_eggs_dir():
     buildout_default = get_buildout_default_eggs_dir()
