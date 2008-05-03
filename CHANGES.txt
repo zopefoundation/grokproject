@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Add newest=false to the buildout.cfg of grokproject itself.
+
 * If we create a ~/.buildout/default.cfg the download-directory
   option is added with value ~/.buidout/downloads.
 
