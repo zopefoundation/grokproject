@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* When grok is not installed yet, download a tar ball with all eggs
+  needed by Grok and install those in the shared eggs directory.
+
 * Added svn:external for bootstrap/bootstrap.py to the buildout. And we're
   downloading a fresh one for every grokproject that we're generating.
 

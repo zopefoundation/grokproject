@@ -2,19 +2,23 @@ import sys
 import os
 import urllib
 import urlparse
+import shutil
+import tempfile
 import xml.sax.saxutils
+import tarfile
 from paste.script import templates
 from paste.script.templates import NoDefault
 from grokproject.utils import run_buildout
-from grokproject.utils import default_eggs_dir
 from grokproject.utils import get_buildout_default_eggs_dir
 from grokproject.utils import ask_var
-from grokproject.utils import get_var
 from grokproject.utils import get_boolean_value_for_option
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
+from grokproject.utils import required_grok_version
+from zc.buildout.easy_install import install
+from zc.buildout.easy_install import MissingDistribution
 
-VERSIONINFO_INFO_URL = 'http://grok.zope.org/releaseinfo/current'
+GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 BOOTSTRAP = 'http://svn.zope.org/*checkout*/zc.buildout/trunk/bootstrap/bootstrap.py'
 
 class GrokProject(templates.Template):
@@ -65,8 +69,9 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
 
         # Handling the version.cfg file.
-        info = urllib.urlopen(VERSIONINFO_INFO_URL).read().strip()
-        version_info_url = urlparse.urljoin(VERSIONINFO_INFO_URL, info)
+        current_info_url = GROK_RELEASE_URL + 'current'
+        info = urllib.urlopen(current_info_url).read().strip()
+        version_info_url = urlparse.urljoin(current_info_url, info)
         vars['version_info_url'] = version_info_url
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
@@ -77,6 +82,8 @@ class GrokProject(templates.Template):
 
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:
+            # Put explicit_eggs_dir in the vars; used by the post command.
+            vars['explicit_eggs_dir'] = explicit_eggs_dir
             vars['eggs_dir'] = (
                 '# Warning: when you share this buildout.cfg with friends\n'
                 '# please remove the eggs-directory line as it is hardcoded.\n'
@@ -89,6 +96,58 @@ class GrokProject(templates.Template):
         return vars
 
     def post(self, command, output_dir, vars):
-        if vars['run_buildout']:
-            os.chdir(vars['project'])
-            run_buildout(command.options.verbose)
+        if not vars['run_buildout']:
+            return
+        os.chdir(vars['project'])
+        eggs_dir = vars.get('explicit_eggs_dir',
+                            get_buildout_default_eggs_dir())
+        if not os.path.isdir(eggs_dir):
+            os.mkdir(eggs_dir)
+
+        version = required_grok_version(vars['version_info_file_contents'])
+        try:
+            empty_index = tempfile.mkdtemp()
+
+            # Check if the required grok version is already installed.
+            # We do this by trying to install grok in the eggs dir and
+            # letting easy_install only look inside that same eggs
+            # dir while doing that.
+            try:
+                install(['grok'], eggs_dir, newest=False,
+                        versions={'grok': version}, links=[eggs_dir],
+                        index='file://' + empty_index)
+            except MissingDistribution:
+                print "Grok is missing!  We will download a tar ball."
+
+                tarball_name = 'grok-eggs-%s.tgz' % version
+                url = GROK_RELEASE_URL + tarball_name
+                print "Attempting download from %s ..." % url
+
+                try:
+                    extraction_dir = tempfile.mkdtemp() + '/'
+                    filenum, temp_tarball_name = tempfile.mkstemp()
+                    tarball = open(temp_tarball_name, 'w')
+                    tarball.write(urllib.urlopen(url).read())
+                    tarball.close()
+                    print "Finished downloading."
+                    print "Installing eggs to %s ..." % eggs_dir
+
+                    tf = tarfile.open(temp_tarball_name,
+                                      'r:gz')
+                    links = []
+                    for name in tf.getnames():
+                        tf.extract(name, extraction_dir)
+                        links.append(extraction_dir + name)
+                    tf.close()
+
+                    install(['grok'], eggs_dir, newest=False,
+                            versions={'grok': version},
+                            links=links,
+                            index='file://' + empty_index)
+                finally:
+                    shutil.rmtree(extraction_dir)
+                    os.unlink(temp_tarball_name)
+        finally:
+            shutil.rmtree(empty_index)
+
+        run_buildout(command.options.verbose)

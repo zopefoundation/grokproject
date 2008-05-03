@@ -87,15 +87,10 @@ def get_buildout_default_eggs_dir():
             if eggs_dir:
                 return os.path.expanduser(eggs_dir)
 
+
 def exist_buildout_default_file():
     default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
     return os.path.isfile(default_cfg)
-
-def default_eggs_dir():
-    buildout_default = get_buildout_default_eggs_dir()
-    if buildout_default:
-        return buildout_default
-    return os.path.join(HOME, 'buildout-eggs')
 
 
 def run_buildout(verbose=False):
@@ -139,3 +134,9 @@ def run_buildout(verbose=False):
 
     print "Invoking zc.buildout..."
     zc.buildout.buildout.main(['-q', 'install'])
+
+
+def required_grok_version(versionfile):
+    for line in versionfile.split('\n'):
+        if line.startswith('grok ='):
+            return line.split(' ')[-1]
