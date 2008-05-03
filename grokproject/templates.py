@@ -15,8 +15,8 @@ from grokproject.utils import get_boolean_value_for_option
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 from grokproject.utils import required_grok_version
-from zc.buildout.easy_install import install
-from zc.buildout.easy_install import MissingDistribution
+from grokproject.utils import is_grok_installed
+from grokproject.utils import install_grok
 
 GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 BOOTSTRAP = 'http://svn.zope.org/*checkout*/zc.buildout/trunk/bootstrap/bootstrap.py'
@@ -105,49 +105,37 @@ class GrokProject(templates.Template):
             os.mkdir(eggs_dir)
 
         version = required_grok_version(vars['version_info_file_contents'])
-        try:
-            empty_index = tempfile.mkdtemp()
+        if not is_grok_installed(target_dir=eggs_dir, version=version):
+            print "Grok is missing.  We will download a tar ball."
 
-            # Check if the required grok version is already installed.
-            # We do this by trying to install grok in the eggs dir and
-            # letting easy_install only look inside that same eggs
-            # dir while doing that.
+            tarball_name = 'grok-eggs-%s.tgz' % version
+            url = GROK_RELEASE_URL + tarball_name
+            print "Attempting download from %s ..." % url
+
             try:
-                install(['grok'], eggs_dir, newest=False,
-                        versions={'grok': version}, links=[eggs_dir],
-                        index='file://' + empty_index)
-            except MissingDistribution:
-                print "Grok is missing!  We will download a tar ball."
+                extraction_dir = tempfile.mkdtemp() + '/'
+                filenum, temp_tarball_name = tempfile.mkstemp()
+                tarball = open(temp_tarball_name, 'w')
+                tarball.write(urllib.urlopen(url).read())
+                tarball.close()
+                print "Finished downloading."
+                print "Installing eggs to %s ..." % eggs_dir
 
-                tarball_name = 'grok-eggs-%s.tgz' % version
-                url = GROK_RELEASE_URL + tarball_name
-                print "Attempting download from %s ..." % url
+                tf = tarfile.open(temp_tarball_name,
+                                  'r:gz')
+                links = []
+                for name in tf.getnames():
+                    tf.extract(name, extraction_dir)
+                    links.append(extraction_dir + name)
+                tf.close()
 
-                try:
-                    extraction_dir = tempfile.mkdtemp() + '/'
-                    filenum, temp_tarball_name = tempfile.mkstemp()
-                    tarball = open(temp_tarball_name, 'w')
-                    tarball.write(urllib.urlopen(url).read())
-                    tarball.close()
-                    print "Finished downloading."
-                    print "Installing eggs to %s ..." % eggs_dir
-
-                    tf = tarfile.open(temp_tarball_name,
-                                      'r:gz')
-                    links = []
-                    for name in tf.getnames():
-                        tf.extract(name, extraction_dir)
-                        links.append(extraction_dir + name)
-                    tf.close()
-
-                    install(['grok'], eggs_dir, newest=False,
-                            versions={'grok': version},
-                            links=links,
-                            index='file://' + empty_index)
-                finally:
-                    shutil.rmtree(extraction_dir)
-                    os.unlink(temp_tarball_name)
-        finally:
-            shutil.rmtree(empty_index)
+                result = install_grok(target_dir=eggs_dir, version=version,
+                                      links=links)
+                if result is False:
+                    print "Failed to install Grok with the tar ball."
+                    print "Continuing with buildout instead."
+            finally:
+                shutil.rmtree(extraction_dir)
+                os.unlink(temp_tarball_name)
 
         run_buildout(command.options.verbose)

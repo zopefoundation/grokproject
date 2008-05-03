@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Factor out functions is_grok_installed and install_grok.
+
 * When grok is not installed yet, download a tar ball with all eggs
   needed by Grok and install those in the shared eggs directory.
 
