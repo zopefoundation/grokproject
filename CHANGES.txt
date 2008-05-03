@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* If we create a ~/.buildout/default.cfg the download-directory
+  option is added with value ~/.buidout/downloads.
+
 * If the user has a ~/.buildout/default.cfg nothing is added to the
   created buildout.cfg. If there is no default.cfg one is created
   with a line specifying the eggs-directory to ~/.buildout/eggs. If
