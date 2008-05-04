@@ -22,10 +22,12 @@ class ask_var(var):
         if self.getter is None:
             self.getter = lambda x, y: self.default
 
+
 def get_var(vars, name):
     for var in vars:
         if var.name == name:
             return var
+
 
 def create_buildout_default_file():
     default_dir = os.path.join(HOME, '.buildout')
@@ -43,6 +45,7 @@ eggs-directory = %s
         config_file.write(contents)
         config_file.close()
 
+
 def get_boolean_value_for_option(vars, option):
     value = vars.get(option.name)
     if value is not None:
@@ -51,12 +54,12 @@ def get_boolean_value_for_option(vars, option):
         else:
             want_boolean = False
         value = value.lower()
-        if value in ('1', 'true'):
+        if value in ('1', 'true', 'yes'):
             if want_boolean:
                 value = True
             else:
                 value = 'true'
-        elif value in ('0', 'false'):
+        elif value in ('0', 'false', 'no'):
             if want_boolean:
                 value = False
             else:
@@ -133,6 +136,7 @@ def required_grok_version(versionfile):
     for line in versionfile.split('\n'):
         if line.startswith('grok ='):
             return line.split(' ')[-1]
+
 
 def install_grok(target_dir=None, version=None, links=None):
     from zc.buildout.easy_install import install
