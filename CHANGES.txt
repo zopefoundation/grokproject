@@ -4,6 +4,8 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Add a testbrowser test.
+
 * Set up a functional test.
 
 * Added a dependency on z3c.testsetup.

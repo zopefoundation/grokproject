@@ -15,3 +15,25 @@ Test creating a ${app_class_name} instance into Grok::
    True
    >>> list(instance)
    []
+
+
+Run tests in the testbrowser
+----------------------------
+
+The zope.testbrowser.browser module exposes a Browser class that
+simulates a web browser similar to Mozilla Firefox or IE.  We use that
+to test how our application behaves in a browser.  For more
+information, see http://pypi.python.org/pypi/zope.testbrowser
+
+Create a browser and visit the instance you just created::
+
+   >>> from zope.testbrowser.testing import Browser
+   >>> browser = Browser()
+   >>> browser.open('http://localhost/instance')
+
+Check some basic information about the page you visit::
+
+   >>> browser.url
+   'http://localhost/instance'
+   >>> browser.headers.get('Status').upper()
+   '200 OK'
