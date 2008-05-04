@@ -34,19 +34,12 @@ def create_buildout_default_file():
     eggs_dir = os.path.join(default_dir, 'eggs')
     if not os.path.isdir(eggs_dir):
         os.mkdir(eggs_dir)
-    downloads_dir = os.path.join(default_dir, 'downloads')
-    if not os.path.isdir(downloads_dir):
-        os.mkdir(downloads_dir)
     default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
     if not os.path.isfile(default_cfg):
         config_file = open(default_cfg, 'w')
         contents = """[buildout]
-
-#executable = python2.4
-#index = http://download.zope.org/ppix
 eggs-directory = %s
-download-directory = %s
-""" % (eggs_dir, downloads_dir)
+""" % (eggs_dir)
         config_file.write(contents)
         config_file.close()
 

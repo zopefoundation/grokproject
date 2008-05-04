@@ -8,7 +8,7 @@ Changes
 
 * Set up a functional test.
 
-* Added a dependency on z3c.testsetup.
+* Added a dependency on z3c.testsetup for created projects.
 
 * Factor out functions is_grok_installed and install_grok.
 
@@ -19,9 +19,6 @@ Changes
   downloading a fresh one for every grokproject that we're generating.
 
 * Add newest=false to the buildout.cfg of grokproject itself.
-
-* If we create a ~/.buildout/default.cfg the download-directory
-  option is added with value ~/.buidout/downloads.
 
 * If the user has a ~/.buildout/default.cfg nothing is added to the
   created buildout.cfg. If there is no default.cfg one is created
