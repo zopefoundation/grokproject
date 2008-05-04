@@ -34,8 +34,9 @@ Let's check the contents
     >>> ls(sofware_dir)
     __init__.py
     app.py
+    app.txt
     app_templates
     configure.zcml
     ftesting.zcml
     static
-    testing.py
+    tests.py
