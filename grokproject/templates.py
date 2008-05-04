@@ -106,11 +106,11 @@ class GrokProject(templates.Template):
 
         version = required_grok_version(vars['version_info_file_contents'])
         if not is_grok_installed(target_dir=eggs_dir, version=version):
-            print "Grok is missing.  We will download a tar ball."
+            print "Grok is not installed. A grok tarball will be downloaded."
 
             tarball_name = 'grok-eggs-%s.tgz' % version
             url = GROK_RELEASE_URL + tarball_name
-            print "Attempting download from %s ..." % url
+            print "Downloading %s ..." % url
 
             try:
                 extraction_dir = tempfile.mkdtemp() + '/'
