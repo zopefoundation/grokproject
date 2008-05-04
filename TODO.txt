@@ -5,6 +5,16 @@
 * Allow creating projects with dotted names.
   See https://bugs.launchpad.net/grok/+bug/223560
 
+* Make a template for megrok.something
+
 * WSGI integration (add some lines to buildout.cfg)
 
 * Once grok.test enters the core, add some lines in our template.
+
+* Put some standard tests in the generated project.
+
+* When running the grokproject tests, also run the bin/test of a
+  generated project.
+
+* Add z3c.testsetup as dependency in the generated project.
+
