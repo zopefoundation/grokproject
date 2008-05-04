@@ -1,0 +1,17 @@
+Do a functional doctest test on the app.
+========================================
+
+:Test-Layer: functional
+
+Test creating a ${app_class_name} instance into Grok::
+
+   >>> from ${package}.app import ${app_class_name}
+   >>> root = getRootFolder()
+   >>> root['instance'] = ${app_class_name}()
+   >>> root.get('instance').__class__.__name__
+   '${app_class_name}'
+   >>> instance = root.get('instance')
+   >>> isinstance(instance, ${app_class_name})
+   True
+   >>> list(instance)
+   []

@@ -18,3 +18,7 @@
 
 * Add z3c.testsetup as dependency in the generated project.
 
+* Do not add a .buildout/downloads dir.  Only have [buildout] and
+  eggs-directory in the default.cfg that we provide.
+
+* No more find-links for zope.org in the buildout.cfg

@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Set up a functional test.
+
+* Added a dependency on z3c.testsetup.
+
 * Factor out functions is_grok_installed and install_grok.
 
 * When grok is not installed yet, download a tar ball with all eggs
