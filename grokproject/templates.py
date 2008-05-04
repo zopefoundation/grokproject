@@ -113,7 +113,7 @@ class GrokProject(templates.Template):
             print "Downloading %s ..." % url
 
             try:
-                extraction_dir = tempfile.mkdtemp() + '/'
+                extraction_dir = tempfile.mkdtemp()
                 filenum, temp_tarball_name = tempfile.mkstemp()
                 tarball = open(temp_tarball_name, 'w')
                 tarball.write(urllib.urlopen(url).read())
@@ -126,7 +126,7 @@ class GrokProject(templates.Template):
                 links = []
                 for name in tf.getnames():
                     tf.extract(name, extraction_dir)
-                    links.append(extraction_dir + name)
+                    links.append(os.path.join(extraction_dir, name))
                 tf.close()
 
                 result = install_grok(target_dir=eggs_dir, version=version,
