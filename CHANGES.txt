@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Temporarily added find-links again as it is needed to find zope.tal
+  3.4.0b1 which was never released on the cheeseshop.
+
 * Add a testbrowser test.
 
 * Set up a functional test.
