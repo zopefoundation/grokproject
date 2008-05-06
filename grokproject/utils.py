@@ -89,6 +89,12 @@ def exist_buildout_default_file():
     return os.path.isfile(default_cfg)
 
 
+def required_grok_version(versionfile):
+    for line in versionfile.split('\n'):
+        if line.startswith('grok ='):
+            return line.split(' ')[-1]
+
+
 def run_buildout(verbose=False):
     """Run a buildout.
 
@@ -130,38 +136,3 @@ def run_buildout(verbose=False):
 
     print "Invoking zc.buildout..."
     zc.buildout.buildout.main(['-q', 'install'])
-
-
-def required_grok_version(versionfile):
-    for line in versionfile.split('\n'):
-        if line.startswith('grok ='):
-            return line.split(' ')[-1]
-
-
-def install_grok(target_dir=None, version=None, links=None):
-    from zc.buildout.easy_install import install
-    from zc.buildout.easy_install import MissingDistribution
-    try:
-        empty_index = tempfile.mkdtemp()
-
-        try:
-            install(['grok'], target_dir, newest=False,
-                    versions={'grok': version}, links=links,
-                    index='file://' + empty_index)
-        except MissingDistribution:
-            result = False
-        else:
-            result = True
-    finally:
-        shutil.rmtree(empty_index)
-    return result
-
-
-def is_grok_installed(target_dir=None, version=None):
-    # Check if the required grok version is installed.  We do this
-    # by trying to install grok in the target dir and letting
-    # easy_install only look inside that same eggs dir while doing
-    # that.
-    result = install_grok(target_dir=target_dir, version=version,
-                          links=[target_dir])
-    return result

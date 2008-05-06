@@ -1,6 +1,12 @@
 Changes
 =======
 
+maurits-using-eggbasket branch
+------------------------------
+
+* Use the new z3c.recipe.eggbasket recipe.
+
+
 0.8 (unreleased)
 ------------------
 

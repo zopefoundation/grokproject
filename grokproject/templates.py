@@ -2,24 +2,19 @@ import sys
 import os
 import urllib
 import urlparse
-import shutil
-import tempfile
 import xml.sax.saxutils
-import tarfile
 from paste.script import templates
 from paste.script.templates import NoDefault
 from grokproject.utils import run_buildout
-from grokproject.utils import get_buildout_default_eggs_dir
 from grokproject.utils import ask_var
 from grokproject.utils import get_boolean_value_for_option
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 from grokproject.utils import required_grok_version
-from grokproject.utils import is_grok_installed
-from grokproject.utils import install_grok
 
-GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
+GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/current'
 BOOTSTRAP = 'http://svn.zope.org/*checkout*/zc.buildout/trunk/bootstrap/bootstrap.py'
+
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -69,12 +64,13 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
 
         # Handling the version.cfg file.
-        current_info_url = GROK_RELEASE_URL + 'current'
+        current_info_url = GROK_RELEASE_URL
         info = urllib.urlopen(current_info_url).read().strip()
         version_info_url = urlparse.urljoin(current_info_url, info)
         vars['version_info_url'] = version_info_url
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
+        vars['grokversion'] = required_grok_version(version_info_file_contents)
 
         # Handling the bootstrap.py file.
         bootstrap_contents = urllib.urlopen(BOOTSTRAP).read()
@@ -99,43 +95,4 @@ class GrokProject(templates.Template):
         if not vars['run_buildout']:
             return
         os.chdir(vars['project'])
-        eggs_dir = vars.get('explicit_eggs_dir',
-                            get_buildout_default_eggs_dir())
-        if not os.path.isdir(eggs_dir):
-            os.mkdir(eggs_dir)
-
-        version = required_grok_version(vars['version_info_file_contents'])
-        if not is_grok_installed(target_dir=eggs_dir, version=version):
-            print "Grok is not installed. A grok tarball will be downloaded."
-
-            tarball_name = 'grok-eggs-%s.tgz' % version
-            url = GROK_RELEASE_URL + tarball_name
-            print "Downloading %s ..." % url
-
-            try:
-                extraction_dir = tempfile.mkdtemp()
-                filenum, temp_tarball_name = tempfile.mkstemp()
-                tarball = open(temp_tarball_name, 'w')
-                tarball.write(urllib.urlopen(url).read())
-                tarball.close()
-                print "Finished downloading."
-                print "Installing eggs to %s ..." % eggs_dir
-
-                tf = tarfile.open(temp_tarball_name,
-                                  'r:gz')
-                links = []
-                for name in tf.getnames():
-                    tf.extract(name, extraction_dir)
-                    links.append(os.path.join(extraction_dir, name))
-                tf.close()
-
-                result = install_grok(target_dir=eggs_dir, version=version,
-                                      links=links)
-                if result is False:
-                    print "Failed to install Grok with the tar ball."
-                    print "Continuing with buildout instead."
-            finally:
-                shutil.rmtree(extraction_dir)
-                os.unlink(temp_tarball_name)
-
         run_buildout(command.options.verbose)

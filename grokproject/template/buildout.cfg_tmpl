@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = app data zopectl i18n test
+parts = eggbasket app data zopectl i18n test
 newest = ${newest}
 extends = versions.cfg
 find-links = http://download.zope.org/distribution
@@ -9,6 +9,11 @@ find-links = http://download.zope.org/distribution
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
 versions = versions
+
+[eggbasket]
+recipe = z3c.recipe.eggbasket
+eggs = grok
+url = http://grok.zope.org/releaseinfo/grok-eggs-0.12.tgz
 
 [app]
 recipe = zc.zope3recipes>=0.5.3:application
