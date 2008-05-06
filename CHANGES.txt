@@ -4,6 +4,9 @@ Changes
 maurits-using-eggbasket branch
 ------------------------------
 
+* At the end of the generated bootstrap.py run buildout install
+  eggbasket.
+
 * When creating a new grokproject first run 'buildout install
   eggbasket' before running the general 'buildout install'.
 
