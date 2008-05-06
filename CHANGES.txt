@@ -4,6 +4,9 @@ Changes
 maurits-using-eggbasket branch
 ------------------------------
 
+* When creating a new grokproject first run 'buildout install
+  eggbasket' before running the general 'buildout install'.
+
 * Use the new z3c.recipe.eggbasket recipe.
 
 

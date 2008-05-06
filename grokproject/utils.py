@@ -135,4 +135,5 @@ def run_buildout(verbose=False):
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
 
     print "Invoking zc.buildout..."
+    zc.buildout.buildout.main(['-q', 'install', 'eggbasket'])
     zc.buildout.buildout.main(['-q', 'install'])
