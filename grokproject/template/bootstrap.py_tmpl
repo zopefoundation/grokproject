@@ -1,2 +1,7 @@
 ${bootstrap_contents}
+
+# Automatically added at the end by grokproject to bootstrap this
+# project with packages that grok depends on, without needing to fetch
+# their code from too many websites that could be down.
+import zc.buildout.buildout
 zc.buildout.buildout.main(sys.argv[1:] + ['install', 'eggbasket'])
