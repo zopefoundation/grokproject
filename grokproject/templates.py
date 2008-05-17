@@ -19,7 +19,6 @@ from grokproject.utils import is_grok_installed
 from grokproject.utils import install_grok
 
 GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
-BOOTSTRAP = 'http://svn.zope.org/*checkout*/zc.buildout/trunk/bootstrap/bootstrap.py'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -75,10 +74,6 @@ class GrokProject(templates.Template):
         vars['version_info_url'] = version_info_url
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
-
-        # Handling the bootstrap.py file.
-        bootstrap_contents = urllib.urlopen(BOOTSTRAP).read()
-        vars['bootstrap_contents'] = bootstrap_contents
 
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:

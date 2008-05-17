@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Using hardcoded bootstrap.py again instead of downloading the current trunk
+  revision upon each grokproject run, which is potentially dangerous.
+
 * Temporarily added find-links again as it is needed to find zope.tal
   3.4.0b1 which was never released on the cheeseshop.
 
