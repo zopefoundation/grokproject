@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Add a line at the end of bootstrap.py again to install the eggbasket
+  section.
+
 * Using hardcoded bootstrap.py again instead of downloading the current trunk
   revision upon each grokproject run, which is potentially dangerous.
 

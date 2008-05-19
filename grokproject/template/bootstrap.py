@@ -60,3 +60,7 @@ ws.require('zc.buildout')
 import zc.buildout.buildout
 zc.buildout.buildout.main(sys.argv[1:] + ['bootstrap'])
 shutil.rmtree(tmpeggs)
+
+# grokproject specific addition to standard bootstrap.py:
+# Install eggbasket too.
+zc.buildout.buildout.main(sys.argv[1:] + ['install', 'eggbasket'])
