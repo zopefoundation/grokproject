@@ -116,19 +116,23 @@ class GrokProject(templates.Template):
                 print "Finished downloading."
                 print "Installing eggs to %s ..." % eggs_dir
 
-                tf = tarfile.open(temp_tarball_name,
-                                  'r:gz')
-                links = []
-                for name in tf.getnames():
-                    tf.extract(name, extraction_dir)
-                    links.append(os.path.join(extraction_dir, name))
-                tf.close()
+                try:
+                    tf = tarfile.open(temp_tarball_name,
+                                      'r:gz')
+                except tarfile.ReadError, e:
+                    print "ReadError: %s.  Not using tarball." % e
+                else:
+                    links = []
+                    for name in tf.getnames():
+                        tf.extract(name, extraction_dir)
+                        links.append(os.path.join(extraction_dir, name))
+                    tf.close()
 
-                result = install_grok(target_dir=eggs_dir, version=version,
-                                      links=links)
-                if result is False:
-                    print "Failed to install Grok with the tar ball."
-                    print "Continuing with buildout instead."
+                    result = install_grok(target_dir=eggs_dir, version=version,
+                                          links=links)
+                    if result is False:
+                        print "Failed to install Grok with the tar ball."
+                        print "Continuing with buildout instead."
             finally:
                 shutil.rmtree(extraction_dir)
                 os.unlink(temp_tarball_name)
