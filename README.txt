@@ -24,18 +24,18 @@ To start the Zope server, choose one of the two command schemes::
   
     starts the twisted server
     
-  - ``bin/paster serve etc/debug.ini
+  - ``bin/paster serve etc/debug.ini``
   
     starts the pythonpaste http server with debug enabled
     
-  - ``bin/paster serve etc/deploy.ini
+  - ``bin/paster serve etc/deploy.ini``
   
-    starts the pythonpaste http server without eror console
+    starts the pythonpaste http server without error console
     
 When using paster, automatic reloading after code changes can be enabled
 by running::
 
-  - ``bin/paster serve --reload etc/debug.ini
+  - ``bin/paster serve --reload etc/debug.ini``
 
 For those who know paster: ``grokproject`` is just a wrapper around a
 paster template.  So instead of running the ``grokproject`` command,
