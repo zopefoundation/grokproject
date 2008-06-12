@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = app data zopectl i18n test
+parts = app apptwisted data zopectl i18n test
 newest = ${newest}
 extends = versions.cfg
 find-links = http://download.zope.org/distribution
@@ -11,6 +11,15 @@ ${eggs_dir}
 versions = versions
 
 [app]
+recipe = zc.recipe.egg
+eggs = ${egg}
+       z3c.evalexception>=2.0
+       Paste
+       PasteScript
+       PasteDeploy
+interpreter = python
+
+[apptwisted]
 recipe = zc.zope3recipes>=0.5.3:application
 eggs = ${egg}
 site.zcml = <include package="${package}" />
@@ -52,7 +61,7 @@ recipe = zc.recipe.filestorage
 # this section named so that the start/stop script is called bin/zopectl
 [zopectl]
 recipe = zc.zope3recipes:instance
-application = app
+application = apptwisted
 zope.conf = $${data:zconfig}
 
 [test]

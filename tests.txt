@@ -25,6 +25,7 @@ Let's check the contents
     bootstrap.py
     buildout.cfg
     develop-eggs
+    etc
     parts
     setup.py
     src
@@ -38,5 +39,7 @@ Let's check the contents
     app_templates
     configure.zcml
     ftesting.zcml
+    startup.py
     static
     tests.py
+    

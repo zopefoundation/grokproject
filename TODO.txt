@@ -15,3 +15,13 @@
 * Remove find-links from generated buildout.cfg when grok 0.13 goes
   live.  0.12 depends on find-links to get zope.tal 3.4.0b1 which was
   never released on the cheeseshop.
+
+
+branch
+------
+
+* force HTTPBasicAuth dialog on first access (instead of Error traceback)
+
+* enable restart/shutdown in admin/server console for 'paster serve' mode
+
+  

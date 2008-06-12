@@ -1,6 +1,14 @@
 Changes
 =======
 
+branch (2008-06-12)
+-------------------
+
+* Support for dual startup of "zopectl" and "paster serve".
+  Modified buildout.cfg, additional templates taken from zopeproject.
+  Both configurations use the same directories/files for filestorage 
+  (parts/data) and logging (parts/zopectl).
+
 0.8 (unreleased)
 ------------------
 
