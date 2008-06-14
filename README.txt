@@ -26,7 +26,8 @@ To start the Zope server, choose one of the two command schemes::
     
   - ``bin/paster serve etc/debug.ini``
   
-    starts the pythonpaste http server with debug enabled
+    starts the pythonpaste http server with an interactive AJAX debugger enabled
+    authentication: first access should go to http://localhost:8080/@@login.html
     
   - ``bin/paster serve etc/deploy.ini``
   
