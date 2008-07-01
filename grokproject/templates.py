@@ -75,6 +75,10 @@ class GrokProject(templates.Template):
         version_info_file_contents = urllib.urlopen(version_info_url).read()
         vars['version_info_file_contents'] = version_info_file_contents
 
+        # Which grok version are we depending on?
+        version = required_grok_version(vars['version_info_file_contents'])
+        vars['grokversion'] = version
+
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:
             # Put explicit_eggs_dir in the vars; used by the post command.

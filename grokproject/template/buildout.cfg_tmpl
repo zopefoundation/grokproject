@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = app data zopectl i18n test
+parts = eggbasket app data zopectl i18n test
 newest = ${newest}
 extends = versions.cfg
 # eggs will be installed in the default buildout location
@@ -66,3 +66,8 @@ package = ${package}
 domain = ${package}
 location = src/${package}
 output = locales
+
+[eggbasket]
+recipe = z3c.recipe.eggbasket
+eggs = grok
+url = http://grok.zope.org/releaseinfo/grok-eggs-${grokversion}.tgz
