@@ -5,6 +5,7 @@ Changes
 ------------------
 
 * Pinned the required grok version in the generated setup.py.
+  Pinned the required PasteScript version in setup.py of grokproject.
   Refs https://bugs.launchpad.net/grok/+bug/242370
 
 * Actually added the required eggbasket section to the generated
