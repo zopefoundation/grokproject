@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Pinned the required grok version in the generated setup.py.
+  Refs https://bugs.launchpad.net/grok/+bug/242370
+
 * Actually added the required eggbasket section to the generated
   buildout.cfg.  Fixes https://bugs.launchpad.net/grok/+bug/242368
 
