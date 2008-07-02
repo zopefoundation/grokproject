@@ -20,7 +20,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript==1.6.3'],
+    install_requires=['PasteScript>=1.6'],
     tests_require=['zope.testing', 'Cheetah', 'PasteScript'],
     test_suite='tests.test_suite',
     entry_points={
