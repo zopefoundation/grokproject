@@ -20,8 +20,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['PasteScript==1.6.3', 'zc.buildout'],
-    tests_require=['zope.testing', 'zc.buildout', 'Cheetah', 'PasteScript'],
+    install_requires=['PasteScript==1.6.3'],
+    tests_require=['zope.testing', 'Cheetah', 'PasteScript'],
     test_suite='tests.test_suite',
     entry_points={
     'console_scripts': ['grokproject = grokproject:main'],

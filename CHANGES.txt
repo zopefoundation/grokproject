@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Removed dependency on zc.buildout as we already use
+  bootstrap.py-like code to install it on the fly if it is not there
+  yet.
+
 * Removed code that was factored out into z3c.recipe.eggbasket and
   already gets invoked by grokproject by doing a "buildout bootstrap".
 
