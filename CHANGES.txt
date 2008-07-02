@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Removed code that was factored out into z3c.recipe.eggbasket and
+  already gets invoked by grokproject by doing a "buildout bootstrap".
+
 * Pinned the required PasteScript version in setup.py of grokproject.
   Refs https://bugs.launchpad.net/grok/+bug/242370
 
