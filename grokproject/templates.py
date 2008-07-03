@@ -63,11 +63,22 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
 
         # Handling the version.cfg file.
+        print "Downloading info about versions..."
         current_info_url = GROK_RELEASE_URL + 'current'
-        info = urllib.urlopen(current_info_url).read().strip()
+        try:
+            info = urllib.urlopen(current_info_url).read().strip()
+        except IOError:
+            print "Error: cannot download required %s" % current_info_url
+            print "Server may be down.  Please try again later."
+            sys.exit(1)
         version_info_url = urlparse.urljoin(current_info_url, info)
         vars['version_info_url'] = version_info_url
-        version_info_file_contents = urllib.urlopen(version_info_url).read()
+        try:
+            version_info_file_contents = urllib.urlopen(version_info_url).read()
+        except IOError:
+            print "Error: cannot download required %s" % version_info_url
+            print "Server may be down.  Please try again later."
+            sys.exit(1)
         vars['version_info_file_contents'] = version_info_file_contents
 
         # Which grok version are we depending on?

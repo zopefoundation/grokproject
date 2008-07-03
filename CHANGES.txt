@@ -4,6 +4,10 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Check for download errors when getting the release info files from
+  grok.zope.org.  That way we give a meaningful error message to the
+  user.
+
 * Removed dependency on zc.buildout as we already use
   bootstrap.py-like code to install it on the fly if it is not there
   yet.
