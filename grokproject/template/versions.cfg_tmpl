@@ -4,3 +4,13 @@
 # when this project was created.
 
 ${version_info_file_contents}
+
+# Here we pin the recipes used in the buildout.cfg
+lovely.recipe = 0.3.1b4
+z3c.recipe.eggbasket = 0.3.0
+zc.buildout = 1.0.6
+zc.recipe.egg = 1.1.0b1
+zc.recipe.filestorage = 1.0.1
+zc.recipe.testrunner = 1.0.0
+zc.zodbrecipes = 0.4.0
+zc.zope3recipes = 0.7.0

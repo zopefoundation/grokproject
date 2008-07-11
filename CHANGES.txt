@@ -4,6 +4,9 @@ Changes
 0.8 (unreleased)
 ------------------
 
+* Pinned zc.buildout and the used recipes in the generated
+  versions.cfg.
+
 * Check for download errors when getting the release info files from
   grok.zope.org.  That way we give a meaningful error message to the
   user.
