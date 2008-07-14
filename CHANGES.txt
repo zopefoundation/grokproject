@@ -1,8 +1,8 @@
 Changes
 =======
 
-0.8 (unreleased)
-------------------
+0.8 (2008-07-14)
+----------------
 
 * Pinned zc.buildout and the used recipes in the generated
   versions.cfg.
@@ -23,18 +23,14 @@ Changes
 
 * Catch download error when trying to get the big grok tarball.
 
-* Add a line at the end of bootstrap.py again to install the eggbasket
-  section.
+* Use a hardcoded bootstrap.py instead of referring to it via an
+  external or downloading the current trunk revision upon each
+  grokproject run (those options are potentially dangerous).
 
-* Using hardcoded bootstrap.py again instead of downloading the current trunk
-  revision upon each grokproject run, which is potentially dangerous.
+  Also added a line at the end of bootstrap.py to install the
+  eggbasket section.
 
-* Temporarily added find-links again as it is needed to find zope.tal
-  3.4.0b1 which was never released on the cheeseshop.
-
-* Add a testbrowser test.
-
-* Set up a functional test.
+* Added a testbrowser test / functional test to the template.
 
 * Added a dependency on z3c.testsetup for created projects.
 
@@ -42,11 +38,6 @@ Changes
 
 * When grok is not installed yet, download a tar ball with all eggs
   needed by Grok and install those in the shared eggs directory.
-
-* Added svn:external for bootstrap/bootstrap.py to the buildout. And we're
-  downloading a fresh one for every grokproject that we're generating.
-
-* Add newest=false to the buildout.cfg of grokproject itself.
 
 * If the user has a ~/.buildout/default.cfg nothing is added to the
   created buildout.cfg. If there is no default.cfg one is created
@@ -61,7 +52,7 @@ Changes
 * Do not ask for eggs dir when we have a default already.
 
 * Refactor grokproject/__init__.py by moving things out into main.py,
-  templates,py and utils.py, like zopeproject does.
+  templates.py and utils.py, like zopeproject does.
 
 * Add README.txt file to the created static/ dir.  Biggest reason:
   otherwise 'python setup.py sdist' simply does not add that empty
@@ -69,12 +60,10 @@ Changes
 
 * Added local download of the current fixed versions as versions.cfg.
 
-* Add bin/test
-
 * Add handling for the eggs-directory option in buildout.cfg, taken
   from zopeproject.
 
-* Added test.
+* Added a test for grokproject itself.
 
 * Copy the run_buildout function from zopeproject and put it in
   utils.py.  Call that in the post hook of our paste template.  In the
@@ -91,7 +80,7 @@ Changes
 * Move version_info_url to the template vars without making it a real
   question.
 
-* Rename the grokproject template to just grok.  Me Grok Like Short Names.
+* Rename the grokproject template to just grok.  ME GROK LIKE SHORT NAMES.
 
 * Do not add eggs-directory to the buildout.cfg, as the absolute paths
   created make the resulting project unusable on other computers.
@@ -107,9 +96,8 @@ Changes
   zope.securitypolicy.zopepolicy.ZopeSecurityPolicy in ftesting.zcml
   template (Depends on a Grok release > 0.11.1).
 
-
 0.7 (2008-04-22)
-------------------
+----------------
 
 * Each of the interactive questions can now be set with an commandline
   option.
@@ -125,7 +113,6 @@ Changes
   new dependencies are added to ``setup.py`` that need ZCML, the ZCML
   will be automatically loaded. (Depends on a new release of Grok with
   z3c.autoinclude)
-
 
 0.6 (2007-10-10)
 ----------------
