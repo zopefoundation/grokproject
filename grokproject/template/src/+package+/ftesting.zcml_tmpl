@@ -4,7 +4,6 @@
    package="${package}"
    >
 
-  <include package="grok" />
   <include package="${package}" />
 
   <!-- Typical functional testing security setup -->

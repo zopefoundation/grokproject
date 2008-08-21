@@ -4,7 +4,8 @@ Changes
 0.9 (unreleased)
 ----------------
 
-* ...
+* Fix ftesting.zcml to not include grok package : it precludes overrides of
+  anything included by grok.
 
 0.8 (2008-07-14)
 ----------------
