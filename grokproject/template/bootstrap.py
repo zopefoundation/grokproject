@@ -65,3 +65,7 @@ shutil.rmtree(tmpeggs)
 # Install eggbasket too.  This should be verbose to give the user
 # information about what is happening, since this can take a while.
 zc.buildout.buildout.main(sys.argv[1:] + ['-v', 'install', 'eggbasket'])
+if sys.platform == 'win32':
+    print "Now you can run 'bin\buildout.exe'"
+else:
+    print "Now you can run 'bin/buildout'"
