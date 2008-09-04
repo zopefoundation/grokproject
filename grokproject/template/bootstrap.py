@@ -62,5 +62,6 @@ zc.buildout.buildout.main(sys.argv[1:] + ['bootstrap'])
 shutil.rmtree(tmpeggs)
 
 # grokproject specific addition to standard bootstrap.py:
-# Install eggbasket too.
-zc.buildout.buildout.main(sys.argv[1:] + ['install', 'eggbasket'])
+# Install eggbasket too.  This should be verbose to give the user
+# information about what is happening, since this can take a while.
+zc.buildout.buildout.main(sys.argv[1:] + ['-v', 'install', 'eggbasket'])

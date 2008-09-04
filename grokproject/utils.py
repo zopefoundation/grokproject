@@ -117,6 +117,13 @@ def run_buildout(verbose=False):
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
 
     print "Invoking zc.buildout..."
+    
+    # First we install eggbasket.  This is also done in the
+    # bootstrap.py, but that is not actually called by the bootstrap
+    # lines above...
+    zc.buildout.buildout.main(['install', 'eggbasket'])
+
+    # The rest of the install can be a bit quieter.
     zc.buildout.buildout.main(['-q', 'install'])
 
 

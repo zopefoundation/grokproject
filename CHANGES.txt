@@ -4,6 +4,8 @@ Changes
 0.9 (unreleased)
 ----------------
 
+* Explicitly run the install of the eggbasket recipe.
+
 * Fix ftesting.zcml to not include grok package : it precludes overrides of
   anything included by grok.
 
