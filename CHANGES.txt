@@ -4,6 +4,9 @@ Changes
 0.9 (unreleased)
 ----------------
 
+* grokproject now uses `z3c.recipe.i18n` instead of `lovely.recipe`
+  for generation of i18n-scripts.
+
 * At the end of the bootstrap.py of the generated project we now give
   the user a hint that he can run bin/buildout.
 

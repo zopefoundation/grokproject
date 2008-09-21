@@ -16,7 +16,7 @@ Then use paster::
     /.../bin/paster create -t grok grokexample user=a passwd=a --no-interactive
     ...
 
-Let's check the contents
+Let's check the contents::
 
     >>> package_dir = os.path.join(tempdir, 'grokexample')
     >>> ls(package_dir)
@@ -40,3 +40,22 @@ Let's check the contents
     ftesting.zcml
     static
     tests.py
+
+    >>> bin_dir = os.path.join(package_dir, 'bin')
+    >>> ls(bin_dir)
+    buildout...
+    i18nextract...
+    i18nmergeall...
+    i18nstats...
+    test...
+    zopectl...
+
+We can create a POT file out of our sources using the freshly
+generated `i18nextract`::
+
+    >>> cmd = os.path.join(bin_dir, 'i18nextract')
+    >>> output = read_sh(cmd)
+    >>> print output
+    domain:...'grokexample'
+    ...
+    output: '...grokexample.pot'
