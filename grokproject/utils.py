@@ -3,6 +3,7 @@ import sys
 import shutil
 import tempfile
 import pkg_resources
+import logging
 from paste.script.templates import var
 
 HOME = os.path.expanduser('~')
@@ -112,6 +113,7 @@ def run_buildout(verbose=False):
 
         import zc.buildout.buildout
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
+        remove_old_logger_handlers()
         shutil.rmtree(tmpdir)
     else:
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
@@ -121,10 +123,24 @@ def run_buildout(verbose=False):
     # First we install eggbasket.  This is also done in the
     # bootstrap.py, but that is not actually called by the bootstrap
     # lines above...
-    zc.buildout.buildout.main(['install', 'eggbasket'])
+    zc.buildout.buildout.main(['install', 'eggbasket'])    
+    remove_old_logger_handlers()
 
     # The rest of the install can be a bit quieter.
     zc.buildout.buildout.main(['-q', 'install'])
+    remove_old_logger_handlers()
+
+
+def remove_old_logger_handlers():
+    # zc.buildout installs a new log stream on every call of
+    # main(). We remove any leftover handlers to avoid multiple output
+    # of same content (doubled lines etc.)
+    root_logger = logging.getLogger()
+    if 'zc.buildout' in root_logger.manager.loggerDict.keys():
+        logger = logging.getLogger('zc.buildout')
+        for handler in logger.handlers:
+            logger.removeHandler(handler)
+    return
 
 
 def required_grok_version(versionfile):
