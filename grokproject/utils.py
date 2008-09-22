@@ -124,11 +124,14 @@ def run_buildout(verbose=False):
     # First we install eggbasket.  This is also done in the
     # bootstrap.py, but that is not actually called by the bootstrap
     # lines above...
+    #
+    # Note: we do not want to make this either quiet or verbose: quiet
+    # is too quiet and verbose is too verbose. :-/
     zc.buildout.buildout.main(['install', 'eggbasket'])    
     remove_old_logger_handlers()
 
-    # The rest of the install can be a bit quieter.
-    zc.buildout.buildout.main(['-q', 'install'])
+    # Now do the rest of the install.
+    zc.buildout.buildout.main(extra_args + ['install'])
     remove_old_logger_handlers()
 
 

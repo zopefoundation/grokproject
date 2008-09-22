@@ -4,6 +4,9 @@ Changes
 0.9 (unreleased)
 ----------------
 
+* Respect the verboseness requested by the user when running the final
+  install.
+
 * Fix behaviour that produced double/triple output when `buildout`
   was invoked several times.
 
