@@ -4,6 +4,9 @@ Changes
 0.9 (unreleased)
 ----------------
 
+* Fix behaviour that produced double/triple output when `buildout`
+  was invoked several times.
+
 * grokproject now uses `z3c.recipe.i18n` instead of `lovely.recipe`
   for generation of i18n-scripts.
 
