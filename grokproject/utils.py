@@ -117,6 +117,7 @@ def run_buildout(verbose=False):
         shutil.rmtree(tmpdir)
     else:
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
+        remove_old_logger_handlers()
 
     print "Invoking zc.buildout..."
     
