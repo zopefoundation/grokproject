@@ -155,3 +155,50 @@ We can run tests::
     Tearing down left over layers:
       Tear down grokexample.FunctionalLayer ... not supported
 
+Using the generated `buildout` script
+-------------------------------------
+
+We can call the `buildout` script of the freshly generated
+project. For this to work, we have to switch to the project directory
+first::
+
+    >>> cd(package_dir)
+    >>> cmd = os.path.join(bin_dir, 'buildout')
+    >>> output = read_sh(cmd)
+    >>> print output
+    Develop: '...'
+    Updating eggbasket.
+    Updating app.
+    Generated script '...runzope'.
+    Generated script '...debugzope'.
+    Updating data.
+    Updating zopectl.
+    Generated script '...zopectl'.
+    Updating i18n.
+    The recipe for i18n doesn't define an update method. ...
+    i18n: setting up i18n tools
+    Generated script '...i18nextract'.
+    Generated script '...i18nmergeall'.
+    Generated script '...i18nstats'.
+    Updating test.
+    Generated script '...test'.
+
+Using the generated `bootstrap` script
+--------------------------------------
+
+Generated grokprojects come with their own `bootstrap.py` script, that
+makes it easier to distribute projects. As a normal Python module it
+has to be called with a Python interpreter::
+
+    >>> import sys
+    >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
+    >>> cmd = "%s %s" % (sys.executable, cmd_arg)
+    >>> output = read_sh(cmd)
+    >>> print output
+    Develop: '...'
+    Installing 'z3c.recipe.eggbasket'.
+    We have the distribution that satisfies 'z3c.recipe.eggbasket==...'.
+    Getting required 'zc.recipe.egg==...'
+    We have the distribution that satisfies 'zc.recipe.egg==...'.
+    Updating eggbasket.
+    Now you can run '...'
