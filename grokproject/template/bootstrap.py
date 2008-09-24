@@ -20,7 +20,19 @@ use the -c option to specify an alternate configuration file.
 $Id: bootstrap.py 85041 2008-03-31 15:57:30Z andreasjung $
 """
 
-import os, shutil, sys, tempfile, urllib2
+import os, shutil, sys, tempfile, urllib2, logging
+
+def remove_old_logger_handlers():
+    # zc.buildout installs a new log stream on every call of
+    # main(). We remove any leftover handlers to avoid multiple output
+    # of same content (doubled lines etc.)
+    root_logger = logging.getLogger()
+    if 'zc.buildout' in root_logger.manager.loggerDict.keys():
+        logger = logging.getLogger('zc.buildout')
+        for handler in logger.handlers:
+            logger.removeHandler(handler)
+    return
+
 
 tmpeggs = tempfile.mkdtemp()
 
@@ -59,6 +71,7 @@ ws.add_entry(tmpeggs)
 ws.require('zc.buildout')
 import zc.buildout.buildout
 zc.buildout.buildout.main(sys.argv[1:] + ['bootstrap'])
+remove_old_logger_handlers()
 shutil.rmtree(tmpeggs)
 
 # grokproject specific addition to standard bootstrap.py:
