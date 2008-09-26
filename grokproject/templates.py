@@ -35,6 +35,9 @@ class GrokProject(templates.Template):
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
+        ask_var('server',
+                'Use twisted.wsgi(default) or paste?',
+                default='default'),
         ]
 
     def check_vars(self, vars, cmd):
@@ -61,6 +64,10 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
+
+        if not(str(vars.get('server')).lower() in ['default','twisted.wsgi','twisted','yes','y']):
+            self._template_dir = 'template_paste'
+            print "Your grokproject will use 'paste'"
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."
