@@ -17,7 +17,12 @@ is built on).
 After the project area has been created successfully, you will find an
 empty Python package in the ``src`` directory in which you can place
 the code for your web application.  To start the Zope server, execute
-``bin/zopectl fg``.
+``bin/paster serve etc/deploy.ini``.
+
+To create a project with the old ``zopectl`` layout run the ``grokproject`` 
+script like:
+
+  $ grokproject --zopectl=True MammothHerd
 
 For those who know paster: ``grokproject`` is just a wrapper around a
 paster template.  So instead of running the ``grokproject`` command,

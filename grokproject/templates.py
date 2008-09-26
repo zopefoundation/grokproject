@@ -35,9 +35,10 @@ class GrokProject(templates.Template):
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
-        ask_var('server',
-                "Use 'paste' (default) or 'zopectl'?",
-                default='paste'),
+        ask_var('zopectl',
+                "Use zopectl",
+                default=False, should_ask=False,
+                getter=get_boolean_value_for_option),
         ]
 
     def check_vars(self, vars, cmd):
@@ -49,7 +50,7 @@ class GrokProject(templates.Template):
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
-
+        
         skipped_vars = {}
         for var in list(self.vars):
             if not var.should_ask:
@@ -65,9 +66,9 @@ class GrokProject(templates.Template):
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
 
-        if str(vars.get('server')).lower() == 'zopectl':
+        if vars['zopectl']:
             self._template_dir = 'template'
-
+        
         # Handling the version.cfg file.
         print "Downloading info about versions..."
         current_info_url = GROK_RELEASE_URL + 'current'
