@@ -1,6 +1,16 @@
 Changes
 =======
 
+branch
+------
+
+* added another template to support paste (template_paste)
+* paste is the default server mode now
+* grokproject --server=zopectl ... creates a grokproject like before
+* with bin/paster serve etc/debug.ini 
+  you need to access the project from http://localhost:8080/@@login.html
+  
+
 0.9 (unreleased)
 ----------------
 

@@ -16,7 +16,7 @@ GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 
 
 class GrokProject(templates.Template):
-    _template_dir = 'template'
+    _template_dir = 'template_paste'
     summary = "A grok project"
     required_templates = []
 
@@ -36,8 +36,8 @@ class GrokProject(templates.Template):
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
         ask_var('server',
-                'Use twisted.wsgi(default) or paste?',
-                default='default'),
+                "Use 'paste' (default) or 'zopectl'?",
+                default='paste'),
         ]
 
     def check_vars(self, vars, cmd):
@@ -65,9 +65,8 @@ class GrokProject(templates.Template):
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
 
-        if not(str(vars.get('server')).lower() in ['default','twisted.wsgi','twisted','yes','y']):
-            self._template_dir = 'template_paste'
-            print "Your grokproject will use 'paste'"
+        if str(vars.get('server')).lower() == 'zopectl':
+            self._template_dir = 'template'
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."
