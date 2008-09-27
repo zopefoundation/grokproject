@@ -45,7 +45,6 @@ def main():
     # the templates.
     extra_args = []
     for var in GrokProject.vars:
-        print var.name, getattr(options, var.name)
         supplied_value = getattr(options, var.name)
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
