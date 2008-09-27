@@ -35,10 +35,6 @@ class GrokProject(templates.Template):
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
-        ask_var('zopectl',
-                "Use zopectl",
-                default=False, should_ask=False,
-                getter=get_boolean_value_for_option),
         ]
 
     def check_vars(self, vars, cmd):
@@ -60,13 +56,12 @@ class GrokProject(templates.Template):
         vars = super(GrokProject, self).check_vars(vars, cmd)
         for name in skipped_vars:
             vars[name] = skipped_vars[name]
-
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
 
-        if vars['zopectl']:
+        if vars.get('zopectl','') == 'True':
             self._template_dir = 'template'
         
         # Handling the version.cfg file.

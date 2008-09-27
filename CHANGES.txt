@@ -6,7 +6,8 @@ branch
 
 * added another template to support paster (template_paste)
 * paster is the default server mode now
-* grokproject --zopectl=True ... creates a grokproject like before
+* 'grokproject --zopectl projectname' creates a grokproject like before
+* 'paster create -t grok projectname zopectl=True' does the same
 * with bin/paster serve etc/debug.ini 
   you need to access the project from http://localhost:8080/@@login.html
   
