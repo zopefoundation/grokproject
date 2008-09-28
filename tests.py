@@ -14,6 +14,7 @@ import os
 import shutil
 import popen2
 import StringIO
+import tempfile
 
 from zope.testing import doctest
 
@@ -70,7 +71,7 @@ def touch(*args, **kwargs):
     open(filename, 'w').write(kwargs.get('data',''))
 
 execdir = os.path.abspath(os.path.dirname(sys.executable))
-tempdir = os.getenv('TEMP','/tmp')
+testfiles = ['tests.txt',]# 'test_offline.txt']
 
 def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     """Returns a test suite, based on doctests found in /doctest."""
@@ -78,18 +79,28 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     if globs is None:
         globs = globals()
 
+    tempdir = tempfile.mkdtemp()
+    globs.update(tempdir=tempdir)
+    def docTearDown(doctest):
+        tempdir = doctest.globs['tempdir']
+        assert os.path.isdir(tempdir)
+        rmdir(tempdir)
+        assert not os.path.exists(tempdir)
+        if tearDown is not None:
+            tearDown(doctest)
+
     flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE |
              doctest.REPORT_ONLY_FIRST_FAILURE)
 
     if package_dir not in sys.path:
         sys.path.append(package_dir)
 
-    docs = [os.path.join(package_dir, 'tests.txt')]
+    docs = [os.path.join(package_dir, name) for name in testfiles]
 
     for test in docs:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,
                                           globs=globs, setUp=setUp,
-                                          tearDown=tearDown,
+                                          tearDown=docTearDown,
                                           module_relative=False))
 
     return unittest.TestSuite(suite)
