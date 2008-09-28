@@ -50,6 +50,14 @@ Let's check the contents::
     test...
     zopectl...
 
+    >>> cat(package_dir, 'buildout.cfg')
+    [buildout]
+    ...
+    [eggbasket]
+    recipe = z3c.recipe.eggbasket
+    eggs = grok
+    url = http://grok.zope.org/releaseinfo/grok-eggs-...tgz...
+
 Using i18n scripts
 ------------------
 

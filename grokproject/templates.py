@@ -35,6 +35,10 @@ class GrokProject(templates.Template):
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
+        ask_var('grok_release_url',
+                "URL where grokproject will look up grok version and "
+                "release information.",
+                should_ask=False),
         ]
 
     def check_vars(self, vars, cmd):
@@ -46,6 +50,7 @@ class GrokProject(templates.Template):
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
+        grok_release_url = vars.get('grok_release_url', GROK_RELEASE_URL)
 
         skipped_vars = {}
         for var in list(self.vars):
@@ -57,6 +62,8 @@ class GrokProject(templates.Template):
         for name in skipped_vars:
             vars[name] = skipped_vars[name]
 
+        vars['grok_release_url'] = grok_release_url
+
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
@@ -64,7 +71,7 @@ class GrokProject(templates.Template):
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."
-        current_info_url = GROK_RELEASE_URL + 'current'
+        current_info_url = grok_release_url + 'current'
         try:
             info = urllib.urlopen(current_info_url).read().strip()
         except IOError:

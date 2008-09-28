@@ -1,0 +1,79 @@
+Grokproject with alternative release URL
+========================================
+
+Providing an alternative release URL for grokproject is useful if you need to have your own
+local mirror for grok.
+
+In this test we will use an alternative release URL for grokproject. It is a "file:///"
+URL pointing to a directory with a fake set of grok release information files:
+
+    >>> ls(current_dir, 'test_offline')
+    current
+    grok-0.555.cfg
+    >>> cat(current_dir, 'test_offline', 'current')
+    grok-0.555.cfg
+    >>> cat(current_dir, 'test_offline', 'grok-0.555.cfg')
+    [versions]
+    grok = 0.555
+    <BLANKLINE>
+    >>> alt_url = 'file://' + os.path.join(current_dir, 'test_offline', '')
+
+Go to a directory::
+
+    >>> cd(tempdir)
+
+Check that the directory does not exist::
+
+    >>> rmdir('grokexample')
+
+Then use paster, with a "file:///" url pointing to a fake grok release. We won't run
+buildout because the version file is not actually valid::
+
+    >>> paster = current_dir + '/bin/paster create -t grok --no-interactive '
+    >>> grok_params = ('grokexample user=a passwd=a run_buildout=false grok_release_url=' +
+    ...	               alt_url)
+    >>> sh(paster + grok_params)
+    /.../bin/paster create -t grok --no-interactive grokexample user=a passwd=a run_buildout=false
+    ...
+
+Let's check the contents::
+
+    >>> package_dir = os.path.join(tempdir, 'grokexample')
+    >>> ls(package_dir)
+    bootstrap.py
+    buildout.cfg
+    setup.py
+    src
+    versions.cfg
+
+    >>> software_dir = os.path.join(package_dir, 'src', 'grokexample')
+    >>> ls(software_dir)
+    __init__.py
+    app.py
+    app.txt
+    app_templates
+    configure.zcml
+    ftesting.zcml
+    static
+    tests.py
+
+Let's see if the information in our fake release URL was correctly propagated.
+
+    >>> cat(package_dir, 'versions.cfg')
+    # This file contains a list of versions of the various grok modules that
+    # belong together.
+    # It was downloaded from file://.../test_offline/grok-0.555.cfg
+    # when this project was created.
+    <BLANKLINE>
+    [versions]
+    grok = 0.555
+    <BLANKLINE>
+    ...
+
+    >>> cat(package_dir, 'buildout.cfg')
+    [buildout]
+    ...
+    [eggbasket]
+    recipe = z3c.recipe.eggbasket
+    eggs = grok
+    url = file:///.../grok-eggs-0.555.tgz...

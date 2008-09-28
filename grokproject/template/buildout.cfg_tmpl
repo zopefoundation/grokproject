@@ -71,4 +71,4 @@ zcml =
 [eggbasket]
 recipe = z3c.recipe.eggbasket
 eggs = grok
-url = http://grok.zope.org/releaseinfo/grok-eggs-${grokversion}.tgz
+url = ${grok_release_url}grok-eggs-${grokversion}.tgz

@@ -71,7 +71,8 @@ def touch(*args, **kwargs):
     open(filename, 'w').write(kwargs.get('data',''))
 
 execdir = os.path.abspath(os.path.dirname(sys.executable))
-testfiles = ['tests.txt',]# 'test_offline.txt']
+testfiles = ['tests.txt', 
+             'test_alt_url.txt',]
 
 def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     """Returns a test suite, based on doctests found in /doctest."""
