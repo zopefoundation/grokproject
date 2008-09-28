@@ -1,20 +1,15 @@
 Grokproject tests
 =================
 
-Go to a directory::
+Go to the directory where we intend to create the project (grokproject needs it)::
 
     >>> cd(tempdir)
-
-Check that the directory does not exist::
-
-    >>> rmdir('grokexample')
 
 Then use paster::
 
     >>> paster = current_dir + '/bin/paster create -t grok '
-    >>> sh(paster + 'grokexample user=a passwd=a --no-interactive')
-    /.../bin/paster create -t grok grokexample user=a passwd=a --no-interactive
-    ...
+    >>> sh(paster + 'grokexample user=a passwd=a --no-interactive ')
+    /.../bin/paster create -t grok grokexample user=a passwd=a --no-interactive ...
 
 Let's check the contents::
 

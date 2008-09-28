@@ -80,9 +80,17 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     if globs is None:
         globs = globals()
 
-    tempdir = tempfile.mkdtemp()
-    globs.update(tempdir=tempdir)
+    def docSetUp(doctest):
+        "set up tempdir global for the test and save the initial directory"
+        tempdir = tempfile.mkdtemp()
+        initialdir = os.getcwd()
+        doctest.globs.update(tempdir=tempdir, initialdir=initialdir)
+        if setUp is not None:
+            setUp(doctest)
+
     def docTearDown(doctest):
+        """return to the saved directory and cleanup tempdir"""
+        cd(doctest.globs['initialdir']) # nasty grokproject changes cwd
         tempdir = doctest.globs['tempdir']
         assert os.path.isdir(tempdir)
         rmdir(tempdir)
@@ -100,7 +108,7 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
 
     for test in docs:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,
-                                          globs=globs, setUp=setUp,
+                                          globs=globs, setUp=docSetUp,
                                           tearDown=docTearDown,
                                           module_relative=False))
 

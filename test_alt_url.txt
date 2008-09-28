@@ -7,33 +7,30 @@ local mirror for grok.
 In this test we will use an alternative release URL for grokproject. It is a "file:///"
 URL pointing to a directory with a fake set of grok release information files:
 
-    >>> ls(current_dir, 'test_offline')
+    >>> fake_release = os.path.join(tempdir, 'fake_release')
+    >>> os.mkdir(fake_release)
+    >>> touch(fake_release, 'current', data='grok-0.555.cfg')
+    >>> touch(fake_release, 'grok-0.555.cfg', data='[versions]\ngrok = 0.555\n')
+    >>> ls(fake_release)
     current
     grok-0.555.cfg
-    >>> cat(current_dir, 'test_offline', 'current')
+    >>> cat(fake_release, 'current')
     grok-0.555.cfg
-    >>> cat(current_dir, 'test_offline', 'grok-0.555.cfg')
+    >>> cat(fake_release, 'grok-0.555.cfg')
     [versions]
     grok = 0.555
     <BLANKLINE>
-    >>> alt_url = 'file://' + os.path.join(current_dir, 'test_offline', '')
+    >>> alt_url = 'file://' + os.path.join(fake_release, '')
 
-Go to a directory::
-
-    >>> cd(tempdir)
-
-Check that the directory does not exist::
-
-    >>> rmdir('grokexample')
-
-Then use paster, with a "file:///" url pointing to a fake grok release. We won't run
+Let's use paster, with a "file:///" url pointing to the fake grok release. We won't run
 buildout because the version file is not actually valid::
 
-    >>> paster = current_dir + '/bin/paster create -t grok --no-interactive '
-    >>> grok_params = ('grokexample user=a passwd=a run_buildout=false grok_release_url=' +
+    >>> paster = current_dir + '/bin/paster '
+    >>> paster_params = 'create -t grok --no-interactive -o ' + tempdir
+    >>> grok_params = (' grokexample user=a passwd=a run_buildout=false grok_release_url=' +
     ...	               alt_url)
-    >>> sh(paster + grok_params)
-    /.../bin/paster create -t grok --no-interactive grokexample user=a passwd=a run_buildout=false
+    >>> sh(paster + paster_params + grok_params)
+    /.../bin/paster create -t grok --no-interactive -o ... grokexample user=a passwd=a run_buildout=false grok_release_url=.../fake_release/
     ...
 
 Let's check the contents::
@@ -62,7 +59,7 @@ Let's see if the information in our fake release URL was correctly propagated.
     >>> cat(package_dir, 'versions.cfg')
     # This file contains a list of versions of the various grok modules that
     # belong together.
-    # It was downloaded from file://.../test_offline/grok-0.555.cfg
+    # It was downloaded from file://.../fake_release/grok-0.555.cfg
     # when this project was created.
     <BLANKLINE>
     [versions]
