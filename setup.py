@@ -6,7 +6,7 @@ long_description = (open('README.txt').read()
 
 setup(
     name='grokproject',
-    version='0.9dev',
+    version='0.10dev',
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='https://launchpad.net/grok',
