@@ -4,6 +4,8 @@ Changes
 0.9 (unreleased)
 ----------------
 
+* Add grokui.admin as a dependency for projects created with grokproject.
+
 * Respect the verboseness requested by the user when running the final
   install.
 
