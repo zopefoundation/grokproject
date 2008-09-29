@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = eggbasket app i18n test data zopectl
+parts = eggbasket app i18n test data log
 newest = ${newest}
 extends = versions.cfg
 # eggs will be installed in the default buildout location
@@ -21,7 +21,7 @@ interpreter = python-console
 [data]
 recipe = zc.recipe.filestorage
 
-[zopectl]
+[log]
 recipe = zc.recipe.filestorage
 
 [test]
