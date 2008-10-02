@@ -169,19 +169,13 @@ first::
     Develop: '...'
     Updating eggbasket.
     Updating app.
-    Generated script '...runzope'.
-    Generated script '...debugzope'.
     Updating data.
     Updating zopectl.
-    Generated script '...zopectl'.
     Updating i18n.
     The recipe for i18n doesn't define an update method. ...
     i18n: setting up i18n tools
-    Generated script '...i18nextract'.
-    Generated script '...i18nmergeall'.
-    Generated script '...i18nstats'.
     Updating test.
-    Generated script '...test'.
+    <BLANKLINE>
 
 Using the generated `bootstrap` script
 --------------------------------------
@@ -195,10 +189,9 @@ has to be called with a Python interpreter::
     >>> cmd = "%s %s" % (sys.executable, cmd_arg)
     >>> output = read_sh(cmd)
     >>> print output
+    Generated script '.../bin/buildout'.
     Develop: '...'
     Installing 'z3c.recipe.eggbasket'.
-    We have the distribution that satisfies 'z3c.recipe.eggbasket==...'.
-    Getting required 'zc.recipe.egg==...'
-    We have the distribution that satisfies 'zc.recipe.egg==...'.
-    Updating eggbasket.
-    Now you can run '...'
+    ...
+    Now you can run 'bin/buildout'
+    <BLANKLINE>
