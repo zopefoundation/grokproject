@@ -9,11 +9,21 @@ Check that the directory does not exist::
 
     >>> rmdir('grokexample')
 
-Then use paster::
+Create an empty eggs directory. So we make sure that we don't have to
+care for arbitrary eggs, that were installed in the user's environment
+before::
+
+    >>> tempeggs = 'grokexample-eggs'
+    >>> eggsdir = os.path.join(tempdir, tempeggs)
+    >>> rmdir(eggsdir)
+    >>> os.makedirs(eggsdir)
+
+Then use paster. Eggs are placed in our freshly created eggs directory::
 
     >>> paster = current_dir + '/bin/paster create -t grok '
-    >>> sh(paster + 'grokexample user=a passwd=a --no-interactive')
-    /.../bin/paster create -t grok grokexample user=a passwd=a --no-interactive
+    >>> sh(paster + 'grokexample user=a passwd=a '
+    ...    'eggs_dir=%s --no-interactive' % eggsdir)
+    /.../bin/paster create -t grok grokexample user=a passwd=a ...
     ...
 
 Let's check the contents::
@@ -49,6 +59,12 @@ Let's check the contents::
     i18nstats...
     test...
     zopectl...
+
+The eggs dir is filled now::
+
+    >>> len(os.listdir(eggsdir)) > 100
+    True
+
 
 Using i18n scripts
 ------------------
@@ -175,7 +191,7 @@ first::
     The recipe for i18n doesn't define an update method. ...
     i18n: setting up i18n tools
     Updating test.
-    <BLANKLINE>
+
 
 Using the generated `bootstrap` script
 --------------------------------------
@@ -189,9 +205,14 @@ has to be called with a Python interpreter::
     >>> cmd = "%s %s" % (sys.executable, cmd_arg)
     >>> output = read_sh(cmd)
     >>> print output
-    Generated script '.../bin/buildout'.
     Develop: '...'
     Installing 'z3c.recipe.eggbasket'.
     ...
     Now you can run 'bin/buildout'
-    <BLANKLINE>
+
+
+Clean up::
+
+    >>> cd(tempdir)
+    >>> rmdir('grokexample')
+    >>> rmdir(eggsdir)
