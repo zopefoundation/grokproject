@@ -103,5 +103,7 @@ class GrokProject(templates.Template):
     def post(self, command, output_dir, vars):
         if not vars['run_buildout']:
             return
+        original_dir = os.getcwd()
         os.chdir(vars['project'])
         run_buildout(command.options.verbose)
+        os.chdir(original_dir)
