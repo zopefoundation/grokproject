@@ -23,6 +23,11 @@ To start the application server, execute::
   $ cd MammothHerd
   $ bin/paster serve etc/deploy.ini
   
+There is also an Ajax enabled debugger 
+(point your browser to http://localhost:8080/@@login.html when using this)::
+
+  $ bin/paster serve etc/debug.ini
+  
 Start/stop it in daemon mode::
 
   $ bin/mammothherd-ctl start
@@ -36,7 +41,7 @@ For those who know paster: ``grokproject`` is just a wrapper around a
 paster template.  So instead of running the ``grokproject`` command,
 you can also run::
 
-  $ bin/paster create -t grok MammotHerd
+  $ paster create -t grok MammotHerd
 
 To create a project with the previous ``zopectl`` layout run the ``grokproject`` 
 script like::
