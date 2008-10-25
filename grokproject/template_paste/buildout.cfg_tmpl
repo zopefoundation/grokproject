@@ -1,0 +1,44 @@
+[buildout]
+develop = .
+parts = eggbasket app i18n test data log
+newest = ${newest}
+extends = versions.cfg
+# eggs will be installed in the default buildout location
+# (see .buildout/default.cfg in your home directory)
+# unless you specify an eggs-directory option here.
+${eggs_dir}
+versions = versions
+
+[app]
+recipe = zc.recipe.egg
+eggs = ${egg}
+       z3c.evalexception>=2.0
+       Paste
+       PasteScript
+       PasteDeploy
+interpreter = python-console
+
+[data]
+recipe = zc.recipe.filestorage
+
+[log]
+recipe = zc.recipe.filestorage
+
+[test]
+recipe = zc.recipe.testrunner
+eggs = ${egg}
+defaults = ['--tests-pattern', '^f?tests$$', '-v']
+
+# this section named so that the i18n scripts are called bin/i18n...
+[i18n]
+recipe = z3c.recipe.i18n:i18n
+packages = ${package}
+eggs = ${package}
+domain = ${package}
+output = src/${package}/locales
+zcml =
+
+[eggbasket]
+recipe = z3c.recipe.eggbasket
+eggs = grok
+url = http://grok.zope.org/releaseinfo/grok-eggs-${grokversion}.tgz

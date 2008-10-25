@@ -16,7 +16,7 @@ GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 
 
 class GrokProject(templates.Template):
-    _template_dir = 'template'
+    _template_dir = 'template_paste'
     summary = "A grok project"
     required_templates = []
 
@@ -61,6 +61,9 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
+        
+        if vars.get('zopectl','') == 'True':
+            self._template_dir = 'template_zopectl'
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."

@@ -1,0 +1,7 @@
+import grok
+
+class ${app_class_name}(grok.Application, grok.Container):
+    pass
+
+class Index(grok.View):
+    pass # see app_templates/index.pt

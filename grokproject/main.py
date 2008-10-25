@@ -13,6 +13,8 @@ def main():
                       "hierarchy).")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
+    parser.add_option('--zopectl', action="store_true", dest="zopectl",
+                      default=False, help="Use zopectl.")
 
     # Options that override the interactive part of filling the templates.
     for var in GrokProject.vars:
@@ -46,6 +48,8 @@ def main():
         supplied_value = getattr(options, var.name)
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
+    if options.zopectl:
+        extra_args.append('zopectl=True')
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     sys.exit(exit_code)

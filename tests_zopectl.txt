@@ -1,0 +1,218 @@
+Grokproject tests
+=================
+
+Go to a directory::
+
+    >>> cd(tempdir)
+
+Check that the directory does not exist::
+
+    >>> rmdir('grokexample')
+
+Create an empty eggs directory. So we make sure that we don't have to
+care for arbitrary eggs, that were installed in the user's environment
+before::
+
+    >>> tempeggs = 'grokexample-eggs'
+    >>> eggsdir = os.path.join(tempdir, tempeggs)
+    >>> rmdir(eggsdir)
+    >>> os.makedirs(eggsdir)
+
+Then use paster. Eggs are placed in our freshly created eggs directory::
+
+    >>> paster = current_dir + '/bin/paster create -t grok '
+    >>> sh(paster + 'grokexample user=a passwd=a zopectl=True '
+    ...    'eggs_dir=%s --no-interactive' % eggsdir)
+    /.../bin/paster create -t grok grokexample user=a passwd=a zopectl=True ...
+    ...
+
+Let's check the contents::
+
+    >>> package_dir = os.path.join(tempdir, 'grokexample')
+    >>> ls(package_dir)
+    .installed.cfg
+    bin
+    bootstrap.py
+    buildout.cfg
+    develop-eggs
+    parts
+    setup.py
+    src
+    versions.cfg
+
+    >>> software_dir = os.path.join(package_dir, 'src', 'grokexample')
+    >>> ls(software_dir)
+    __init__.py
+    app.py
+    app.txt
+    app_templates
+    configure.zcml
+    ftesting.zcml
+    static
+    tests.py
+
+    >>> bin_dir = os.path.join(package_dir, 'bin')
+    >>> ls(bin_dir)
+    buildout...
+    i18nextract...
+    i18nmergeall...
+    i18nstats...
+    test...
+    zopectl...
+
+The eggs dir is filled now::
+
+    >>> len(os.listdir(eggsdir)) > 100
+    True
+
+
+Using i18n scripts
+------------------
+
+We can create a POT file out of our sources using the freshly
+generated `i18nextract`::
+
+    >>> cmd = os.path.join(bin_dir, 'i18nextract')
+    >>> output = read_sh(cmd)
+    >>> print output
+    domain:...'grokexample'
+    ...
+    output: '...grokexample.pot'
+
+The .pot file contains no specific entries right now. So let's add a
+source file with translatable content::
+
+    >>> source = """
+    ... from zope.i18nmessageid import MessageFactory
+    ... _ = MessageFactory('grokexample')
+    ...
+    ... class SomeClassWithI18nableContent(object):
+    ...   title = _(u'mytitle')
+    ...   description = _(u'description')
+    ...   name = _(u'name')
+    ... """
+    >>> source_path = os.path.join(software_dir, 'translatable.py')
+    >>> open(source_path, 'w').write(source)
+
+And rerun `bin/i18nextract`::
+
+    >>> cmd = os.path.join(bin_dir, 'i18nextract')
+    >>> output = read_sh(cmd)
+
+The translatable strings now appear in the generated .pot file::
+
+    >>> pot_file = os.path.join(software_dir, 'locales', 'grokexample.pot')
+    >>> print open(pot_file, 'r').read()
+    ####...
+    #: src/grokexample/translatable.py:6
+    msgid "mytitle"
+    msgstr ""
+    <BLANKLINE>
+    #: src/grokexample/translatable.py:7
+    msgid "description"
+    msgstr ""
+    <BLANKLINE>
+    #: src/grokexample/translatable.py:8
+    msgid "name"
+    msgstr ""
+
+Let's now create a translation for that (tiny) set of messages::
+
+    >>> trans_dir_de = os.path.join(software_dir, 'locales', 'de',
+    ...                            'LC_MESSAGES')
+    >>> os.makedirs(trans_dir_de)
+
+In this directory we create a copy of the original .pot file::
+
+    >>> po_file_path = os.path.join(trans_dir_de, 'grokexample.po')
+    >>> po_file = open(pot_file, 'r').read()
+
+We modify the translation to give some more interesting results::
+
+    >>> po_file = po_file.replace('translatable.py:6\n',
+    ...                           'translatable.py:6\n#, fuzzy\n')
+    >>> po_file = po_file.replace('"mytitle"\nmsgstr ""',
+    ...                           '"mytitle"\nmsgstr "Mein Titel"')
+    >>> po_file = po_file.replace('"name"\nmsgstr ""',
+    ...                           '"name"\nmsgstr "Name"')
+    >>> open(po_file_path, 'wb').write(po_file)
+
+We can merge all translations with bin/i18nmergeall::
+
+    >>> cmd = os.path.join(bin_dir, 'i18nmergeall')
+    >>> output = read_sh(cmd).split('\n')
+    >>> print output[1]
+    Merging language "de", domain "grokexample"
+
+We can see the status of translations calling bin/i18nstats::
+
+    >>> cmd = os.path.join(bin_dir, 'i18nstats')
+    >>> output = read_sh(cmd)
+    >>> print output
+    Language    Total    Done    Not Done    Fuzzy      Done %
+    ==========================================================
+    de              3       1           1        1     33.33 %
+
+
+Using the generated `test` script
+---------------------------------
+
+We can run tests::
+
+    >>> cmd = os.path.join(bin_dir, 'test')
+    >>> output = read_sh(cmd)
+    >>> print output
+    Running tests at level 1
+    Running grokexample.FunctionalLayer tests:
+      Set up grokexample.FunctionalLayer in ... seconds.
+      Running:
+    ...
+      Ran 3 tests with 0 failures and 0 errors in ... seconds.
+    Tearing down left over layers:
+      Tear down grokexample.FunctionalLayer ... not supported
+
+Using the generated `buildout` script
+-------------------------------------
+
+We can call the `buildout` script of the freshly generated
+project. For this to work, we have to switch to the project directory
+first::
+
+    >>> cd(package_dir)
+    >>> cmd = os.path.join(bin_dir, 'buildout')
+    >>> output = read_sh(cmd)
+    >>> print output
+    Develop: '...'
+    Updating eggbasket.
+    Updating app.
+    Updating data.
+    Updating zopectl.
+    Updating i18n.
+    The recipe for i18n doesn't define an update method. ...
+    i18n: setting up i18n tools
+    Updating test.
+
+
+Using the generated `bootstrap` script
+--------------------------------------
+
+Generated grokprojects come with their own `bootstrap.py` script, that
+makes it easier to distribute projects. As a normal Python module it
+has to be called with a Python interpreter::
+
+    >>> import sys
+    >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
+    >>> cmd = "%s %s" % (sys.executable, cmd_arg)
+    >>> output = read_sh(cmd)
+    >>> print output
+    Develop: '...'
+    Installing 'z3c.recipe.eggbasket'.
+    ...
+    Now you can run 'bin/buildout'
+
+
+Clean up::
+
+    >>> cd(tempdir)
+    >>> rmdir('grokexample')
+    >>> rmdir(eggsdir)

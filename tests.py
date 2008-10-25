@@ -78,13 +78,15 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     if globs is None:
         globs = globals()
 
-    flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE |
+    flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE) |
              doctest.REPORT_ONLY_FIRST_FAILURE)
 
     if package_dir not in sys.path:
         sys.path.append(package_dir)
 
-    docs = [os.path.join(package_dir, 'tests.txt')]
+    docs = [os.path.join(package_dir, 'tests_zopectl.txt'),
+            os.path.join(package_dir, 'tests_paste.txt'),
+            ]
 
     for test in docs:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,

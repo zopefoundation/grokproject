@@ -35,6 +35,7 @@ Let's check the contents::
     bootstrap.py
     buildout.cfg
     develop-eggs
+    etc
     parts
     setup.py
     src
@@ -48,23 +49,34 @@ Let's check the contents::
     app_templates
     configure.zcml
     ftesting.zcml
+    startup.py
     static
     tests.py
 
     >>> bin_dir = os.path.join(package_dir, 'bin')
     >>> ls(bin_dir)
     buildout...
+    grokexample-ctl...
+    grokexample-debug...
     i18nextract...
     i18nmergeall...
     i18nstats...
+    paster...
+    python-console...
     test...
-    zopectl...
+
+    >>> etc_dir = os.path.join(package_dir, 'etc')
+    >>> ls(etc_dir)
+    debug.ini
+    deploy.ini
+    site.zcml
+    zdaemon.conf
+    zope.conf
 
 The eggs dir is filled now::
 
     >>> len(os.listdir(eggsdir)) > 100
     True
-
 
 Using i18n scripts
 ------------------
@@ -185,12 +197,12 @@ first::
     Develop: '...'
     Updating eggbasket.
     Updating app.
-    Updating data.
-    Updating zopectl.
     Updating i18n.
-    The recipe for i18n doesn't define an update method. ...
+    The recipe for i18n doesn't define an update method. Using its install method.
     i18n: setting up i18n tools
     Updating test.
+    Updating data.
+    Updating log.
 
 
 Using the generated `bootstrap` script

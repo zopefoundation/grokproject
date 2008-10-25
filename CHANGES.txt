@@ -7,6 +7,11 @@ Changes
 * Fixed bug: using the ``--svn-repository`` option would fail with an
   OSError.
 
+* Add another template set for paster support
+
+* Add option --zopectl to select 'zopectl' templates
+
+* Make 'paster' the default template set
 
 0.9 (2008-09-29)
 ----------------
