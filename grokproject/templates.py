@@ -101,6 +101,8 @@ class GrokProject(templates.Template):
         else:
             create_buildout_default_file()
 
+        vars['package_directory'] = os.path.join(os.getcwd(),vars['package'])
+        
         return vars
 
     def post(self, command, output_dir, vars):

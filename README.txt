@@ -1,5 +1,5 @@
-grokproject provides an easy way to get started with a `grok
-<http://cheeseshop.python.org/pypi/grok>`_ web application.  Simply
+grokproject provides an easy way to get started with a `Grok
+<http://pypi.python.org/pypi/grok>`_ web application.  Simply
 install ``grokproject``::
 
   $ easy_install grokproject
@@ -11,7 +11,7 @@ like to create as an argument::
   ... many lines of output here
 
 This will not only create a project area for you to work in, it will
-also download and install grok and Zope 3 (the application server grok
+also download and install Grok and Zope 3 (the application server Grok
 is built on).
 
 After the project area has been created successfully, you will find an
