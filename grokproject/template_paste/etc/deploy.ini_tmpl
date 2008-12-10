@@ -7,5 +7,5 @@ host = 127.0.0.1
 port = 8080
 
 [DEFAULT]
-# set the directory of zope conf files (if not the same as the ini file)
-zope_conf = %(here)s
+# set the name of the zope.conf file
+zope_conf = %(here)s/zope.conf
