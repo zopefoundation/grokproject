@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0a1 (unreleased)
+1.0a1 (2009-01-08)
 ------------------
 
 * Fixed bug: using the ``--svn-repository`` option would fail with an
