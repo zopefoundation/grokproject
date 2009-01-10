@@ -101,7 +101,8 @@ class GrokProject(templates.Template):
         else:
             create_buildout_default_file()
 
-        vars['package_directory'] = os.path.join(os.getcwd(),vars['package'])
+        vars['package_directory'] = os.path.abspath(os.path.join(
+                os.getcwd(), vars['project']))
         
         return vars
 
