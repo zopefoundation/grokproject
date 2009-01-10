@@ -1,4 +1,5 @@
 import sys
+import pkg_resources
 from paste.script import command
 import optparse
 from grokproject import GrokProject
@@ -15,7 +16,9 @@ def main():
                       default=False, help="Be verbose.")
     parser.add_option('--zopectl', action="store_true", dest="zopectl",
                       default=False, help="Use zopectl.")
-
+    parser.add_option('--version', action="store_true", dest="version",
+                      default=False, help="Show grokproject version.")
+    
     # Options that override the interactive part of filling the templates.
     for var in GrokProject.vars:
         option_name = '--'+var.name.replace('_', '-')
@@ -25,6 +28,11 @@ def main():
                 help=var.description)
 
     options, args = parser.parse_args()
+    
+    if options.version:
+        print get_version()
+        return 0
+
     if len(args) != 1:
         parser.print_usage()
         return 1
@@ -53,3 +61,10 @@ def main():
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     sys.exit(exit_code)
+
+def get_version():
+    info = pkg_resources.get_distribution('grokproject')
+    if info.has_version and info.version:
+        return info.version
+    return 'Unknown'
+
