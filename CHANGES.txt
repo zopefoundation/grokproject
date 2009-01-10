@@ -4,7 +4,8 @@ Changes
 1.0b1 (unreleased)
 ------------------
 
-* ...
+* Fix bug https://bugs.launchpad.net/grok/+bug/315795 paster variant
+  of grokproject now again accepts projectnames with uppercase chars.
 
 1.0a1 (2009-01-08)
 ------------------
