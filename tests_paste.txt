@@ -7,7 +7,7 @@ Go to a directory::
 
 Check that the directory does not exist::
 
-    >>> rmdir('grokexample')
+    >>> rmdir('GrokExample')
 
 Create an empty eggs directory. So we make sure that we don't have to
 care for arbitrary eggs, that were installed in the user's environment
@@ -21,14 +21,14 @@ before::
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
     >>> paster = current_dir + '/bin/paster create -t grok '
-    >>> sh(paster + 'grokexample user=a passwd=a '
+    >>> sh(paster + 'GrokExample user=a passwd=a '
     ...    'eggs_dir=%s --no-interactive' % eggsdir)
-    /.../bin/paster create -t grok grokexample user=a passwd=a ...
+    /.../bin/paster create -t grok GrokExample user=a passwd=a ...
     ...
 
 Let's check the contents::
 
-    >>> package_dir = os.path.join(tempdir, 'grokexample')
+    >>> package_dir = os.path.join(tempdir, 'GrokExample')
     >>> ls(package_dir)
     .installed.cfg
     bin
@@ -77,6 +77,15 @@ The eggs dir is filled now::
 
     >>> len(os.listdir(eggsdir)) > 100
     True
+
+We used a projectname with uppercase letters. This is respected by
+configuration files::
+
+    >>> zope_conf = os.path.join(package_dir, 'etc', 'zope.conf')
+    >>> print open(zope_conf, 'rb').read()
+    # Identify the component configuration used to define the site:
+    site-definition ...GrokExample/etc/site.zcml
+    ...
 
 Using i18n scripts
 ------------------
@@ -226,5 +235,5 @@ has to be called with a Python interpreter::
 Clean up::
 
     >>> cd(tempdir)
-    >>> rmdir('grokexample')
+    >>> rmdir('GrokExample')
     >>> rmdir(eggsdir)
