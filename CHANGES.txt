@@ -4,6 +4,9 @@ Changes
 1.0b1 (unreleased)
 ------------------
 
+* Add option ``--version`` to show grokproject version and stay
+  compatible with most command-line tools.
+
 * Fix bug https://bugs.launchpad.net/grok/+bug/315795 paster variant
   of grokproject now again accepts projectnames with uppercase chars.
 
