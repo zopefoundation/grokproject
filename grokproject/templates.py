@@ -1,6 +1,6 @@
 import sys
 import os
-import urllib
+import urllib2
 import urlparse
 import xml.sax.saxutils
 from paste.script import templates
@@ -67,22 +67,17 @@ class GrokProject(templates.Template):
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."
-        current_info_url = GROK_RELEASE_URL + 'current'
-        try:
-            info = urllib.urlopen(current_info_url).read().strip()
-        except IOError:
-            print "Error: cannot download required %s" % current_info_url
-            print "Server may be down.  Please try again later."
-            sys.exit(1)
-        version_info_url = urlparse.urljoin(current_info_url, info)
+        version = vars.get('grokversion', 'current')
+        cfg_filename = 'grok-%s.cfg' % version
+        if version == 'current':
+            # if no version was specified, we look up the current
+            # version first
+            current_info_url = GROK_RELEASE_URL + 'current'
+            cfg_filename = self.download(current_info_url).strip()
+
+        version_info_url = urlparse.urljoin(GROK_RELEASE_URL, cfg_filename)
         vars['version_info_url'] = version_info_url
-        try:
-            version_info_file_contents = urllib.urlopen(version_info_url).read()
-        except IOError:
-            print "Error: cannot download required %s" % version_info_url
-            print "Server may be down.  Please try again later."
-            sys.exit(1)
-        vars['version_info_file_contents'] = version_info_file_contents
+        vars['version_info_file_contents'] = self.download(version_info_url)
 
         # Which grok version are we depending on?
         version = required_grok_version(vars['version_info_file_contents'])
@@ -106,6 +101,27 @@ class GrokProject(templates.Template):
         
         return vars
 
+    def download(self, url):
+        """Downloads a file and returns the contents.
+
+        If an error occurs, we abort, giving some information about
+        the reason.
+        """
+        contents = None
+        try:
+            contents = urllib2.urlopen(url).read()
+        except urllib2.HTTPError:
+            # Some 404 or similar happened...
+            print "Error: cannot download required %s" % url
+            print "Maybe you specified a non-existing version?"
+            sys.exit(1)
+        except IOError, e:
+            # Some serious problem: no connect to server...
+            print "Error: cannot download required %s" % version_info_url
+            print "Server may be down.  Please try again later."
+            sys.exit(1)
+        return contents
+    
     def post(self, command, output_dir, vars):
         if not vars['run_buildout']:
             return
