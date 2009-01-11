@@ -4,6 +4,15 @@ Changes
 1.0b1 (unreleased)
 ------------------
 
+* Add option ``--grokversion`` which installs the requested version of
+  Grok with the created project. Examples::
+
+    grokproject --grokversion=0.14.1 Sample
+
+  or::
+
+    paster create -t grok Sample grokversion=0.14.1
+
 * Add option ``--version`` to show grokproject version and stay
   compatible with most command-line tools.
 
