@@ -12,6 +12,10 @@ def main():
                       help="Import project to given repository location (this "
                       "will also create the standard trunk/ tags/ branches/ "
                       "hierarchy).")
+    parser.add_option('--grokversion', dest="grokversion", default=None,
+                      help="Specify the Grok version to use. GROKVERSION is "
+                      "a string like 0.14.1, 1.0a1 or similar. If not given, "
+                      "the latest version found on the grok website is used.")
     parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
                       default=False, help="Be verbose.")
     parser.add_option('--zopectl', action="store_true", dest="zopectl",
@@ -58,6 +62,8 @@ def main():
             extra_args.append('%s=%s' % (var.name, supplied_value))
     if options.zopectl:
         extra_args.append('zopectl=True')
+    if options.grokversion:
+        extra_args.append('grokversion=%s' % options.grokversion)
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     sys.exit(exit_code)
