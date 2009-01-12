@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0b1 (unreleased)
+1.0a2 (unreleased)
 ------------------
 
 * Add option ``--grokversion`` which installs the requested version of
