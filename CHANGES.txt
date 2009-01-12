@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0a2 (unreleased)
+1.0a2 (2009-01-12)
 ------------------
 
 * Add option ``--grokversion`` which installs the requested version of
