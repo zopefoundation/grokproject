@@ -4,6 +4,10 @@ Changes
 1.0a3 (unreleased)
 ------------------
 
+* Pinned all package versions in the generated versions.cfg to the
+  latest released ones.  Especially pinned z3c.recipe.eggbasket to
+  the most recent one, 0.4.1.
+
 
 1.0a2 (2009-01-12)
 ------------------
