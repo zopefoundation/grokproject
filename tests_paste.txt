@@ -216,6 +216,7 @@ first::
     >>> output = read_sh(cmd)
     >>> print output
     Develop: '...'
+    ...
     Updating eggbasket.
     Updating app.
     Updating i18n.
@@ -224,6 +225,7 @@ first::
     Updating test.
     Updating data.
     Updating log.
+    <BLANKLINE>
 
 
 Using the generated `bootstrap` script

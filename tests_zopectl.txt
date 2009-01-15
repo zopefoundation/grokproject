@@ -183,6 +183,7 @@ first::
     >>> output = read_sh(cmd)
     >>> print output
     Develop: '...'
+    ...
     Updating eggbasket.
     Updating app.
     Updating data.
@@ -191,6 +192,7 @@ first::
     The recipe for i18n doesn't define an update method. ...
     i18n: setting up i18n tools
     Updating test.
+    <BLANKLINE>
 
 
 Using the generated `bootstrap` script
