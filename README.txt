@@ -4,8 +4,13 @@ install ``grokproject``::
 
   $ easy_install grokproject
 
-and run the ``grokproject`` script with the name of the project you'd
-like to create as an argument::
+If you have an old version of grokproject installed then you can
+upgrade doing::
+
+  $ easy_install -U grokproject
+
+Afterwards you can run the ``grokproject`` script with the name of the
+project you'd like to create as an argument::
 
   $ grokproject MammothHerd
   ... many lines of output here
