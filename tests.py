@@ -69,6 +69,57 @@ def touch(*args, **kwargs):
     filename = os.path.join(*args)
     open(filename, 'w').write(kwargs.get('data',''))
 
+def shorttests(show_message=False):
+    shorttestfile = os.path.join(
+        os.path.dirname(__file__), 'shorttests')
+    if not show_message:
+        return os.path.exists(shorttestfile)
+    if os.path.exists(shorttestfile):
+        print
+        print "WARNING: running shorttests."
+        print "  This reduces the runtime of testruns by making use of"
+        print "  a once filled eggs directory."
+        print "  If you want clean test runs with an empty eggs directory,"
+        print "  remove the file"
+        print "    " + os.path.join(__file__, 'shorttests')
+        print "  Running shorttests might lead to failing tests. Please run"
+        print "  the full tests before submitting code."
+        print
+    else:
+        print
+        print "NOTE: running full tests."
+        print "  If you want to reuse a prefilled eggs directory between"
+        print "  test runs (which dramatically reduces runtime), create a"
+        print "  file "
+        print "    " + shorttestfile
+        print "  and rerun the tests."
+        print
+    return os.path.exists(shorttestfile)
+
+def maybe_mkdir(path):
+    """Create a directory `path` conditionally.
+
+    If the dir already exists and `shorttest()` is ``True`` we leave
+    the directory untouched.
+
+    Otherwise any old file/directory with path `path` is removed and
+    recreated.
+    """
+    if shorttests() and os.path.isdir(path):
+        return
+    rmdir(path)
+    os.makedirs(path)
+
+def maybe_rmdir(path):
+    """Remove a directory conditionally.
+
+    If `shorttest()` is True, we do not remove the directory.
+    """
+    if shorttests() and os.path.isdir(path):
+        return
+    rmdir(path)
+    
+
 execdir = os.path.abspath(os.path.dirname(sys.executable))
 tempdir = os.getenv('TEMP','/tmp')
 
@@ -98,6 +149,7 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
 
 def test_suite():
     """returns the test suite"""
+    short = shorttests(show_message=True)
     return doc_suite(current_dir)
 
 if __name__ == '__main__':
