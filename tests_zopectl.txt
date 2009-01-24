@@ -11,12 +11,12 @@ Check that the directory does not exist::
 
 Create an empty eggs directory. So we make sure that we don't have to
 care for arbitrary eggs, that were installed in the user's environment
-before::
+before. If a file ``shorttests`` exists in this directory, we do not
+create a new dir but make only sure it exists and leave it untouched::
 
     >>> tempeggs = 'grokexample-eggs'
     >>> eggsdir = os.path.join(tempdir, tempeggs)
-    >>> rmdir(eggsdir)
-    >>> os.makedirs(eggsdir)
+    >>> maybe_mkdir(eggsdir)
 
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
@@ -217,4 +217,4 @@ Clean up::
 
     >>> cd(tempdir)
     >>> rmdir('grokexample')
-    >>> rmdir(eggsdir)
+    >>> maybe_rmdir(eggsdir)
