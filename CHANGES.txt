@@ -4,6 +4,9 @@ Changes
 1.0a3 (unreleased)
 ------------------
 
+* Fix bug https://bugs.launchpad.net/grok/+bug/315214 by supporting
+  faster test runs. See README-shorttests.txt for details.
+
 * Pinned all package versions in the generated versions.cfg to the
   latest released ones.  Especially pinned z3c.recipe.eggbasket to
   the most recent one, 0.4.1.
