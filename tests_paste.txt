@@ -216,6 +216,7 @@ first::
     >>> output = read_sh(cmd)
     >>> print output
     Develop: '...'
+    ...
     Updating eggbasket.
     Updating app.
     Updating i18n.
