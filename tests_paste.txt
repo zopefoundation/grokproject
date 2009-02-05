@@ -34,6 +34,7 @@ Let's check the contents::
     bin
     bootstrap.py
     buildout.cfg
+    cfg_templates
     develop-eggs
     etc
     parts
@@ -72,6 +73,13 @@ Let's check the contents::
     site.zcml
     zdaemon.conf
     zope.conf
+
+In the generated configuration files paths are set to local paths::
+
+    >>> cat(etc_dir, 'zope.conf')
+    # Identify the component configuration used to define the site:
+    site-definition /.../GrokExample/etc/site.zcml
+    ...
 
 The eggs dir is filled now::
 
@@ -216,7 +224,6 @@ first::
     >>> output = read_sh(cmd)
     >>> print output
     Develop: '...'
-    ...
     Updating eggbasket.
     Updating app.
     Updating i18n.
@@ -225,8 +232,12 @@ first::
     Updating test.
     Updating data.
     Updating log.
+    Updating zope_conf.
+    Updating site_zcml.
+    Updating zdaemon_conf.
+    Updating deploy_ini.
+    Updating debug_ini.
     <BLANKLINE>
-
 
 Using the generated `bootstrap` script
 --------------------------------------
