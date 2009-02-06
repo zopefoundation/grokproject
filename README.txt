@@ -26,12 +26,12 @@ the code for your web application.
 To start the application server, execute::
 
   $ cd MammothHerd
-  $ bin/paster serve etc/deploy.ini
+  $ bin/paster serve parts/etc/deploy.ini
   
 There is also an Ajax enabled debugger 
 (point your browser to http://localhost:8080/@@login.html when using this)::
 
-  $ bin/paster serve etc/debug.ini
+  $ bin/paster serve parts/etc/debug.ini
   
 Start/stop it in daemon mode::
 
@@ -57,3 +57,12 @@ or::
 
   $ paster create -t grok MammothHerd zopectl=True
 
+All configuration files used for running Grok can be found in the
+``parts/etc/`` directory of your project. These configuration files
+are generated automatically from the templates in ``etc/`` on each
+``buildout`` run. To modify the configuration files edit the
+approriate templates in ``etc/`` and rerun ``buildout`` afterwards::
+
+  $ bin/buildout
+
+This will rebuild the files in ``parts/etc/``.
