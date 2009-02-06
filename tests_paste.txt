@@ -34,7 +34,6 @@ Let's check the contents::
     bin
     bootstrap.py
     buildout.cfg
-    cfg_templates
     develop-eggs
     etc
     parts
@@ -66,7 +65,7 @@ Let's check the contents::
     python-console...
     test...
 
-    >>> etc_dir = os.path.join(package_dir, 'etc')
+    >>> etc_dir = os.path.join(package_dir, 'parts', 'etc')
     >>> ls(etc_dir)
     debug.ini
     deploy.ini
@@ -89,7 +88,7 @@ The eggs dir is filled now::
 We used a projectname with uppercase letters. This is respected by
 configuration files::
 
-    >>> zope_conf = os.path.join(package_dir, 'etc', 'zope.conf')
+    >>> zope_conf = os.path.join(package_dir, 'parts', 'etc', 'zope.conf')
     >>> print open(zope_conf, 'rb').read()
     # Identify the component configuration used to define the site:
     site-definition ...GrokExample/etc/site.zcml
