@@ -1,9 +1,12 @@
+import codecs
 import os
 import sys
+import sha
 import shutil
 import tempfile
 import pkg_resources
 import logging
+from random import randint
 from paste.script.templates import var
 
 HOME = os.path.expanduser('~')
@@ -45,6 +48,15 @@ eggs-directory = %s
         config_file.write(contents)
         config_file.close()
 
+def get_sha1_encoded_string(passwd):
+    """Encode the given `string` using SHA1.
+    """
+    encoder = codecs.getencoder('utf-8')
+    salt = "%08x" % randint(0, 0xffffffff)
+    # This is apparently a wrong use of salt, but the old SHA1
+    # password manager of `zope.app.authentication` handles it this way.
+    result = salt + sha.new(encoder(passwd)[0]).hexdigest()
+    return result
 
 def get_boolean_value_for_option(vars, option):
     value = vars.get(option.name)
