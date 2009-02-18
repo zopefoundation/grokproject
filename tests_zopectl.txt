@@ -66,6 +66,20 @@ The eggs dir is filled now::
     >>> len(os.listdir(eggsdir)) > 100
     True
 
+The password given is stored SHA1 encoded::
+
+    >>> buildout_cfg = os.path.join(package_dir, 'buildout.cfg')
+    >>> print open(buildout_cfg, 'rb').read()
+    [buildout]
+    ...
+        <principal id="zope.manager"
+                   title="Manager"
+                   login="a"
+                   password_manager="SHA1"
+                   password="...86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"
+                   />
+    ...
+
 
 Using i18n scripts
 ------------------

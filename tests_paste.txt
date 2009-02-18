@@ -106,6 +106,21 @@ version requested::
     # when this project was created.
     ...
 
+The password given is stored SHA1 encoded::
+
+    >>> site_zcml_in = os.path.join(package_dir, 'etc', 
+    ...                             'site.zcml.in')
+    >>> print open(site_zcml_in, 'rb').read()
+    <configure xmlns="http://namespaces.zope.org/zope"
+    ...
+        <principal id="zope.manager"
+                   title="Manager"
+                   login="a"
+                   password_manager="SHA1"
+                   password="...86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"
+                   />
+    ...
+
 
 Using i18n scripts
 ------------------
