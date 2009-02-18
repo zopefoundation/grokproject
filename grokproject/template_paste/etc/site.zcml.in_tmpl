@@ -16,7 +16,7 @@
       <principal id="zope.manager"
                  title="Manager"
                  login=${user}
-                 password_manager="Plain Text"
+                 password_manager="SHA1"
                  password=${passwd}
                  />
 
