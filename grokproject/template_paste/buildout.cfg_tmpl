@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = eggbasket app i18n test data log 
+parts = eggbasket app i18n test data log zpasswd
         zope_conf site_zcml zdaemon_conf deploy_ini debug_ini
 newest = ${newest}
 extends = versions.cfg
@@ -38,6 +38,14 @@ eggs = ${package}
 domain = ${package}
 output = src/${package}/locales
 zcml =
+
+# This section is named so that the zpasswd utility is
+# called `zpasswd`
+[zpasswd]
+recipe = z3c.recipe.dev:script
+eggs = ${egg}
+module = zope.app.server.zpasswd
+method = main
 
 [zope_conf]
 recipe = collective.recipe.template

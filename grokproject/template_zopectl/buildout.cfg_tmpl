@@ -1,6 +1,6 @@
 [buildout]
 develop = .
-parts = eggbasket app data zopectl i18n test
+parts = eggbasket app data zopectl i18n test zpasswd
 newest = ${newest}
 extends = versions.cfg
 # eggs will be installed in the default buildout location
@@ -67,6 +67,14 @@ eggs = ${package}
 domain = ${package}
 output = src/${package}/locales
 zcml =
+
+# This section is named so that the zpasswd utility is
+# called `zpasswd`
+[zpasswd]
+recipe = z3c.recipe.dev:script
+eggs = ${egg}
+module = zope.app.server.zpasswd
+method = main
 
 [eggbasket]
 recipe = z3c.recipe.eggbasket
