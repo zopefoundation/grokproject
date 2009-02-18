@@ -64,6 +64,7 @@ Let's check the contents::
     paster...
     python-console...
     test...
+    zpasswd...
 
     >>> etc_dir = os.path.join(package_dir, 'parts', 'etc')
     >>> ls(etc_dir)
@@ -231,6 +232,7 @@ first::
     Updating test.
     Updating data.
     Updating log.
+    Updating zpasswd.
     Updating zope_conf.
     Updating site_zcml.
     Updating zdaemon_conf.
