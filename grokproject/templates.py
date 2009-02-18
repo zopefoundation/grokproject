@@ -8,6 +8,7 @@ from paste.script.templates import NoDefault
 from grokproject.utils import run_buildout
 from grokproject.utils import ask_var
 from grokproject.utils import get_boolean_value_for_option
+from grokproject.utils import get_sha1_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 from grokproject.utils import required_grok_version
@@ -57,6 +58,7 @@ class GrokProject(templates.Template):
         for name in skipped_vars:
             vars[name] = skipped_vars[name]
 
+        vars['passwd'] = get_sha1_encoded_string(vars['passwd'])            
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
