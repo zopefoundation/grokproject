@@ -4,6 +4,9 @@ Changes
 1.0a3 (unreleased)
 ------------------
 
+* Fix bug https://bugs.launchpad.net/grok/+bug/160196 The initial
+  password is now stored SHA1 encoded.
+
 * Make the `zope.app.server.zpasswd` utility available as a
   commandline tool in bin/.
 
