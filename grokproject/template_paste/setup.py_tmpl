@@ -22,13 +22,14 @@ ${long_description|nothing}""",
                         'grok',
                         'grokui.admin',
                         'z3c.testsetup',
+                        'grokcore.startup',
                         # Add extra requirements here
                         ],
       entry_points = """
       [console_scripts]
-      ${package}-debug = ${package}.startup:interactive_debug_prompt
-      ${package}-ctl = ${package}.startup:zdaemon_controller
+      ${package}-debug = grokcore.startup.startup:interactive_debug_prompt
+      ${package}-ctl = grokcore.startup.startup:zdaemon_controller
       [paste.app_factory]
-      main = ${package}.startup:application_factory
+      main = grokcore.startup:application_factory
       """,
       )

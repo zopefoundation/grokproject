@@ -5,5 +5,3 @@
 
 * Make tests run under Windows
 
-* Paster: should not need to access http://localhost:8080/@@login.html when 
-  running the debug.ini profile

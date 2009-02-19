@@ -28,6 +28,12 @@ Changes
   latest released ones.  Especially pinned z3c.recipe.eggbasket to
   the most recent one, 0.4.1.
 
+* Integrated with grokcore.startup
+  Removed ``startup.py`` from the paster template
+
+* Paster: you need to first access http://localhost:8080/@@login.html 
+  when running the debug.ini profile
+
 
 1.0a2 (2009-01-12)
 ------------------

@@ -49,7 +49,6 @@ Let's check the contents::
     app_templates
     configure.zcml
     ftesting.zcml
-    startup.py
     static
     tests.py
 
