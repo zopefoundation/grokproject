@@ -27,8 +27,8 @@ ${long_description|nothing}""",
                         ],
       entry_points = """
       [console_scripts]
-      ${package}-debug = grokcore.startup.startup:interactive_debug_prompt
-      ${package}-ctl = grokcore.startup.startup:zdaemon_controller
+      ${package}-debug = grokcore.startup:interactive_debug_prompt
+      ${package}-ctl = grokcore.startup:zdaemon_controller
       [paste.app_factory]
       main = grokcore.startup:application_factory
       """,
