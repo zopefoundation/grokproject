@@ -39,6 +39,11 @@ def create_buildout_default_file():
     eggs_dir = os.path.join(default_dir, 'eggs')
     if not os.path.isdir(eggs_dir):
         os.mkdir(eggs_dir)
+    if sys.platform == 'win32':
+        # Fix for paths with spaces on Windows.
+        # See https://bugs.launchpad.net/grok/+bug/315223
+        import win32api
+        eggs_dir = win32api.GetShortPathName(eggs_dir)
     default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
     if not os.path.isfile(default_cfg):
         config_file = open(default_cfg, 'w')
