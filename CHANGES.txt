@@ -38,6 +38,8 @@ Changes
 * Paster: you need to first access http://localhost:8080/@@login.html 
   when running the debug.ini profile
 
+* Fix bug https://bugs.launchpad.net/grok/+bug/332173
+  add middleware to support access logging
 
 1.0a2 (2009-01-12)
 ------------------
