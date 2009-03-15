@@ -21,15 +21,16 @@ site-definition $${buildout:directory}/etc/site.zcml
 <eventlog>
   # This sets up logging to a file.
   # The "path" setting can be a relative or absolute
-  # filesystem path or the tokens STDOUT or STDERR.
+  # filesystem path.
 
   <logfile>
     path $${buildout:directory}/parts/log/z3.log
     formatter zope.exceptions.log.Formatter
   </logfile>
 
-  # This sets up logging to to standard output (STDOUT).
-
+  # This sets up logging to to standard output.
+  # The "path" setting can be the tokens STDOUT or STDERR
+  
 #  <logfile>
 #    path STDOUT
 #    formatter zope.exceptions.log.Formatter
