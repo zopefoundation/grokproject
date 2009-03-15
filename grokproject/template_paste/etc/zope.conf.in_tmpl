@@ -19,8 +19,8 @@ site-definition $${buildout:directory}/etc/site.zcml
 </zodb>
 
 <eventlog>
-  # This sets up logging to both a file and to standard output
-  # (STDOUT).  The "path" setting can be a relative or absolute
+  # This sets up logging to a file.
+  # The "path" setting can be a relative or absolute
   # filesystem path or the tokens STDOUT or STDERR.
 
   <logfile>
@@ -28,10 +28,12 @@ site-definition $${buildout:directory}/etc/site.zcml
     formatter zope.exceptions.log.Formatter
   </logfile>
 
-  <logfile>
-    path STDOUT
-    formatter zope.exceptions.log.Formatter
-  </logfile>
+  # This sets up logging to to standard output (STDOUT).
+
+#  <logfile>
+#    path STDOUT
+#    formatter zope.exceptions.log.Formatter
+#  </logfile>
 </eventlog>
 
 # Comment this line to disable developer mode.  This should be done in
