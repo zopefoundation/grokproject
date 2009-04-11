@@ -277,3 +277,31 @@ Clean up::
     >>> cd(tempdir)
     >>> rmdir('GrokExample')
     >>> maybe_rmdir(eggsdir)
+
+Generate consistent versions.cfg
+--------------------------------
+
+It can happen, that some egg defined in the downloaded versions.cfg
+file (Groks "KGS") is also set in our local versions.cfg
+extensions. In this case we only want to get the version from Grok.
+
+We can show this with the grok 1.0a2 versions.cfg, which includes
+grokui.admin:
+
+    >>> import urllib2
+    >>> url = 'http://grok.zope.org/releaseinfo/grok-1.0a2.cfg'
+    >>> versions_cfg = urllib2.urlopen(url).read()
+    >>> print versions_cfg
+    [versions]
+    ...
+    grokui.admin = ...
+    ...
+
+Normally, grokproject would also include a grokui.admin version
+setting, but after scanning the original versions.cfg, it is skipped:
+
+    >>> from grokproject.utils import extend_versions_cfg
+    >>> additions = extend_versions_cfg(versions_cfg)
+    >>> 'grokui.admin' in additions
+    False
+
