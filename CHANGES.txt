@@ -4,6 +4,10 @@ Changes
 1.0a4 (unreleased)
 ------------------
 
+* Reintroduce ``find-links`` to Zope package index in generated
+  buildout.cfg to avoid problems with z3c.widget and other packages
+  needing packages only hosted on Zope.
+
 * Removed `grokui.admin` from generated versions.cfg. It should be
   pinned down by Groks versions.cfg.
 
