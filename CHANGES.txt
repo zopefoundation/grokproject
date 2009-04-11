@@ -4,8 +4,8 @@ Changes
 1.0a4 (unreleased)
 ------------------
 
-* Updated versions of `grokui.admin` in versions.cfg templates. Use
-  0.3.2 from now on.
+* Removed `grokui.admin` from generated versions.cfg. It should be
+  pinned down by Groks versions.cfg.
 
 
 1.0a3 (2009-04-03)
