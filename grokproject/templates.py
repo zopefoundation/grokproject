@@ -12,6 +12,7 @@ from grokproject.utils import get_sha1_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 from grokproject.utils import required_grok_version
+from grokproject.utils import extend_versions_cfg
 
 GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 
@@ -63,8 +64,11 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
-        
+
+        create_zopectl = False
         if vars.get('zopectl','') == 'True':
+            create_zopectl = True
+        if create_zopectl:
             self._template_dir = 'template_zopectl'
 
         # Handling the version.cfg file.
@@ -80,6 +84,10 @@ class GrokProject(templates.Template):
         version_info_url = urlparse.urljoin(GROK_RELEASE_URL, cfg_filename)
         vars['version_info_url'] = version_info_url
         vars['version_info_file_contents'] = self.download(version_info_url)
+
+        # Maybe add additional eggs...
+        vars['version_info_additions'] = extend_versions_cfg(
+            vars['version_info_file_contents'], create_zopectl)
 
         # Which grok version are we depending on?
         version = required_grok_version(vars['version_info_file_contents'])
@@ -102,7 +110,7 @@ class GrokProject(templates.Template):
                 os.getcwd(), vars['project']))
         
         return vars
-
+    
     def download(self, url):
         """Downloads a file and returns the contents.
 
