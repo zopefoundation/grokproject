@@ -2,6 +2,7 @@
 develop = .
 parts = eggbasket app data zopectl i18n test zpasswd
 newest = ${newest}
+find-links = http://download.zope.org/distribution/
 extends = versions.cfg
 # eggs will be installed in the default buildout location
 # (see .buildout/default.cfg in your home directory)
