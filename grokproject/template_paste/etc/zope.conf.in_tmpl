@@ -1,5 +1,5 @@
 # Identify the component configuration used to define the site:
-site-definition $${buildout:directory}/etc/site.zcml
+site-definition $${site_zcml:output}
 
 <zodb>
   # Standard Filestorage
