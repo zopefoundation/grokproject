@@ -4,6 +4,8 @@ Changes
 1.0a4 (unreleased)
 ------------------
 
+* Fixed wrong site-definition path in generated zope.conf.
+
 * Fix bug https://bugs.launchpad.net/grok/+bug/358719
   Backslashes in Windows paths are now quoted in Python expressions in
   configuration .ini files. Patches, testing and solutions from Ben
