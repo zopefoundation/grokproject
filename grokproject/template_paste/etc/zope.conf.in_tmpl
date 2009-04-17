@@ -4,7 +4,7 @@ site-definition $${buildout:directory}/etc/site.zcml
 <zodb>
   # Standard Filestorage
   <filestorage>
-    path ${data:path}
+    path $${data:path}
   </filestorage>
 
 # Uncomment this if you want to connect to a ZEO server instead:
