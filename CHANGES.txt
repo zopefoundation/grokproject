@@ -4,6 +4,11 @@ Changes
 1.0a4 (unreleased)
 ------------------
 
+* Fix bug https://bugs.launchpad.net/grok/+bug/358719
+  Backslashes in Windows paths are now quoted in Python expressions in
+  configuration .ini files. Patches, testing and solutions from Ben
+  Dadsetan and Roger Erens.
+
 * Add filter to include only eggs in generated versions.cfg that are
   not already provided by a downloaded grok KGS.
 
