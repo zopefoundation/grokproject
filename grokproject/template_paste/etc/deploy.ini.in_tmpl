@@ -27,7 +27,8 @@ formatter = generic
 
 [handler_accesslog]
 class = FileHandler
-args = ('$${buildout:directory}/parts/log/access.log','a')
+args = (os.path.join(r'$${buildout:directory}', 'parts', 'log', 'access.log'),
+        'a')
 level = INFO
 formatter = accesslog
 
