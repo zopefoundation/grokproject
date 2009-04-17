@@ -77,7 +77,7 @@ In the generated configuration files paths are set to local paths::
 
     >>> cat(etc_dir, 'zope.conf')
     # Identify the component configuration used to define the site:
-    site-definition /.../GrokExample/etc/site.zcml
+    site-definition /.../GrokExample/parts/etc/site.zcml
     ...
 
 The eggs dir is filled now::
@@ -91,7 +91,7 @@ configuration files::
     >>> zope_conf = os.path.join(package_dir, 'parts', 'etc', 'zope.conf')
     >>> print open(zope_conf, 'rb').read()
     # Identify the component configuration used to define the site:
-    site-definition ...GrokExample/etc/site.zcml
+    site-definition ...GrokExample/parts/etc/site.zcml
     ...
 
 We used the ``--grokversion`` parameter. Therefore we got the Grok
