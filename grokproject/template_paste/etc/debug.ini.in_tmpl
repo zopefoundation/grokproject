@@ -1,4 +1,7 @@
-# $${buildout:directory}/parts/log/
+# debug.ini
+#
+# Debugging configuration for use with paster/WSGI
+#
 
 [loggers]
 keys = root, wsgi
