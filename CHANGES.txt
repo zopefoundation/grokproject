@@ -4,6 +4,9 @@ Changes
 1.0a5 (unreleased)
 ------------------
 
+* Increased z3c.recipe.i18n version to use: 0.5.3 does not emit any
+  warnings any more when being installed.
+
 
 1.0a4 (2009-04-17)
 ------------------
