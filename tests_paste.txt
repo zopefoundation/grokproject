@@ -241,7 +241,6 @@ first::
     Updating eggbasket.
     Updating app.
     Updating i18n.
-    The recipe for i18n doesn't define an update method. Using its install method.
     i18n: setting up i18n tools
     Updating test.
     Updating data.

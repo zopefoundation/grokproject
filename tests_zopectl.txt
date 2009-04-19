@@ -203,7 +203,6 @@ first::
     Updating data.
     Updating zopectl.
     Updating i18n.
-    The recipe for i18n doesn't define an update method. ...
     i18n: setting up i18n tools
     Updating test.
     Updating zpasswd.
