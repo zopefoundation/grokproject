@@ -7,6 +7,10 @@ Changes
 * Increased z3c.recipe.i18n version to use: 0.5.3 does not emit any
   warnings any more when being installed.
 
+* Assert that project names are valid python identifiers
+  https://bugs.launchpad.net/bugs/223560
+  https://bugs.launchpad.net/bugs/373592
+  
 
 1.0a4 (2009-04-17)
 ------------------

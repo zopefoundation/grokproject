@@ -2,8 +2,10 @@ import sys
 import pkg_resources
 from paste.script import command
 import optparse
+import re
 from grokproject import GrokProject
 
+project_name_re=re.compile('[a-zA-Z_][a-zA-Z0-9_]*')
 
 def main():
     usage = "usage: %prog [options] PROJECT"
@@ -64,6 +66,16 @@ def main():
         extra_args.append('zopectl=True')
     if options.grokversion:
         extra_args.append('grokversion=%s' % options.grokversion)
+
+    # Assert that the project name is a valid Python identifier
+    if not (project_name_re.match(project).group() == project):
+        print
+        print "Error: The chosen project name is not a invalid " \
+              "package name: %s." % project
+        print "Please choose a different project name."
+        sys.exit(1)
+
+    # Create the project
     exit_code = runner.run(option_args + ['-t', 'grok', project]
                            + extra_args)
     sys.exit(exit_code)
