@@ -4,6 +4,10 @@ Changes
 1.0a5 (unreleased)
 ------------------
 
+* Added two packages to the pinned versions in generated projects:
+  z3c.recipe.dev = 0.5.3
+  zc.lockfile = 1.0.0
+
 * Using the just released z3c.recipe.eggbasket 0.4.2 in the generated
   projects.
 
