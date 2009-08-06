@@ -2,7 +2,14 @@
 develop = .
 parts = eggbasket app data zopectl i18n test zpasswd
 newest = ${newest}
-find-links = http://download.zope.org/distribution/
+
+# Comment the following line in, if you need megrok.forms or other
+# eggs only found in this package index. Beware also, that you will
+# get non-official builds of other packages. Using the Zope package
+# index is therefore deprecated.
+
+# find-links = http://download.zope.org/distribution/
+
 extends = versions.cfg
 # eggs will be installed in the default buildout location
 # (see .buildout/default.cfg in your home directory)
