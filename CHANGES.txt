@@ -2,7 +2,9 @@ Changes
 =======
 
 1.0a5 (not released)
-------------------
+--------------------
+
+* Commented ``find-links`` out in `buildout.cfg`.
 
 * Added two packages to the pinned versions in generated projects:
   z3c.recipe.dev = 0.5.3
