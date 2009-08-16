@@ -4,8 +4,8 @@ Changes
 1.0a5 (not released)
 --------------------
 
-* Added (commented) example config for blob-storage in paster
-  template's `zope.conf.in`.
+* Added blob-storage in paster template's `zope.conf.in`. Blob-storage
+  is enabled by default.
 
 * Commented ``find-links`` out in `buildout.cfg`.
 
