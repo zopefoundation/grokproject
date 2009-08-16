@@ -27,6 +27,7 @@ eggs = ${egg}
        PasteDeploy
 interpreter = python-console
 
+# See etc/zope.conf.in if you want to enable a blob storage.
 [data]
 recipe = zc.recipe.filestorage
 
