@@ -4,6 +4,9 @@ Changes
 1.0a5 (not released)
 --------------------
 
+* Added (commented) example config for blob-storage in paster
+  template's `zope.conf.in`.
+
 * Commented ``find-links`` out in `buildout.cfg`.
 
 * Added two packages to the pinned versions in generated projects:
