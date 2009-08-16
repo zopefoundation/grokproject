@@ -2,10 +2,18 @@
 site-definition $${site_zcml:output}
 
 <zodb>
-  # Standard Filestorage
-  <filestorage>
-    path $${data:path}
-  </filestorage>
+  # Standard blob storage
+  <blobstorage>
+    blob-dir $${buildout:parts-directory}/blobs
+    <filestorage>
+      path $${data:path}
+    </filestorage>
+  </blobstorage>
+
+# Uncomment this if you want a blob-less standard file storage instead:
+#  <filestorage>
+#    path $${data:path}
+#  </filestorage>
 
 # Uncomment this if you want to connect to a ZEO server instead:
 #  <zeoclient>
@@ -16,15 +24,6 @@ site-definition $${site_zcml:output}
 #    # Uncomment to have a persistent disk cache
 #    #client zeo1
 #  </zeoclient>
-
-# Uncomment this if you want to enable a blob storage (and comment out
-# standard filestorage above):
-#  <blobstorage>
-#    <filestorage>
-#      path $${data:path}
-#    </filestorage>
-#    blob-dir = $${data:path}/blobs
-#  </blobstorage>
 
 </zodb>
 
