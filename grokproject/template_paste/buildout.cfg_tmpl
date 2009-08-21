@@ -57,27 +57,27 @@ module = zope.app.server.zpasswd
 method = main
 
 [zope_conf]
-recipe = z3c.recipe.template
+recipe = collective.recipe.template
 input = etc/zope.conf.in
 output = $${buildout:parts-directory}/etc/zope.conf
 
 [site_zcml]
-recipe = z3c.recipe.template
+recipe = collective.recipe.template
 input = etc/site.zcml.in
 output = $${buildout:parts-directory}/etc/site.zcml
 
 [zdaemon_conf]
-recipe = z3c.recipe.template
+recipe = collective.recipe.template
 input = etc/zdaemon.conf.in
 output = $${buildout:parts-directory}/etc/zdaemon.conf
 
 [deploy_ini]
-recipe = z3c.recipe.template
+recipe = collective.recipe.template
 input = etc/deploy.ini.in
 output = $${buildout:parts-directory}/etc/deploy.ini
 
 [debug_ini]
-recipe = z3c.recipe.template
+recipe = collective.recipe.template
 input = etc/debug.ini.in
 output = $${buildout:parts-directory}/etc/debug.ini
 
