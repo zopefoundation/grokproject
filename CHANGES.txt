@@ -4,6 +4,10 @@ Changes
 1.0a5 (not released)
 --------------------
 
+* The var/ directory is now used for var/filestorage, var/blobstorage and
+  var/log instead of storing all that in the parts/ directory.  This matches
+  expectations of most users: parts/ can be rebuild, var/ must be backed up.
+
 * Added blob-storage in paster template's `zope.conf.in`. Blob-storage
   is enabled by default.
 

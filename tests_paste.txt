@@ -39,6 +39,7 @@ Let's check the contents::
     parts
     setup.py
     src
+    var
     versions.cfg
 
     >>> software_dir = os.path.join(package_dir, 'src', 'grokexample')

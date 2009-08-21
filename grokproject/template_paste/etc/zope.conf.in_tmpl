@@ -4,15 +4,15 @@ site-definition $${site_zcml:output}
 <zodb>
   # Standard blob storage
   <blobstorage>
-    blob-dir $${buildout:parts-directory}/blobs
+    blob-dir $${zope_conf:blobstorage}
     <filestorage>
-      path $${data:path}
+      path $${zope_conf:filestorage}
     </filestorage>
   </blobstorage>
 
 # Uncomment this if you want a blob-less standard file storage instead:
 #  <filestorage>
-#    path $${data:path}
+#       path $${zope_conf:filestorage}
 #  </filestorage>
 
 # Uncomment this if you want to connect to a ZEO server instead:
@@ -33,7 +33,7 @@ site-definition $${site_zcml:output}
   # filesystem path.
 
   <logfile>
-    path $${buildout:directory}/parts/log/z3.log
+    path $${zope_conf:logfiles}/z3.log
     formatter zope.exceptions.log.Formatter
   </logfile>
 
@@ -49,3 +49,7 @@ site-definition $${site_zcml:output}
 # Comment this line to disable developer mode.  This should be done in
 # production
 devmode on
+
+# Extra configuration lines can be added to zope_conf's extra option. Put for 
+# instance productconf sections in here.
+$${zope_conf:extra}
