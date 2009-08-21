@@ -6,7 +6,7 @@ site-definition $${site_zcml:output}
   <blobstorage>
     blob-dir $${zope_conf:blobstorage}
     <filestorage>
-      path $${zope_conf:filestorage}
+      path $${zope_conf:filestorage}/Data.fs
     </filestorage>
   </blobstorage>
 
