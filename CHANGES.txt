@@ -11,13 +11,13 @@ Changes
 * Added blob-storage in paster template's `zope.conf.in`. Blob-storage
   is enabled by default.
 
-* Commented ``find-links`` out in `buildout.cfg`.
+* Removed ``find-links`` from `buildout.cfg`.
 
 * Added two packages to the pinned versions in generated projects:
   z3c.recipe.dev = 0.5.3
   zc.lockfile = 1.0.0
 
-* Using the just released z3c.recipe.eggbasket 0.4.2 in the generated
+* Using the just released z3c.recipe.eggbasket 0.4.3 in the generated
   projects.
 
 * Increased z3c.recipe.i18n version to use: 0.5.3 does not emit any
