@@ -12,6 +12,10 @@ parts =
     zdaemon_conf
     deploy_ini
     debug_ini
+    # For backward compatibility, telling buildout not to throw away
+    # the data and log subdirectories from the parts directory.
+    data
+    log
 newest = ${newest}
 
 extends = versions.cfg
@@ -69,6 +73,16 @@ logfiles = $${buildout:directory}/var/log
 extra =
 # 'extra' is copied verbatim. Use it for product config sections and so.
 
+# The [data] and [log] parts are still in here to instruct buildout to not
+# unintentionally throw away the parts/data and parts/log subdirectories
+# that contain the Data.fs and the log files. These files should be
+# copied to the new locations. See the upgrade notes for more information.
+[data]
+recipe = zc.recipe.filestorage
+
+[log]
+recipe = zc.recipe.filestorage
+
 [site_zcml]
 recipe = collective.recipe.template
 input = etc/site.zcml.in
@@ -88,7 +102,6 @@ output = $${buildout:parts-directory}/etc/deploy.ini
 recipe = collective.recipe.template
 input = etc/debug.ini.in
 output = $${buildout:parts-directory}/etc/debug.ini
-
 
 [eggbasket]
 recipe = z3c.recipe.eggbasket
