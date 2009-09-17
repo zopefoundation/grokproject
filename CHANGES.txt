@@ -1,8 +1,8 @@
 Changes
 =======
 
-1.0b1 (not released)
---------------------
+1.0b1 (2009-09-17)
+------------------
 
 * The var/ directory is now used for var/filestorage, var/blobstorage and
   var/log instead of storing all that in the parts/ directory.  This matches
