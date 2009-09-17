@@ -70,7 +70,7 @@ def main():
     # Assert that the project name is a valid Python identifier
     if not (project_name_re.match(project).group() == project):
         print
-        print "Error: The chosen project name is not a invalid " \
+        print "Error: The chosen project name is not a valid " \
               "package name: %s." % project
         print "Please choose a different project name."
         sys.exit(1)
