@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.0a5 (not released)
+1.0b1 (not released)
 --------------------
 
 * The var/ directory is now used for var/filestorage, var/blobstorage and
@@ -26,7 +26,7 @@ Changes
 * Assert that project names are valid python identifiers
   https://bugs.launchpad.net/bugs/223560
   https://bugs.launchpad.net/bugs/373592
-  
+
 * Generate the site.zcml containing the new default permission for grok.
   grok.View is now the default view instead of zope.Public.
 
@@ -88,7 +88,7 @@ Changes
 * Integrated with grokcore.startup
   Removed ``startup.py`` from the paster template
 
-* Paster: you need to first access http://localhost:8080/@@login.html 
+* Paster: you need to first access http://localhost:8080/@@login.html
   when running the debug.ini profile
 
 * Fix bug https://bugs.launchpad.net/grok/+bug/332173
