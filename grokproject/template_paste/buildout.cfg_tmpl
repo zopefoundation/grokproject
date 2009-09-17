@@ -12,8 +12,8 @@ parts =
     zdaemon_conf
     deploy_ini
     debug_ini
-    # For backward compatibility, telling buildout not to throw away
-    # the data and log subdirectories from the parts directory.
+# For backward compatibility, telling buildout not to throw away
+# the data and log subdirectories from the parts directory.
     data
     log
 newest = ${newest}
