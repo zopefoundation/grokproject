@@ -20,10 +20,12 @@ directory exists already, then we leave it untouched::
 
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
-    >>> paster = current_dir + '/bin/paster create -t grok '
-    >>> sh(paster + 'GrokExample user=a passwd=a '
-    ...    'grokversion=0.14.1 eggs_dir=%s --no-interactive' % eggsdir)
-    /.../bin/paster create -t grok GrokExample user=a passwd=a ...
+    >>> paster = current_dir + '/bin/paster'
+    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=0.14.1'
+    >>> sh([paster] + parms.split() +
+    ...    ['eggs_dir=%s' % eggsdir, '--no-interactive'])
+    ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 
+     'user=a', 'passwd=a', ...
     ...
 
 Let's check the contents::
@@ -237,21 +239,22 @@ first::
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
-    >>> print output
+    >>> print output # doctest: +REPORT_UDIFF
     Develop: ...
     Updating eggbasket.
     Updating app.
     Updating i18n.
     i18n: setting up i18n tools
     Updating test.
-    Updating data.
-    Updating log.
-    Updating zpasswd.
-    Updating zope_conf.
     Updating site_zcml.
+    Updating zope_conf.
+    Updating mkdirs.
+    Updating zpasswd.
     Updating zdaemon_conf.
     Updating deploy_ini.
     Updating debug_ini.
+    Updating data.
+    Updating log.
     <BLANKLINE>
 
 Using the generated `bootstrap` script
@@ -263,8 +266,7 @@ has to be called with a Python interpreter::
 
     >>> import sys
     >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
-    >>> cmd = "%s %s" % (sys.executable, cmd_arg)
-    >>> output = read_sh(cmd)
+    >>> output = read_sh([sys.executable, cmd_arg])
     >>> print output
     Develop: '...'
     Installing 'z3c.recipe.eggbasket'.

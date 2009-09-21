@@ -12,8 +12,9 @@ import doctest
 import sys
 import os
 import shutil
-import popen2
 import StringIO
+import subprocess
+import tempfile
 
 from zope.testing import doctest
 
@@ -24,22 +25,21 @@ def rmdir(*args):
     if os.path.isdir(dirname):
         shutil.rmtree(dirname)
 
-def read_sh(cmd):
-    _cmd = cmd
-    old = sys.stdout
-    child_stdout_and_stderr, child_stdin = popen2.popen4(_cmd)
-    child_stdin.close()
-    return child_stdout_and_stderr.read()
+## FIXME - check for other platforms
+MUST_CLOSE_FDS = not sys.platform.startswith('win')
+
+def read_sh(command, input=None):
+    p = subprocess.Popen(command,
+                         stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT,
+                         close_fds=MUST_CLOSE_FDS)
+    out, err_ = p.communicate(input)
+    return out
 
 def sh(cmd):
-    _cmd = cmd
     print cmd
-    # launch command 2 times to see what append and be able
-    # to test in doc tests
-    os.system(_cmd)
-    child_stdout_and_stderr, child_stdin = popen2.popen4(_cmd)
-    child_stdin.close()
-    print child_stdout_and_stderr.read()
+    print read_sh(cmd)
 
 def ls(*args):
     dirname = os.path.join(*args)
@@ -123,6 +123,12 @@ def maybe_rmdir(path):
 execdir = os.path.abspath(os.path.dirname(sys.executable))
 tempdir = os.getenv('TEMP','/tmp')
 
+DOCTEST_FILES='''
+tests_zopectl.txt
+tests_paste.txt
+tests_alternative_release_url.txt
+'''.strip().split('\n')
+
 def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     """Returns a test suite, based on doctests found in /doctest."""
     suite = []
@@ -135,9 +141,8 @@ def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
     if package_dir not in sys.path:
         sys.path.append(package_dir)
 
-    docs = [os.path.join(package_dir, 'tests_zopectl.txt'),
-            os.path.join(package_dir, 'tests_paste.txt'),
-            ]
+    docs = [os.path.join(package_dir, filename)
+            for filename in DOCTEST_FILES]
 
     for test in docs:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,
