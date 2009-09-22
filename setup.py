@@ -10,7 +10,7 @@ setup(
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='https://launchpad.net/grok',
-    download_url='svn://svn.zope.org/repos/main/grokproject/trunk#egg=grokproject-dev',
+    download_url='http://pypi.python.org/pypi/grokproject',
     description="""
     Script that sets up a grok project directory, installs Zope 3 and grok and
     creates a template for a grok application.""",
