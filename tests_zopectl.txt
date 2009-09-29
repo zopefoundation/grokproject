@@ -20,10 +20,13 @@ create a new dir but make only sure it exists and leave it untouched::
 
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
-    >>> paster = current_dir + '/bin/paster create -t grok '
-    >>> sh(paster + 'grokexample user=a passwd=a zopectl=True '
-    ...    'eggs_dir=%s --no-interactive' % eggsdir)
-    /.../bin/paster create -t grok grokexample user=a passwd=a zopectl=True ...
+    >>> paster = current_dir + '/bin/paster'
+    >>> pasterparams = ('create -t grok grokexample user=a passwd=a '
+    ...                 'zopectl=True')
+    >>> sh([paster] + pasterparams.split() +
+    ...    ['eggs_dir=%s' % eggsdir, '--no-interactive'])
+    ['/.../bin/paster', 'create', '-t', 'grok', 'grokexample', 
+     'user=a', 'passwd=a', 'zopectl=True', ...
     ...
 
 Let's check the contents::
@@ -218,8 +221,7 @@ has to be called with a Python interpreter::
 
     >>> import sys
     >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
-    >>> cmd = "%s %s" % (sys.executable, cmd_arg)
-    >>> output = read_sh(cmd)
+    >>> output = read_sh([sys.executable, cmd_arg])
     >>> print output
     Develop: '...'
     Installing 'z3c.recipe.eggbasket'.

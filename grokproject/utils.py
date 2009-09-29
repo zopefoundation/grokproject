@@ -174,7 +174,7 @@ def extend_versions_cfg(versions_cfg, for_zopectl=False):
     """Add additional package versions for versions.cfg.
     
     We only add eggs that are not already included in versions.cfg
-    fetched from grok.zope.org/releaseinfo.
+    fetched from the release info URL (usually grok.zope.org/releaseinfo).
     """
     here = os.path.dirname(__file__)
     if for_zopectl:
