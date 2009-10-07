@@ -4,7 +4,9 @@ Changes
 1.0 (unreleased)
 ----------------
 
-* ...
+* The ``debug.ini`` file now by default configures the Unuathorized
+  exception to not to be reraised. This will make sure Zope's authentication
+  mechanism keep working when using the ``z3c.evalexception`` middleware.
 
 1.0b1 (2009-09-17)
 ------------------
