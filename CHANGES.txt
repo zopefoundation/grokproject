@@ -4,7 +4,10 @@ Changes
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+* Pinned down zc.zope3recipes for zopectl-driven installs. The more
+  recent versions of zc.zope3recipes require zc.recipe.egg >= 1.2.0
+  which we currently do not support. As a result zctl-builds could
+  fail due to unmet version constraints.
 
 
 1.0b1 (2009-09-17)
