@@ -22,6 +22,7 @@ Then use paster. Eggs are placed in our freshly created eggs directory::
 
     >>> paster = current_dir + '/bin/paster'
     >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=0.14.1'
+    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=1.0'
     >>> sh([paster] + parms.split() +
     ...    ['eggs_dir=%s' % eggsdir, '--no-interactive'])
     ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 
@@ -104,7 +105,7 @@ version requested::
     >>> print open(versions_cfg, 'rb').read()
     # This file contains a list of versions of the various grok modules that
     # belong together.
-    # It was downloaded from http://grok.zope.org/releaseinfo/grok-0.14.1.cfg
+    # It was downloaded from http://grok.zope.org/releaseinfo/grok-...cfg
     # when this project was created.
     ...
 
@@ -268,6 +269,7 @@ has to be called with a Python interpreter::
     >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
     >>> output = read_sh([sys.executable, cmd_arg])
     >>> print output
+    Generated script '.../GrokExample/bin/buildout'.
     Develop: '...'
     Installing 'z3c.recipe.eggbasket'.
     ...
