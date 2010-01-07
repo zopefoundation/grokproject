@@ -30,11 +30,12 @@
 
   <grant 
       permission="zope.View"
-      principal="zope.Authenticated"
+      principal="zope.Everybody"
       />
-  <grant
-      permission="zope.View"
-      principal="zope.anybody"
+
+  <grant 
+      permission="zope.app.dublincore.view"
+      principal="zope.Everybody"
       />
 
   <principal
