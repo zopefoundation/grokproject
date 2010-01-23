@@ -8,7 +8,7 @@ setup(name=${repr(project)},
       long_description="""\
 ${long_description|nothing}""",
       # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
-      classifiers=[], 
+      classifiers=[],
       keywords=${repr(keywords)|empty},
       author=${repr(author)|empty},
       author_email=${repr(author_email)|empty},
@@ -31,5 +31,6 @@ ${long_description|nothing}""",
       ${package}-ctl = grokcore.startup:zdaemon_controller
       [paste.app_factory]
       main = grokcore.startup:application_factory
+      debug = grokcore.startup:debug_application_factory
       """,
       )
