@@ -221,10 +221,10 @@ has to be called with a Python interpreter::
 
     >>> import sys
     >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
-    >>> output = read_sh([sys.executable, cmd_arg])
+    >>> output = "OUTPUT:\n" + read_sh([sys.executable, cmd_arg])
     >>> print output
-    Generated script '/.../bin/buildout'.
-    Develop: '...'
+    OUTPUT:
+    ...
     Installing 'z3c.recipe.eggbasket'.
     ...
     Now you can run 'bin/buildout'
