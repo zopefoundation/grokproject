@@ -1,8 +1,8 @@
 Changes
 =======
 
-1.1 (unreleased)
-----------------
+1.0.1 (2010-01-24)
+------------------
 
 * Fix bug https://bugs.launchpad.net/grok/+bug/487561 Granted
   ``zope.View`` and ``zope.app.dublincore.view`` permissions for all
