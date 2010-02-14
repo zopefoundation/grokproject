@@ -4,6 +4,10 @@ Changes
 1.0.3 (unreleased)
 ------------------
 
+* Pin zope.app.container 3.8.1 and zope.app.folder 3.5.1 for project
+  created with Grok 1.0 KGS (those packages were not pinned in the released
+  versions.cfg).
+
 * For Python 2.5 and 2.6, use hashlib module instead of the deprecated
   sha module in Python 2.6.
 
