@@ -1,13 +1,17 @@
 import codecs
 import os
 import sys
-import sha
 import shutil
 import tempfile
 import pkg_resources
 import logging
 from random import randint
 from paste.script.templates import var
+
+try:
+    from hashlib import sha1
+except ImportError:
+    from sha import sha as sha1
 
 HOME = os.path.expanduser('~')
 
@@ -60,7 +64,7 @@ def get_sha1_encoded_string(passwd):
     salt = "%08x" % randint(0, 0xffffffff)
     # This is apparently a wrong use of salt, but the old SHA1
     # password manager of `zope.app.authentication` handles it this way.
-    result = salt + sha.new(encoder(passwd)[0]).hexdigest()
+    result = salt + sha1(encoder(passwd)[0]).hexdigest()
     return result
 
 def get_boolean_value_for_option(vars, option):
