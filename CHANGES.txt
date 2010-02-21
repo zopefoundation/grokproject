@@ -4,6 +4,10 @@ Changes
 1.0.3 (unreleased)
 ------------------
 
+* Fix bug https://bugs.launchpad.net/grok/+bug/524000
+  Firsttime-user problem on win32: grokproject didn't work if no
+  .buildout/default.cfg existed and user had no pywin32 already installed.
+
 * Pin zope.app.container 3.8.1 and zope.app.folder 3.5.1 for project
   created with Grok 1.1a2 KGS (those packages were not pinned in the released
   versions.cfg).
