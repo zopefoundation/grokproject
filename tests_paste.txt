@@ -22,7 +22,7 @@ Then use paster. Eggs are placed in our freshly created eggs directory::
 
     >>> paster = current_dir + '/bin/paster'
     >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=0.14.1'
-    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=1.0'
+    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=1.1a2'
     >>> sh([paster] + parms.split() +
     ...    ['eggs_dir=%s' % eggsdir, '--no-interactive'])
     ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 
