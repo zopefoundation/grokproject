@@ -124,7 +124,6 @@ execdir = os.path.abspath(os.path.dirname(sys.executable))
 tempdir = os.getenv('TEMP','/tmp')
 
 DOCTEST_FILES='''
-tests_zopectl.txt
 tests_paste.txt
 tests_alternative_release_url.txt
 '''.strip().split('\n')

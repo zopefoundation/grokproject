@@ -75,12 +75,6 @@ class GrokProject(templates.Template):
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
 
-        create_zopectl = False
-        if vars.get('zopectl','') == 'True':
-            create_zopectl = True
-        if create_zopectl:
-            self._template_dir = 'template_zopectl'
-
         # Handling the version.cfg file.
         print "Downloading info about versions..."
         version = vars.get('grokversion', 'current')
@@ -97,7 +91,7 @@ class GrokProject(templates.Template):
 
         # Maybe add additional eggs...
         vars['version_info_additions'] = extend_versions_cfg(
-            vars['version_info_file_contents'], create_zopectl)
+            vars['version_info_file_contents'])
 
         # Which grok version are we depending on?
         version = required_grok_version(vars['version_info_file_contents'])
