@@ -4,6 +4,11 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
+* No longer build the zdaemon ctl. 
+
+* Projects created will use the #main and #debug entry points now defined
+  in grokcore.startup.
+
 * The application specific version pins are now in Grok's versions cfg.
 
 * Remove '--zopectl' option. Paster setups are now the only supported

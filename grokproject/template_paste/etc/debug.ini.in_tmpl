@@ -53,7 +53,7 @@ use = egg:z3c.evalexception#ajax
 next = zope
 
 [app:zope]
-use = egg:${egg}#debug
+use = egg:grokcore.startup#debug
 filter-with = translogger
 exempt-exceptions = zope.security.interfaces.IUnauthorized
 

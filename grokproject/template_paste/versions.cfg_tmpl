@@ -4,7 +4,3 @@
 # when this project was created.
 
 ${version_info_file_contents}
-
-# Here we pin the recipes and other packages that are not in the
-# downloaded versions.cfg of grok
-${version_info_additions}
