@@ -4,10 +4,11 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
+* The application specific version pins are now in Grok's versions cfg.
+
 * Remove '--zopectl' option. Paster setups are now the only supported
   method to create new projects.
   Fix bug https://bugs.launchpad.net/grok/+bug/524262
-
 
 1.0.3 (2010-02-21)
 ------------------

@@ -12,7 +12,6 @@ from grokproject.utils import get_sha1_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 from grokproject.utils import required_grok_version
-from grokproject.utils import extend_versions_cfg
 
 GROK_RELEASE_URL_DEFAULT = 'http://grok.zope.org/releaseinfo/'
 
@@ -88,10 +87,6 @@ class GrokProject(templates.Template):
         version_info_url = urlparse.urljoin(grok_release_url, cfg_filename)
         vars['version_info_url'] = version_info_url
         vars['version_info_file_contents'] = self.download(version_info_url)
-
-        # Maybe add additional eggs...
-        vars['version_info_additions'] = extend_versions_cfg(
-            vars['version_info_file_contents'])
 
         # Which grok version are we depending on?
         version = required_grok_version(vars['version_info_file_contents'])

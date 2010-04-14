@@ -173,30 +173,3 @@ def required_grok_version(versionfile):
         if line.startswith('grok ='):
             return line.split(' ')[-1]
 
-
-def extend_versions_cfg(versions_cfg):
-    """Add additional package versions for versions.cfg.
-    
-    We only add eggs that are not already included in versions.cfg
-    fetched from the release info URL (usually grok.zope.org/releaseinfo).
-    """
-    here = os.path.dirname(__file__)
-    additional_eggs = open(
-        os.path.join(here, 'ext_eggs.cfg'), 'rb').read()
-        
-    # Create a list of already pinned eggs...
-    pinned = list()
-    for line in versions_cfg.split('\n'):
-        if not " " in line:
-            continue
-        pinned.append(line.split(' ')[0].strip())
-
-    result = ''
-    for line in additional_eggs.split('\n'):
-        if ' ' in line:
-            if line.split(' ')[0].strip() in pinned:
-                # Skip eggs already in versions.cfg...
-                continue
-            pass
-        result += '%s\n' % line
-    return result
