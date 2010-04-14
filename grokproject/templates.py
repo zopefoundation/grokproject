@@ -17,7 +17,7 @@ GROK_RELEASE_URL_DEFAULT = 'http://grok.zope.org/releaseinfo/'
 
 
 class GrokProject(templates.Template):
-    _template_dir = 'template_paste'
+    _template_dir = 'template'
     summary = "A grok project"
     required_templates = []
 
