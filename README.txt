@@ -28,15 +28,14 @@ To start the application server, execute::
   $ cd MammothHerd
   $ bin/paster serve parts/etc/deploy.ini
   
+Start/stop it in daemon mode::
+
+  $ bin/paster serve parts/etc/deploy.ini --daemon
+  
 There is also an Ajax enabled debugger 
 (point your browser to http://localhost:8080/@@login.html when using this)::
 
   $ bin/paster serve parts/etc/debug.ini
-  
-Start/stop it in daemon mode::
-
-  $ bin/mammothherd-ctl start
-  $ bin/mammothherd-ctl stop
   
 Start the debugger::
 
@@ -47,15 +46,6 @@ paster template.  So instead of running the ``grokproject`` command,
 you can also run::
 
   $ paster create -t grok MammotHerd
-
-To create a project with the previous ``zopectl`` layout run the ``grokproject`` 
-script like::
-
-  $ grokproject --zopectl MammothHerd
-
-or::
-
-  $ paster create -t grok MammothHerd zopectl=True
 
 All configuration files used for running Grok can be found in the
 ``parts/etc/`` directory of your project. These configuration files
