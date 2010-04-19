@@ -127,5 +127,5 @@ class GrokProject(templates.Template):
             return
         original_dir = os.getcwd()
         os.chdir(vars['project'])
-        run_buildout(command.options.verbose)
+        run_buildout(command.verbose)
         os.chdir(original_dir)
