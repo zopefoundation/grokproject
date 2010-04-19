@@ -45,10 +45,10 @@ Let's check the contents::
     >>> ls(package_dir)
     bootstrap.py
     buildout.cfg
+    cache
     etc
     setup.py
     src
-    versions.cfg
 
     >>> software_dir = os.path.join(package_dir, 'src', 'grokexample')
     >>> ls(software_dir)
@@ -63,8 +63,10 @@ Let's check the contents::
 
 Let's see if the information in our fake release URL was correctly propagated.
 
-    >>> cat(package_dir, 'versions.cfg')
-    # This file contains a list of versions of the various grok modules that
+    >>> cat(package_dir, 'buildout.cfg')
+    [buildout]
+    ...
+    extends = 
     # belong together.
     # It was downloaded from file://.../fake_release/grok-0.555.cfg
     # when this project was created.
@@ -72,7 +74,6 @@ Let's see if the information in our fake release URL was correctly propagated.
     [versions]
     grok = 0.555
     <BLANKLINE>
-    ...
 
     >>> cat(package_dir, 'buildout.cfg')
     [buildout]
