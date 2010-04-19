@@ -1,29 +1,31 @@
 [buildout]
+extends = ${version_info_url}
+extends-cache = cache
 develop = .
 parts =
-    eggbasket
     app
-    i18n
-    test
-    mkdirs
-    zpasswd
-    zope_conf
-    site_zcml
-    deploy_ini
     debug_ini
+    deploy_ini
+    i18n
+    mkdirs
+    site_zcml
+    test
+    zope_conf
+    zpasswd
 # For backward compatibility, telling buildout not to throw away
 # the data and log subdirectories from the parts directory.
     data
     log
 newest = ${newest}
-
-extends = versions.cfg
+versions = versions
 # eggs will be installed in the default buildout location
 # (see .buildout/default.cfg in your home directory)
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
-versions = versions
 extensions = buildout.dumppickedversions
+
+[versions]
+# Override versions here.
 
 [app]
 recipe = zc.recipe.egg
@@ -34,17 +36,15 @@ eggs = ${egg}
        PasteDeploy
 interpreter = python-console
 
-[mkdirs]
-recipe = z3c.recipe.mkdir
-paths =
-    $${zope_conf:filestorage}
-    $${zope_conf:logfiles}
-    $${zope_conf:blobstorage}
+[debug_ini]
+recipe = collective.recipe.template
+input = etc/debug.ini.in
+output = $${buildout:parts-directory}/etc/debug.ini
 
-[test]
-recipe = zc.recipe.testrunner
-eggs = ${egg}
-defaults = ['--tests-pattern', '^f?tests$$', '-v']
+[deploy_ini]
+recipe = collective.recipe.template
+input = etc/deploy.ini.in
+output = $${buildout:parts-directory}/etc/deploy.ini
 
 # this section named so that the i18n scripts are called bin/i18n...
 [i18n]
@@ -55,13 +55,22 @@ domain = ${package}
 output = src/${package}/locales
 zcml =
 
-# This section is named so that the zpasswd utility is
-# called `zpasswd`
-[zpasswd]
-recipe = z3c.recipe.dev:script
+[mkdirs]
+recipe = z3c.recipe.mkdir
+paths =
+    $${zope_conf:filestorage}
+    $${zope_conf:logfiles}
+    $${zope_conf:blobstorage}
+
+[site_zcml]
+recipe = collective.recipe.template
+input = etc/site.zcml.in
+output = $${buildout:parts-directory}/etc/site.zcml
+
+[test]
+recipe = zc.recipe.testrunner
 eggs = ${egg}
-module = zope.app.server.zpasswd
-method = main
+defaults = ['--tests-pattern', '^f?tests$$', '-v']
 
 [zope_conf]
 recipe = collective.recipe.template
@@ -73,6 +82,14 @@ logfiles = $${buildout:directory}/var/log
 extra =
 # 'extra' is copied verbatim. Use it for product config sections and so.
 
+# This section is named so that the zpasswd utility is
+# called `zpasswd`
+[zpasswd]
+recipe = z3c.recipe.dev:script
+eggs = ${egg}
+module = zope.app.server.zpasswd
+method = main
+
 # The [data] and [log] parts are still in here to instruct buildout to not
 # unintentionally throw away the parts/data and parts/log subdirectories
 # that contain the Data.fs and the log files. These files should be
@@ -82,23 +99,3 @@ recipe = zc.recipe.filestorage
 
 [log]
 recipe = zc.recipe.filestorage
-
-[site_zcml]
-recipe = collective.recipe.template
-input = etc/site.zcml.in
-output = $${buildout:parts-directory}/etc/site.zcml
-
-[deploy_ini]
-recipe = collective.recipe.template
-input = etc/deploy.ini.in
-output = $${buildout:parts-directory}/etc/deploy.ini
-
-[debug_ini]
-recipe = collective.recipe.template
-input = etc/debug.ini.in
-output = $${buildout:parts-directory}/etc/debug.ini
-
-[eggbasket]
-recipe = z3c.recipe.eggbasket
-eggs = grok
-url = ${grok_release_url}grok-eggs-${grokversion}.tgz
