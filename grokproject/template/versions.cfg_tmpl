@@ -1,6 +1,0 @@
-# This file contains a list of versions of the various grok modules that
-# belong together.
-# It was downloaded from ${version_info_url}
-# when this project was created.
-
-${version_info_file_contents}
