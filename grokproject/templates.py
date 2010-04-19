@@ -72,9 +72,9 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
 
         # Handling the version.cfg file.
-        print "Downloading info about versions..."
         version = vars.get('grokversion')
         if version is None:
+            print "Determining current grok version..."
             # if no version was specified, we look up the current version first
             current_info_url = urlparse.urljoin(grok_release_url, 'current')
             version = self.download(current_info_url).strip().replace(
