@@ -1,28 +1,16 @@
 Grokproject tests
 =================
 
-Go to a directory::
+Go to a fresh test directory::
 
-    >>> cd(tempdir)
-
-Check that the directory does not exist::
-
-    >>> rmdir('GrokExample')
-
-Create an empty eggs directory. So we make sure that we don't have to
-care for arbitrary eggs, that were installed in the user's environment
-before. If this directory contains a file ``shorttests`` and the eggs
-directory exists already, then we leave it untouched::
-
-    >>> tempeggs = 'grokexample-eggs'
-    >>> eggsdir = os.path.join(tempdir, tempeggs)
-    >>> maybe_mkdir(eggsdir)
+    >>> cd(testdir)
 
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
+    >>> import os.path
     >>> # Use a specific grok version, because 'current' will change at some
     >>> # point in the future.
-    >>> executable = [current_dir + '/bin/grokproject']
+    >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> grokversion = ['--grokversion=1.1rc1']
     >>> sh(executable + opts + grokversion + ['GrokExample'])
@@ -39,7 +27,13 @@ Then use paster. Eggs are placed in our freshly created eggs directory::
 
 Let's check the contents::
 
-    >>> package_dir = os.path.join(tempdir, 'GrokExample')
+    >>> package_dir = os.path.join(testdir, 'GrokExample')
+    >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
+    [buildout]
+    extends = http://grok.zope.org/releaseinfo/1.1rc1/versions.cfg
+    find-links = http://grok.zope.org/releaseinfo/1.1rc1/eggs/
+    ...
+
     >>> ls(package_dir)
     .installed.cfg
     bin
@@ -101,7 +95,7 @@ buildout files to support offline building. We know what the filename of the
 cached versions file for 1.1rc1 will look like:
 
     >>> ls(os.path.join(package_dir, 'cache'))
-    6a3f22ca3d6177f67814aa5ce2d48c62
+    000739fbb1c7d540a2861c7476c5ec2d
 
 We used a projectname with uppercase letters. This is respected by
 configuration files::
@@ -266,8 +260,8 @@ first::
 We can influence the version of grok to be installed by using the
 ``grokversion`` parameter. 
 
-    >>> cd(tempdir)
-    >>> package_dir = os.path.join(tempdir, 'GrokExample2')
+    >>> cd(testdir)
+    >>> package_dir = os.path.join(testdir, 'GrokExample2')
     >>> grokversion = ['--grokversion=1.1a2']
     >>> # WARNING: We know that running the buildout of grok 1.1a2 has a 
     >>> # buildout failure. That's OK for this test, as we want to show 
@@ -277,7 +271,6 @@ We can influence the version of grok to be installed by using the
     '--grokversion=1.1a2', 'GrokExample2']
     Creating directory ./GrokExample2
     Downloading zc.buildout...
-    ...
     Invoking zc.buildout...
     *************** PICKED VERSIONS ****************
     [versions]
@@ -290,12 +283,5 @@ We can influence the version of grok to be installed by using the
     ...
 
     >>> ls(os.path.join(package_dir, 'cache'))
-    76cda68c4f673d08a52e03fc4a3e0b65
-
-Clean up::
-
-    >>> cd(tempdir)
-    >>> rmdir('GrokExample')
-    >>> rmdir('GrokExample2')
-    >>> maybe_rmdir(eggsdir)
+    6ac204ce415265b11b4a9a4701f2a04f
 

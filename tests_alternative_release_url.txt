@@ -8,7 +8,8 @@ In this test we will use an alternative release URL for grokproject. It is a
 "file:///" URL pointing to a directory with a fake set of grok release
 information files:
 
-    >>> testdir = tempfile.mkdtemp() # can be removed when tempdir becomes really temporary
+    >>> cd(testdir)
+    >>> import os.path
     >>> fake_release = os.path.join(testdir, 'fake_release')
     >>> os.mkdir(fake_release)
     >>> touch(fake_release, 'current', data='grok-0.555.cfg')
@@ -28,13 +29,13 @@ information files:
 Let's use paster, with a "file:///" url pointing to the fake grok release. We
 won't run buildout because the version file is not actually valid::
 
-    >>> paster = current_dir + '/bin/paster'
+    >>> paster = [os.path.join(current_dir, 'bin', 'paster')]
     >>> paster_params = ('create -t grok --no-interactive -o'.split() +
     ...                  [testdir])
     >>> grok_params = ('grokexample user=a passwd=a run_buildout=false '
     ...                'grok_release_url=' + alt_url).split()
-    >>> sh([paster] + paster_params + grok_params)
-    ['/.../bin/paster', 'create', '-t', 'grok', '--no-interactive',
+    >>> sh(paster + paster_params + grok_params)
+    ['.../bin/paster', 'create', '-t', 'grok', '--no-interactive',
      '-o', ... 'grokexample', 'user=a', 'passwd=a', 'run_buildout=false',
      'grok_release_url=file:///.../fake_release/']
     ...
@@ -42,6 +43,13 @@ won't run buildout because the version file is not actually valid::
 Let's check the contents::
 
     >>> package_dir = os.path.join(testdir, 'grokexample')
+    >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
+    [buildout]
+    extends = file:///.../fake_release/0.555/versions.cfg
+    extends-cache = cache
+    find-links = file:///.../fake_release/0.555/eggs/
+    ...
+
     >>> ls(package_dir)
     bootstrap.py
     buildout.cfg
@@ -61,6 +69,3 @@ Let's check the contents::
     static
     tests.py
 
-Cleanup:
-
-    >>> rmdir(package_dir)

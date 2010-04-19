@@ -117,7 +117,15 @@ def maybe_rmdir(path):
     rmdir(path)
     
 
-tempdir = os.getenv('TEMP','/tmp')
+def setup(test):
+    eggsdir = os.path.join(tempfile.gettempdir(), 'grokproject-test-eggs')
+    maybe_mkdir(eggsdir)
+    test.globs['eggsdir'] = eggsdir
+    test.globs['testdir'] = tempfile.mkdtemp()
+
+def teardown(test):
+    maybe_rmdir(test.globs['eggsdir'])
+    shutil.rmtree(test.globs['testdir'])
 
 def doc_suite(package_dir):
     """Returns a test suite"""
@@ -131,12 +139,22 @@ def doc_suite(package_dir):
     tests = [os.path.join(package_dir, filename)
             for filename in [
                 'tests_paste.txt', 'tests_alternative_release_url.txt']]
+    globs = {
+        'ls': ls,
+        'cd': cd,
+        'cat': cat,
+        'touch': touch,
+        'sh': sh,
+        'read_sh': read_sh,
+        'current_dir': current_dir,
+    }
 
     for test in tests:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,
-                                          globs=globals(),
+                                          globs=globs,
+                                          setUp=setup,
+                                          tearDown=teardown,
                                           module_relative=False))
-
     return unittest.TestSuite(suite)
 
 def test_suite():
