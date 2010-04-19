@@ -2,27 +2,22 @@
 """
 Grabs the tests in doctest
 
-Previously Taken virtually verbatim from zopeskel with permission (for zpl)
+Previously Taken virtually verbatim from zopeskel with permission (for ZPL)
 from Tarek Ziade. (c) Tarek Ziade
 """
 __docformat__ = 'restructuredtext'
 
-import unittest
-import doctest
-import sys
 import os
 import shutil
-import StringIO
 import subprocess
+import sys
 import tempfile
+import unittest
 
 from zope.testing import doctest
 
-current_dir = os.path.abspath(os.path.dirname(__file__))
-shorttestfile = os.path.join(os.path.dirname(__file__), 'shorttests')
-
-## FIXME - check for other platforms
-MUST_CLOSE_FDS = not sys.platform.startswith('win')
+CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
+SHORTTESTFILE = os.path.join(os.path.dirname(__file__), 'shorttests')
 
 def rmdir(*args):
     dirname = os.path.join(*args)
@@ -30,11 +25,15 @@ def rmdir(*args):
         shutil.rmtree(dirname)
 
 def read_sh(command, input=None):
-    p = subprocess.Popen(command,
-                         stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.STDOUT,
-                         close_fds=MUST_CLOSE_FDS)
+    # XXX check for other platforms too?
+    close_fds = not sys.platform.startswith('win')
+    p = subprocess.Popen(
+        command,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        close_fds=close_fds
+        )
     out, err_ = p.communicate(input)
     return out
 
@@ -67,7 +66,7 @@ def touch(*args, **kwargs):
     open(filename, 'w').write(kwargs.get('data',''))
 
 def shorttests():
-    return os.path.exists(shorttestfile)
+    return os.path.exists(SHORTTESTFILE)
 
 def maybe_mkdir(path):
     if shorttests() and os.path.isdir(path):
@@ -101,7 +100,9 @@ def doc_suite(package_dir):
 
     tests = [os.path.join(package_dir, filename)
             for filename in [
-                'tests_paste.txt', 'tests_alternative_release_url.txt']]
+                'tests_paste.txt',
+                'tests_alternative_release_url.txt'
+                ]]
     globs = {
         'ls': ls,
         'cd': cd,
@@ -109,13 +110,19 @@ def doc_suite(package_dir):
         'touch': touch,
         'sh': sh,
         'read_sh': read_sh,
-        'current_dir': current_dir,
-    }
+        'current_dir': CURRENT_DIR,
+        }
 
     for test in tests:
-        suite.append(doctest.DocFileSuite(
-            test, optionflags=flags, globs=globs, setUp=setup, tearDown=teardown,
-            module_relative=False))
+        suite.append(
+            doctest.DocFileSuite(
+                test,
+                optionflags=flags,
+                globs=globs,
+                setUp=setup,
+                tearDown=teardown,
+                module_relative=False
+                ))
     return unittest.TestSuite(suite)
 
 def show_shorttests_message():
@@ -126,7 +133,7 @@ def show_shorttests_message():
         print '  This reduces the runtime of testruns by making use of'
         print '  a once filled eggs directory.'
         print '  If you want clean test runs with an empty eggs directory,'
-        print '  remove the file "' + shorttestfile + '".'
+        print '  remove the file "' + SHORTTESTFILE + '".'
         print
         print '  Running shorttests might lead to failing tests. Please run'
         print '  the full tests before submitting code.'
@@ -137,13 +144,13 @@ def show_shorttests_message():
         print
         print '  If you want to reuse a prefilled eggs directory between'
         print '  test runs (which dramatically reduces runtime), create a'
-        print '  file "' + shorttestfile + '" and rerun the tests.'
+        print '  file "' + SHORTTESTFILE + '" and rerun the tests.'
         print
 
 def test_suite():
     """returns the test suite"""
     show_shorttests_message()
-    return doc_suite(current_dir)
+    return doc_suite(CURRENT_DIR)
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
