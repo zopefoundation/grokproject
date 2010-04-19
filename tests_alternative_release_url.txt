@@ -61,28 +61,6 @@ Let's check the contents::
     static
     tests.py
 
-Let's see if the information in our fake release URL was correctly propagated.
-
-    >>> cat(package_dir, 'buildout.cfg')
-    [buildout]
-    ...
-    extends = 
-    # belong together.
-    # It was downloaded from file://.../fake_release/grok-0.555.cfg
-    # when this project was created.
-    <BLANKLINE>
-    [versions]
-    grok = 0.555
-    <BLANKLINE>
-
-    >>> cat(package_dir, 'buildout.cfg')
-    [buildout]
-    ...
-    [eggbasket]
-    recipe = z3c.recipe.eggbasket
-    eggs = grok
-    url = file:///.../grok-eggs-0.555.tgz...
-
 Cleanup:
 
     >>> rmdir(package_dir)

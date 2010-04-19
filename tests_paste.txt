@@ -20,12 +20,22 @@ directory exists already, then we leave it untouched::
 
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
-    >>> paster = current_dir + '/bin/paster'
-    >>> params = ['create','-t', 'grok', 'GrokExample', 'user=a', 'passwd=a']
-    >>> sh([paster] + params + ['eggs_dir=%s' % eggsdir, '--no-interactive'])
-    ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 
-     'user=a', 'passwd=a', ...
-    ...
+    >>> # Use a specific grok version, because 'current' will change at some
+    >>> # point in the future.
+    >>> executable = [current_dir + '/bin/grokproject']
+    >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
+    >>> grokversion = ['--grokversion=1.1rc1']
+    >>> sh(executable + opts + grokversion + ['GrokExample'])
+    ['...grokproject', '--user=a', '--passwd=a', '--eggs-dir=...grokexample-eggs',
+    '--grokversion=1.1rc1', 'GrokExample']
+    Creating directory ./GrokExample
+    Downloading zc.buildout...
+    Invoking zc.buildout...
+    *************** PICKED VERSIONS ****************
+    [versions]
+    <BLANKLINE>
+    *************** /PICKED VERSIONS ***************
+    <BLANKLINE>
 
 Let's check the contents::
 
@@ -93,20 +103,6 @@ configuration files::
     >>> print open(zope_conf, 'rb').read()
     # Identify the component configuration used to define the site:
     site-definition ...GrokExample/parts/etc/site.zcml
-    ...
-
-We can influence the version of grok to be installed by using the
-``grokversion`` parameter. 
-
-    >>> params += ['grokversion=1.1rc1']
-    >>> sh([paster] + params + ['eggs_dir=%s' % eggsdir, '--no-interactive'])
-    ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 'grokversion=1.1rc1',
-    ...
-
-    >>> cat('buildout_cfg')
-    [buildout]
-    ...
-    extends = http://grok.zope.org/releaseinfo/grok-1.1rc1.cfg
     ...
 
 The password given is stored SHA1 encoded::
@@ -240,19 +236,18 @@ first::
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
-    >>> print output # doctest: +REPORT_UDIFF
+    >>> print output
     Develop: ...
-    Updating eggbasket.
     Updating app.
-    Updating i18n.
-    i18n: setting up i18n tools
-    Updating test.
     Updating site_zcml.
     Updating zope_conf.
-    Updating mkdirs.
-    Updating zpasswd.
-    Updating deploy_ini.
     Updating debug_ini.
+    Updating deploy_ini.
+    Updating i18n.
+    i18n: setting up i18n tools
+    Updating mkdirs.
+    Updating test.
+    Updating zpasswd.
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
@@ -261,27 +256,36 @@ first::
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
 
-Using the generated `bootstrap` script
---------------------------------------
+We can influence the version of grok to be installed by using the
+``grokversion`` parameter. 
 
-Generated grokprojects come with their own `bootstrap.py` script, that
-makes it easier to distribute projects. As a normal Python module it
-has to be called with a Python interpreter::
-
-    >>> import sys
-    >>> cmd_arg = os.path.join(package_dir, 'bootstrap.py')
-    >>> output = "OUTPUT:\n" + read_sh([sys.executable, cmd_arg])
-    >>> print output
-    OUTPUT:
+    >>> cd(tempdir)
+    >>> package_dir = os.path.join(tempdir, 'GrokExample2')
+    >>> grokversion = ['--grokversion=1.1a2']
+    >>> # WARNING: We know that running the buildout of grok 1.1a2 has a 
+    >>> # buildout failure. That's OK for this test, as we want to show 
+    >>> # that we can point to a different version.
+    >>> sh(executable + opts + grokversion + ['GrokExample2'])
+    ['...grokproject', '--user=a', '--passwd=a', '--eggs-dir=...grokexample-eggs',
+    '--grokversion=1.1a2', 'GrokExample2']
+    Creating directory ./GrokExample2
+    Downloading zc.buildout...
     ...
-    Installing 'z3c.recipe.eggbasket'.
+    Invoking zc.buildout...
+    *************** PICKED VERSIONS ****************
+    [versions]
     ...
-    Now you can run 'bin/buildout'
+    *************** /PICKED VERSIONS ***************
 
+    >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
+    [buildout]
+    extends = http://grok.zope.org/releaseinfo/grok-1.1a2.cfg
+    ...
 
 Clean up::
 
     >>> cd(tempdir)
     >>> rmdir('GrokExample')
+    >>> rmdir('GrokExample2')
     >>> maybe_rmdir(eggsdir)
 
