@@ -21,10 +21,8 @@ directory exists already, then we leave it untouched::
 Then use paster. Eggs are placed in our freshly created eggs directory::
 
     >>> paster = current_dir + '/bin/paster'
-    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=0.14.1'
-    >>> parms = 'create -t grok GrokExample user=a passwd=a grokversion=1.1a2'
-    >>> sh([paster] + parms.split() +
-    ...    ['eggs_dir=%s' % eggsdir, '--no-interactive'])
+    >>> params = ['create','-t', 'grok', 'GrokExample', 'user=a', 'passwd=a']
+    >>> sh([paster] + params + ['eggs_dir=%s' % eggsdir, '--no-interactive'])
     ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 
      'user=a', 'passwd=a', ...
     ...
@@ -37,13 +35,13 @@ Let's check the contents::
     bin
     bootstrap.py
     buildout.cfg
+    cache
     develop-eggs
     etc
     parts
     setup.py
     src
     var
-    versions.cfg
 
     >>> software_dir = os.path.join(package_dir, 'src', 'grokexample')
     >>> ls(software_dir)
@@ -58,23 +56,22 @@ Let's check the contents::
 
     >>> bin_dir = os.path.join(package_dir, 'bin')
     >>> ls(bin_dir)
-    buildout...
-    grokexample-ctl...
-    grokexample-debug...
-    i18nextract...
-    i18nmergeall...
-    i18nstats...
-    paster...
-    python-console...
-    test...
-    zpasswd...
+    buildout
+    grokexample-debug
+    i18ncompile
+    i18nextract
+    i18nmergeall
+    i18nstats
+    paster
+    python-console
+    test
+    zpasswd
 
     >>> etc_dir = os.path.join(package_dir, 'parts', 'etc')
     >>> ls(etc_dir)
     debug.ini
     deploy.ini
     site.zcml
-    zdaemon.conf
     zope.conf
 
 In the generated configuration files paths are set to local paths::
@@ -98,15 +95,18 @@ configuration files::
     site-definition ...GrokExample/parts/etc/site.zcml
     ...
 
-We used the ``--grokversion`` parameter. Therefore we got the Grok
-version requested::
+We can influence the version of grok to be installed by using the
+``grokversion`` parameter. 
 
-    >>> versions_cfg = os.path.join(package_dir, 'versions.cfg')
-    >>> print open(versions_cfg, 'rb').read()
-    # This file contains a list of versions of the various grok modules that
-    # belong together.
-    # It was downloaded from http://grok.zope.org/releaseinfo/grok-...cfg
-    # when this project was created.
+    >>> params += ['grokversion=1.1rc1']
+    >>> sh([paster] + params + ['eggs_dir=%s' % eggsdir, '--no-interactive'])
+    ['/.../bin/paster', 'create', '-t', 'grok', 'GrokExample', 'grokversion=1.1rc1',
+    ...
+
+    >>> cat('buildout_cfg')
+    [buildout]
+    ...
+    extends = http://grok.zope.org/releaseinfo/grok-1.1rc1.cfg
     ...
 
 The password given is stored SHA1 encoded::
@@ -163,15 +163,15 @@ The translatable strings now appear in the generated .pot file::
     >>> pot_file = os.path.join(software_dir, 'locales', 'grokexample.pot')
     >>> print open(pot_file, 'r').read()
     ####...
-    #: src/grokexample/translatable.py:6
+    #: grokexample/translatable.py:6
     msgid "mytitle"
     msgstr ""
     <BLANKLINE>
-    #: src/grokexample/translatable.py:7
+    #: grokexample/translatable.py:7
     msgid "description"
     msgstr ""
     <BLANKLINE>
-    #: src/grokexample/translatable.py:8
+    #: grokexample/translatable.py:8
     msgid "name"
     msgstr ""
 
@@ -251,11 +251,14 @@ first::
     Updating zope_conf.
     Updating mkdirs.
     Updating zpasswd.
-    Updating zdaemon_conf.
     Updating deploy_ini.
     Updating debug_ini.
     Updating data.
     Updating log.
+    *************** PICKED VERSIONS ****************
+    [versions]
+    <BLANKLINE>
+    *************** /PICKED VERSIONS ***************
     <BLANKLINE>
 
 Using the generated `bootstrap` script
@@ -281,31 +284,4 @@ Clean up::
     >>> cd(tempdir)
     >>> rmdir('GrokExample')
     >>> maybe_rmdir(eggsdir)
-
-Generate consistent versions.cfg
---------------------------------
-
-It can happen, that some egg defined in the downloaded versions.cfg
-file (Groks "KGS") is also set in our local versions.cfg
-extensions. In this case we only want to get the version from Grok.
-
-We can show this with the grok 1.0a2 versions.cfg, which includes
-grokui.admin:
-
-    >>> import urllib2
-    >>> url = 'http://grok.zope.org/releaseinfo/grok-1.0a2.cfg'
-    >>> versions_cfg = urllib2.urlopen(url).read()
-    >>> print versions_cfg
-    [versions]
-    ...
-    grokui.admin = ...
-    ...
-
-Normally, grokproject would also include a grokui.admin version
-setting, but after scanning the original versions.cfg, it is skipped:
-
-    >>> from grokproject.utils import extend_versions_cfg
-    >>> additions = extend_versions_cfg(versions_cfg)
-    >>> 'grokui.admin' in additions
-    False
 
