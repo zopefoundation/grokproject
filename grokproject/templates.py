@@ -52,8 +52,6 @@ class GrokProject(templates.Template):
         explicit_eggs_dir = vars.get('eggs_dir')
         grok_release_url = vars.get('grok_release_url',
                                     GROK_RELEASE_URL_DEFAULT)
-        if not grok_release_url.endswith('/'):
-            grok_release_url += '/'
 
         skipped_vars = {}
         for var in list(self.vars):
@@ -80,8 +78,11 @@ class GrokProject(templates.Template):
             version = self.download(current_info_url).strip().replace(
                     'grok-', '').replace('.cfg', '')
 
-        version_info_url = urlparse.urljoin(grok_release_url, 'grok-%s.cfg' % version)
-        vars['version_info_url'] = version_info_url
+        if not grok_release_url.endswith('/'):
+            grok_release_url += '/'
+        base = grok_release_url + version + '/'
+        vars['version_info_url'] = base + 'versions.cfg'
+        vars['find_links_url'] = base + 'eggs/'
 
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:
