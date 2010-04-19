@@ -11,7 +11,6 @@ from grokproject.utils import get_boolean_value_for_option
 from grokproject.utils import get_sha1_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
-from grokproject.utils import required_grok_version
 
 GROK_RELEASE_URL_DEFAULT = 'http://grok.zope.org/releaseinfo/'
 
@@ -66,8 +65,6 @@ class GrokProject(templates.Template):
         for name in skipped_vars:
             vars[name] = skipped_vars[name]
 
-        vars['grok_release_url'] = grok_release_url
-
         vars['passwd'] = get_sha1_encoded_string(vars['passwd'])            
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
@@ -76,21 +73,15 @@ class GrokProject(templates.Template):
 
         # Handling the version.cfg file.
         print "Downloading info about versions..."
-        version = vars.get('grokversion', 'current')
-        cfg_filename = 'grok-%s.cfg' % version
-        if version == 'current':
-            # if no version was specified, we look up the current
-            # version first
+        version = vars.get('grokversion')
+        if version is None:
+            # if no version was specified, we look up the current version first
             current_info_url = urlparse.urljoin(grok_release_url, 'current')
-            cfg_filename = self.download(current_info_url).strip()
+            version = self.download(current_info_url).strip().replace(
+                    'grok-', '').replace('.cfg', '')
 
-        version_info_url = urlparse.urljoin(grok_release_url, cfg_filename)
+        version_info_url = urlparse.urljoin(grok_release_url, 'grok-%s.cfg' % version)
         vars['version_info_url'] = version_info_url
-        vars['version_info_file_contents'] = self.download(version_info_url)
-
-        # Which grok version are we depending on?
-        version = required_grok_version(vars['version_info_file_contents'])
-        vars['grokversion'] = version
 
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:
