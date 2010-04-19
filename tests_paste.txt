@@ -14,10 +14,10 @@ Then use paster. Eggs are placed in our freshly created eggs directory::
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> grokversion = ['--grokversion=1.1rc1']
     >>> sh(executable + opts + grokversion + ['GrokExample'])
-    ['...grokproject', '--user=a', '--passwd=a', '--eggs-dir=...grokexample-eggs',
+    ['...grokproject', '--user=a', '--passwd=a',
+    '--eggs-dir=...grokproject-test-eggs',
     '--grokversion=1.1rc1', 'GrokExample']
-    Creating directory ./GrokExample
-    Downloading zc.buildout...
+    Creating directory ./GrokExample...
     Invoking zc.buildout...
     *************** PICKED VERSIONS ****************
     [versions]
@@ -31,6 +31,7 @@ Let's check the contents::
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
     extends = http://grok.zope.org/releaseinfo/1.1rc1/versions.cfg
+    extends-cache = cache
     find-links = http://grok.zope.org/releaseinfo/1.1rc1/eggs/
     ...
 
@@ -90,7 +91,7 @@ The eggs dir is filled now::
     >>> len(os.listdir(eggsdir)) > 100
     True
 
-The extends-cache directive results in cached versions of the referenced 
+The extends-cache directive results in cached versions of the referenced
 buildout files to support offline building. We know what the filename of the
 cached versions file for 1.1rc1 will look like:
 
@@ -108,7 +109,7 @@ configuration files::
 
 The password given is stored SHA1 encoded::
 
-    >>> site_zcml_in = os.path.join(package_dir, 'etc', 
+    >>> site_zcml_in = os.path.join(package_dir, 'etc',
     ...                             'site.zcml.in')
     >>> print open(site_zcml_in, 'rb').read()
     <configure xmlns="http://namespaces.zope.org/zope"
@@ -240,15 +241,19 @@ first::
     >>> print output
     Develop: ...
     Updating app.
+    ...
     Updating site_zcml.
     Updating zope_conf.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
     i18n: setting up i18n tools
+    ...
     Updating mkdirs.
     Updating test.
+    ...
     Updating zpasswd.
+    ...
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
@@ -258,30 +263,33 @@ first::
     <BLANKLINE>
 
 We can influence the version of grok to be installed by using the
-``grokversion`` parameter. 
+``grokversion`` parameter.
 
     >>> cd(testdir)
     >>> package_dir = os.path.join(testdir, 'GrokExample2')
     >>> grokversion = ['--grokversion=1.1a2']
-    >>> # WARNING: We know that running the buildout of grok 1.1a2 has a 
-    >>> # buildout failure. That's OK for this test, as we want to show 
-    >>> # that we can point to a different version.
+
+    >>> # WARNING: We know that running the buildout of grok 1.1a2 has
+    >>> # a buildout failure. That's OK for this test, as we just want
+    >>> # to show that we can point to a different version.
+
     >>> sh(executable + opts + grokversion + ['GrokExample2'])
-    ['...grokproject', '--user=a', '--passwd=a', '--eggs-dir=...grokexample-eggs',
+    ['...grokproject', '--user=a', '--passwd=a',
+    '--eggs-dir=...grokproject-test-eggs',
     '--grokversion=1.1a2', 'GrokExample2']
     Creating directory ./GrokExample2
-    Downloading zc.buildout...
-    Invoking zc.buildout...
-    *************** PICKED VERSIONS ****************
-    [versions]
-    ...
-    *************** /PICKED VERSIONS ***************
+    While:
+      Installing app.
+    Error: There is a version conflict.
+    We already have: zope.publisher 3.9.3
+    but zope.app.container 3.8.2 requires 'zope.publisher>=3.12'...
 
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
-    extends = http://grok.zope.org/releaseinfo/grok-1.1a2.cfg
+    extends = http://grok.zope.org/releaseinfo/1.1a2/versions.cfg
+    extends-cache = cache
+    find-links = http://grok.zope.org/releaseinfo/1.1a2/eggs/
     ...
 
     >>> ls(os.path.join(package_dir, 'cache'))
-    6ac204ce415265b11b4a9a4701f2a04f
-
+    eb77a071fb78a2da37cbe18aff8b2a5a

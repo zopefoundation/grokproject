@@ -19,14 +19,15 @@ import tempfile
 from zope.testing import doctest
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
+shorttestfile = os.path.join(os.path.dirname(__file__), 'shorttests')
+
+## FIXME - check for other platforms
+MUST_CLOSE_FDS = not sys.platform.startswith('win')
 
 def rmdir(*args):
     dirname = os.path.join(*args)
     if os.path.isdir(dirname):
         shutil.rmtree(dirname)
-
-## FIXME - check for other platforms
-MUST_CLOSE_FDS = not sys.platform.startswith('win')
 
 def read_sh(command, input=None):
     p = subprocess.Popen(command,
@@ -54,7 +55,6 @@ def cd(*args):
     dirname = os.path.join(*args)
     os.chdir(dirname)
 
-
 def cat(*args):
     filename = os.path.join(*args)
     if os.path.isfile(filename):
@@ -66,56 +66,19 @@ def touch(*args, **kwargs):
     filename = os.path.join(*args)
     open(filename, 'w').write(kwargs.get('data',''))
 
-def shorttests(show_message=False):
-    shorttestfile = os.path.join(
-        os.path.dirname(__file__), 'shorttests')
-    if not show_message:
-        return os.path.exists(shorttestfile)
-    if os.path.exists(shorttestfile):
-        print
-        print "WARNING: running shorttests."
-        print "  This reduces the runtime of testruns by making use of"
-        print "  a once filled eggs directory."
-        print "  If you want clean test runs with an empty eggs directory,"
-        print "  remove the file"
-        print "    " + shorttestfile
-        print "  Running shorttests might lead to failing tests. Please run"
-        print "  the full tests before submitting code."
-        print
-    else:
-        print
-        print "NOTE: running full tests."
-        print "  If you want to reuse a prefilled eggs directory between"
-        print "  test runs (which dramatically reduces runtime), create a"
-        print "  file "
-        print "    " + shorttestfile
-        print "  and rerun the tests."
-        print
+def shorttests():
     return os.path.exists(shorttestfile)
 
 def maybe_mkdir(path):
-    """Create a directory `path` conditionally.
-
-    If the dir already exists and `shorttest()` is ``True`` we leave
-    the directory untouched.
-
-    Otherwise any old file/directory with path `path` is removed and
-    recreated.
-    """
     if shorttests() and os.path.isdir(path):
         return
     rmdir(path)
     os.makedirs(path)
 
 def maybe_rmdir(path):
-    """Remove a directory conditionally.
-
-    If `shorttest()` is True, we do not remove the directory.
-    """
     if shorttests() and os.path.isdir(path):
         return
     rmdir(path)
-    
 
 def setup(test):
     eggsdir = os.path.join(tempfile.gettempdir(), 'grokproject-test-eggs')
@@ -130,7 +93,7 @@ def teardown(test):
 def doc_suite(package_dir):
     """Returns a test suite"""
     suite = []
-    flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE | 
+    flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE |
              doctest.REPORT_ONLY_FIRST_FAILURE)
 
     if package_dir not in sys.path:
@@ -150,16 +113,36 @@ def doc_suite(package_dir):
     }
 
     for test in tests:
-        suite.append(doctest.DocFileSuite(test, optionflags=flags,
-                                          globs=globs,
-                                          setUp=setup,
-                                          tearDown=teardown,
-                                          module_relative=False))
+        suite.append(doctest.DocFileSuite(
+            test, optionflags=flags, globs=globs, setUp=setup, tearDown=teardown,
+            module_relative=False))
     return unittest.TestSuite(suite)
+
+def show_shorttests_message():
+    if shorttests():
+        print
+        print 'WARNING: running shorttests.'
+        print
+        print '  This reduces the runtime of testruns by making use of'
+        print '  a once filled eggs directory.'
+        print '  If you want clean test runs with an empty eggs directory,'
+        print '  remove the file "' + shorttestfile + '".'
+        print
+        print '  Running shorttests might lead to failing tests. Please run'
+        print '  the full tests before submitting code.'
+        print
+    else:
+        print
+        print 'NOTE: running full tests.'
+        print
+        print '  If you want to reuse a prefilled eggs directory between'
+        print '  test runs (which dramatically reduces runtime), create a'
+        print '  file "' + shorttestfile + '" and rerun the tests.'
+        print
 
 def test_suite():
     """returns the test suite"""
-    shorttests(show_message=True)
+    show_shorttests_message()
     return doc_suite(current_dir)
 
 if __name__ == '__main__':
