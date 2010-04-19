@@ -29,13 +29,6 @@ class ask_var(var):
         if self.getter is None:
             self.getter = lambda x, y: self.default
 
-
-def get_var(vars, name):
-    for var in vars:
-        if var.name == name:
-            return var
-
-
 def create_buildout_default_file():
     default_dir = os.path.join(HOME, '.buildout')
     if not os.path.isdir(default_dir):
