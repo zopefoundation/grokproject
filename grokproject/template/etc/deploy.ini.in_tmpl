@@ -47,7 +47,7 @@ setup_console_handler = False
 logger_name = wsgi
 
 [app:main]
-use = egg:${egg}
+use = egg:grokcore.startup
 filter-with = translogger
 
 [server:main]
