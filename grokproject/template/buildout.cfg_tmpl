@@ -1,6 +1,7 @@
 [buildout]
 extends = ${version_info_url}
 extends-cache = cache
+find-links = ${find_links_url}
 develop = .
 parts =
     app
