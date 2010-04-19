@@ -55,9 +55,6 @@ def cd(*args):
     os.chdir(dirname)
 
 
-def config(filename):
-    return os.path.join(current_dir, filename)
-
 def cat(*args):
     filename = os.path.join(*args)
     if os.path.isfile(filename):
@@ -81,7 +78,7 @@ def shorttests(show_message=False):
         print "  a once filled eggs directory."
         print "  If you want clean test runs with an empty eggs directory,"
         print "  remove the file"
-        print "    " + os.path.join(__file__, 'shorttests')
+        print "    " + shorttestfile
         print "  Running shorttests might lead to failing tests. Please run"
         print "  the full tests before submitting code."
         print
@@ -120,40 +117,31 @@ def maybe_rmdir(path):
     rmdir(path)
     
 
-execdir = os.path.abspath(os.path.dirname(sys.executable))
 tempdir = os.getenv('TEMP','/tmp')
 
-DOCTEST_FILES='''
-tests_paste.txt
-tests_alternative_release_url.txt
-'''.strip().split('\n')
-
-def doc_suite(package_dir, setUp=None, tearDown=None, globs=None):
-    """Returns a test suite, based on doctests found in /doctest."""
+def doc_suite(package_dir):
+    """Returns a test suite"""
     suite = []
-    if globs is None:
-        globs = globals()
-
     flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE | 
              doctest.REPORT_ONLY_FIRST_FAILURE)
 
     if package_dir not in sys.path:
         sys.path.append(package_dir)
 
-    docs = [os.path.join(package_dir, filename)
-            for filename in DOCTEST_FILES]
+    tests = [os.path.join(package_dir, filename)
+            for filename in [
+                'tests_paste.txt', 'tests_alternative_release_url.txt']]
 
-    for test in docs:
+    for test in tests:
         suite.append(doctest.DocFileSuite(test, optionflags=flags,
-                                          globs=globs, setUp=setUp,
-                                          tearDown=tearDown,
+                                          globs=globals(),
                                           module_relative=False))
 
     return unittest.TestSuite(suite)
 
 def test_suite():
     """returns the test suite"""
-    short = shorttests(show_message=True)
+    shorttests(show_message=True)
     return doc_suite(current_dir)
 
 if __name__ == '__main__':
