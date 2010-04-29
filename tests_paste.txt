@@ -277,7 +277,7 @@ We can influence the version of grok to be installed by using the
     ['...grokproject', '--user=a', '--passwd=a',
     '--eggs-dir=...grokproject-test-eggs',
     '--grokversion=1.1a2', 'GrokExample2']
-    Creating directory ./GrokExample2
+    Creating directory ./GrokExample2...
     While:
       Installing app.
     Error: There is a version conflict.
