@@ -13,6 +13,7 @@ parts =
     test
     zope_conf
     zpasswd
+    interactive_debugger
 # For backward compatibility, telling buildout not to throw away
 # the data and log subdirectories from the parts directory.
     data
@@ -92,6 +93,13 @@ eggs =
   zope.password
 module = zope.password.zpasswd
 method = main
+
+[interactive_debugger]
+recipe = z3c.recipe.dev:script
+eggs = ${egg}
+module = grokcore.startup.startup
+method = interactive_debug_prompt
+arguments = zope_conf="$${zope_conf:output}"
 
 # The [data] and [log] parts are still in here to instruct buildout to not
 # unintentionally throw away the parts/data and parts/log subdirectories

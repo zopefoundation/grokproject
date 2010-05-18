@@ -4,6 +4,9 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
+* Remove the interactive debugger entry point in favor of a buildout part
+  that generates a similar commandline tool for the newly created project.
+
 * Use the zpassword functionality for the bin/zpasswd tool.
 
 * No longer build the zdaemon ctl.

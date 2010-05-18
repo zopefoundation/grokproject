@@ -62,11 +62,11 @@ Let's check the contents::
     >>> bin_dir = os.path.join(package_dir, 'bin')
     >>> ls(bin_dir)
     buildout
-    grokexample-debug
     i18ncompile
     i18nextract
     i18nmergeall
     i18nstats
+    interactive_debugger
     paster
     python-console
     test
@@ -241,15 +241,25 @@ first::
     >>> print output
     Develop: '...'
     Updating app.
+    Generated script '...'.
+    Generated interpreter '...'.
     Updating site_zcml.
     Updating zope_conf.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
     i18n: setting up i18n tools
+    Generated script '...'.
+    Generated script '...'.
+    Generated script '...'.
+    Generated script '...'.
     Updating mkdirs.
     Updating test.
+    Generated script '...'.
     Updating zpasswd.
+    Generated script '...'.
+    Updating interactive_debugger.
+    Generated script '...'.
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************

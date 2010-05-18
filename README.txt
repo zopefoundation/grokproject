@@ -21,25 +21,25 @@ is built on).
 
 After the project area has been created successfully, you will find an
 empty Python package in the ``src`` directory in which you can place
-the code for your web application.  
+the code for your web application.
 
 To start the application server, execute::
 
   $ cd MammothHerd
   $ bin/paster serve parts/etc/deploy.ini
-  
+
 Start/stop it in daemon mode::
 
   $ bin/paster serve parts/etc/deploy.ini --daemon
-  
-There is also an Ajax enabled debugger 
+
+There is also an Ajax enabled debugger
 (point your browser to http://localhost:8080/@@login.html when using this)::
 
   $ bin/paster serve parts/etc/debug.ini
-  
-Start the debugger::
 
-  $ bin/mammothherd-debug
+Start the interactive debugger::
+
+  $ bin/interactive_debugger
 
 For those who know paster: ``grokproject`` is just a wrapper around a
 paster template.  So instead of running the ``grokproject`` command,
