@@ -4,7 +4,9 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
-* No longer build the zdaemon ctl. 
+* Use the zpassword functionality for the bin/zpasswd tool.
+
+* No longer build the zdaemon ctl.
 
 * Projects created will use the #main and #debug entry points now defined
   in grokcore.startup.

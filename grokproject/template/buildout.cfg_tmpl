@@ -87,8 +87,10 @@ extra =
 # called `zpasswd`
 [zpasswd]
 recipe = z3c.recipe.dev:script
-eggs = ${egg}
-module = zope.app.server.zpasswd
+eggs =
+  ${egg}
+  zope.password
+module = zope.password.zpasswd
 method = main
 
 # The [data] and [log] parts are still in here to instruct buildout to not
