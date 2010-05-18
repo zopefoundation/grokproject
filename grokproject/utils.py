@@ -1,12 +1,13 @@
-import codecs
-import os
-import sys
-import shutil
-import tempfile
-import pkg_resources
-import logging
-from random import randint
+from base64 import urlsafe_b64encode
 from paste.script.templates import var
+from random import randint
+import codecs
+import logging
+import os
+import pkg_resources
+import shutil
+import sys
+import tempfile
 
 try:
     from hashlib import sha1
@@ -50,15 +51,17 @@ eggs-directory = %s
         config_file.write(contents)
         config_file.close()
 
-def get_sha1_encoded_string(passwd):
-    """Encode the given `string` using SHA1.
+def get_ssha_encoded_string(password):
+    """Encode the given `string` using "Secure" SHA.
+
+    Taken from zope.password.password, however grokproject itself
+    cannot depend on that package.
     """
     encoder = codecs.getencoder('utf-8')
-    salt = "%08x" % randint(0, 0xffffffff)
-    # This is apparently a wrong use of salt, but the old SHA1
-    # password manager of `zope.app.authentication` handles it this way.
-    result = salt + sha1(encoder(passwd)[0]).hexdigest()
-    return result
+    hash = sha1(encoder(password)[0])
+    salt = os.urandom(4)
+    hash.update(salt)
+    return '{SSHA}' + urlsafe_b64encode(hash.digest() + salt)
 
 def get_boolean_value_for_option(vars, option):
     value = vars.get(option.name)
@@ -134,7 +137,7 @@ def run_buildout(verbose=False):
         remove_old_logger_handlers()
 
     print "Invoking zc.buildout..."
-    
+
     # Now do the rest of the install.
     zc.buildout.buildout.main(extra_args + ['install'])
     remove_old_logger_handlers()

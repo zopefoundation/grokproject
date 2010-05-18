@@ -31,7 +31,7 @@ Let's check the contents::
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
     extends = http://grok.zope.org/releaseinfo/1.1rc1/versions.cfg
-    extends-cache = cache
+    extends-cache = extends-cache
     find-links = http://grok.zope.org/releaseinfo/1.1rc1/eggs/
     ...
 
@@ -40,9 +40,9 @@ Let's check the contents::
     bin
     bootstrap.py
     buildout.cfg
-    cache
     develop-eggs
     etc
+    extends-cache
     parts
     setup.py
     src
@@ -95,7 +95,7 @@ The extends-cache directive results in cached versions of the referenced
 buildout files to support offline building. We know what the filename of the
 cached versions file for 1.1rc1 will look like:
 
-    >>> ls(os.path.join(package_dir, 'cache'))
+    >>> ls(os.path.join(package_dir, 'extends-cache'))
     000739fbb1c7d540a2861c7476c5ec2d
 
 We used a projectname with uppercase letters. This is respected by
@@ -107,7 +107,7 @@ configuration files::
     site-definition ...GrokExample/parts/etc/site.zcml
     ...
 
-The password given is stored SHA1 encoded::
+The password given is stored SSHA encoded::
 
     >>> site_zcml_in = os.path.join(package_dir, 'etc',
     ...                             'site.zcml.in')
@@ -117,8 +117,8 @@ The password given is stored SHA1 encoded::
         <principal id="zope.manager"
                    title="Manager"
                    login="a"
-                   password_manager="SHA1"
-                   password="...86f7e437faa5a7fce15d1ddcb9eaeaea377667b8"
+                   password_manager="SSHA"
+                   password="{SSHA}..."
                    />
     ...
 
@@ -239,21 +239,17 @@ first::
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
     >>> print output
-    Develop: ...
+    Develop: '...'
     Updating app.
-    ...
     Updating site_zcml.
     Updating zope_conf.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
     i18n: setting up i18n tools
-    ...
     Updating mkdirs.
     Updating test.
-    ...
     Updating zpasswd.
-    ...
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
@@ -287,9 +283,9 @@ We can influence the version of grok to be installed by using the
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
     extends = http://grok.zope.org/releaseinfo/1.1a2/versions.cfg
-    extends-cache = cache
+    extends-cache = extends-cache
     find-links = http://grok.zope.org/releaseinfo/1.1a2/eggs/
     ...
 
-    >>> ls(os.path.join(package_dir, 'cache'))
+    >>> ls(os.path.join(package_dir, 'extends-cache'))
     eb77a071fb78a2da37cbe18aff8b2a5a

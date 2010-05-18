@@ -46,15 +46,15 @@ Let's check the contents::
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
     extends = file:///.../fake_release/0.555/versions.cfg
-    extends-cache = cache
+    extends-cache = extends-cache
     find-links = file:///.../fake_release/0.555/eggs/
     ...
 
     >>> ls(package_dir)
     bootstrap.py
     buildout.cfg
-    cache
     etc
+    extends-cache
     setup.py
     src
 

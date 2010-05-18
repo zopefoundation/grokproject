@@ -8,7 +8,7 @@ from paste.script.templates import NoDefault
 from grokproject.utils import run_buildout
 from grokproject.utils import ask_var
 from grokproject.utils import get_boolean_value_for_option
-from grokproject.utils import get_sha1_encoded_string
+from grokproject.utils import get_ssha_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
@@ -63,7 +63,7 @@ class GrokProject(templates.Template):
         for name in skipped_vars:
             vars[name] = skipped_vars[name]
 
-        vars['passwd'] = get_sha1_encoded_string(vars['passwd'])            
+        vars['passwd'] = get_ssha_encoded_string(vars['passwd'])
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
@@ -99,9 +99,9 @@ class GrokProject(templates.Template):
 
         vars['package_directory'] = os.path.abspath(os.path.join(
                 os.getcwd(), vars['project']))
-        
+
         return vars
-    
+
     def download(self, url):
         """Downloads a file and returns the contents.
 
@@ -122,7 +122,7 @@ class GrokProject(templates.Template):
             print "Server may be down.  Please try again later."
             sys.exit(1)
         return contents
-    
+
     def post(self, command, output_dir, vars):
         if not vars['run_buildout']:
             return
