@@ -4,6 +4,26 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
+* Use a new "version information" layout on http://grok.zope.org/releaseinfo.
+
+  More specifically, the "bundlemaker" or "eggbasket" feature is no longer
+  used. Instead, grokproject expexts to find a
+  http://grok.zope.org/releaseinfo/[y.x]/versions.cfg file and a
+  http://grok.zope.org/releaseinfo/[y.x]/eggs directory containing
+  distributions for all the dependencies of grok.
+
+  This "eggs" directory is used by way of the ``find-links`` directive in the
+  ``buildout.cfg`` of newly created projects.
+
+  The ``versions.cfg`` file extends the groktoolkit files that in turn extend
+  from the zopetoolkit cfg files. The newly created project will have an
+  ``extends-cache`` directive set, in order to support "off-line" building (as
+  long as no new packages are required for building).
+
+  **NOTE: As a result of these structural changes, ``grokproject`` will no
+  longer support building projects based on Grok versions earlier than 1.1.1
+  (or earlier than 1.0.2, for the 1.0-line of Grok releases).**
+
 * Remove the interactive debugger entry point in favor of a buildout part
   that generates a similar commandline tool for the newly created project.
 
