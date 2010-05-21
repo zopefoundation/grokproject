@@ -40,7 +40,7 @@ To start the interactive debugger prompt::
 
   $ bin/interactive_debugger
 
-To run an ad-hoc Python script againsy a full setup application::
+To run an ad-hoc Python script against a full setup application::
 
   $ bin/interactive_debugger [name_of_python_script].py
 

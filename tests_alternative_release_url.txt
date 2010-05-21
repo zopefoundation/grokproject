@@ -27,7 +27,7 @@ information files:
     >>> alt_url = 'file://' + os.path.join(fake_release, '')
 
 Let's use paster, with a "file:///" url pointing to the fake grok release. We
-won't run buildout because the version file is not actually valid::
+won't run buildout because the version file is not actually valid:
 
     >>> paster = [os.path.join(current_dir, 'bin', 'paster')]
     >>> paster_params = ('create -t grok --no-interactive -o'.split() +
@@ -40,7 +40,7 @@ won't run buildout because the version file is not actually valid::
      'grok_release_url=file:///.../fake_release/']
     ...
 
-Let's check the contents::
+Let's check the contents:
 
     >>> package_dir = os.path.join(testdir, 'grokexample')
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()

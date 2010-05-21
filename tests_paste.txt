@@ -1,11 +1,11 @@
 Grokproject tests
 =================
 
-Go to a fresh test directory::
+Go to a fresh test directory:
 
     >>> cd(testdir)
 
-Then use paster. Eggs are placed in our freshly created eggs directory::
+Then use paster. Eggs are placed in our freshly created eggs directory:
 
     >>> import os.path
     >>> # Use a specific grok version, because 'current' will change at some
@@ -25,7 +25,7 @@ Then use paster. Eggs are placed in our freshly created eggs directory::
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
 
-Let's check the contents::
+Let's check the contents:
 
     >>> package_dir = os.path.join(testdir, 'GrokExample')
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
@@ -79,14 +79,14 @@ Let's check the contents::
     site.zcml
     zope.conf
 
-In the generated configuration files paths are set to local paths::
+In the generated configuration files paths are set to local paths:
 
     >>> cat(etc_dir, 'zope.conf')
     # Identify the component configuration used to define the site:
     site-definition /.../GrokExample/parts/etc/site.zcml
     ...
 
-The eggs dir is filled now::
+The eggs dir is filled now:
 
     >>> len(os.listdir(eggsdir)) > 100
     True
@@ -99,7 +99,7 @@ cached versions file for 1.1rc1 will look like:
     000739fbb1c7d540a2861c7476c5ec2d
 
 We used a projectname with uppercase letters. This is respected by
-configuration files::
+configuration files:
 
     >>> zope_conf = os.path.join(package_dir, 'parts', 'etc', 'zope.conf')
     >>> print open(zope_conf, 'rb').read()
@@ -107,7 +107,7 @@ configuration files::
     site-definition ...GrokExample/parts/etc/site.zcml
     ...
 
-The password given is stored SSHA encoded::
+The password given is stored SSHA encoded:
 
     >>> site_zcml_in = os.path.join(package_dir, 'etc',
     ...                             'site.zcml.in')
@@ -127,7 +127,7 @@ Using i18n scripts
 ------------------
 
 We can create a POT file out of our sources using the freshly
-generated `i18nextract`::
+generated `i18nextract`:
 
     >>> cmd = os.path.join(bin_dir, 'i18nextract')
     >>> output = read_sh(cmd)
@@ -137,7 +137,7 @@ generated `i18nextract`::
     output: '...grokexample.pot'
 
 The .pot file contains no specific entries right now. So let's add a
-source file with translatable content::
+source file with translatable content:
 
     >>> source = """
     ... from zope.i18nmessageid import MessageFactory
@@ -151,12 +151,12 @@ source file with translatable content::
     >>> source_path = os.path.join(software_dir, 'translatable.py')
     >>> open(source_path, 'w').write(source)
 
-And rerun `bin/i18nextract`::
+And rerun `bin/i18nextract`:
 
     >>> cmd = os.path.join(bin_dir, 'i18nextract')
     >>> output = read_sh(cmd)
 
-The translatable strings now appear in the generated .pot file::
+The translatable strings now appear in the generated .pot file:
 
     >>> pot_file = os.path.join(software_dir, 'locales', 'grokexample.pot')
     >>> print open(pot_file, 'r').read()
@@ -173,18 +173,18 @@ The translatable strings now appear in the generated .pot file::
     msgid "name"
     msgstr ""
 
-Let's now create a translation for that (tiny) set of messages::
+Let's now create a translation for that (tiny) set of messages:
 
     >>> trans_dir_de = os.path.join(software_dir, 'locales', 'de',
     ...                            'LC_MESSAGES')
     >>> os.makedirs(trans_dir_de)
 
-In this directory we create a copy of the original .pot file::
+In this directory we create a copy of the original .pot file:
 
     >>> po_file_path = os.path.join(trans_dir_de, 'grokexample.po')
     >>> po_file = open(pot_file, 'r').read()
 
-We modify the translation to give some more interesting results::
+We modify the translation to give some more interesting results:
 
     >>> po_file = po_file.replace('translatable.py:6\n',
     ...                           'translatable.py:6\n#, fuzzy\n')
@@ -194,14 +194,14 @@ We modify the translation to give some more interesting results::
     ...                           '"name"\nmsgstr "Name"')
     >>> open(po_file_path, 'wb').write(po_file)
 
-We can merge all translations with bin/i18nmergeall::
+We can merge all translations with bin/i18nmergeall:
 
     >>> cmd = os.path.join(bin_dir, 'i18nmergeall')
     >>> output = read_sh(cmd).split('\n')
     >>> print output[1]
     Merging language "de", domain "grokexample"
 
-We can see the status of translations calling bin/i18nstats::
+We can see the status of translations calling bin/i18nstats:
 
     >>> cmd = os.path.join(bin_dir, 'i18nstats')
     >>> output = read_sh(cmd)
@@ -214,7 +214,7 @@ We can see the status of translations calling bin/i18nstats::
 Using the generated `test` script
 ---------------------------------
 
-We can run tests::
+We can run tests:
 
     >>> cmd = os.path.join(bin_dir, 'test')
     >>> output = read_sh(cmd)
@@ -233,7 +233,7 @@ Using the generated `buildout` script
 
 We can call the `buildout` script of the freshly generated
 project. For this to work, we have to switch to the project directory
-first::
+first:
 
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
