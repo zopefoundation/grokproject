@@ -4,7 +4,7 @@
 #
 
 [loggers]
-keys = root, wsgi
+keys = root, wsgi, grok
 
 [handlers]
 keys = console, accesslog
@@ -20,6 +20,14 @@ handlers = console
 level = INFO
 handlers = accesslog
 qualname = wsgi
+propagate = 0
+
+[logger_grok]
+# Set level to WARNING or below if you want to see
+# grok template registry warnings on commandline.
+level = ERROR
+handlers = console
+qualname = grokcore.view
 propagate = 0
 
 [handler_console]

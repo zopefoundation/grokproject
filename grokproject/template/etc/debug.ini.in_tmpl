@@ -4,7 +4,7 @@
 #
 
 [loggers]
-keys = root, wsgi
+keys = root, wsgi, grok
 
 [handlers]
 keys = console, accesslog
@@ -40,6 +40,15 @@ level = INFO
 handlers = accesslog
 qualname = wsgi
 propagate = 0
+
+[logger_grok]
+# Set level to ERROR or above if you want to suppress
+# grok template registry warnings on commandline.
+level = INFO
+handlers = console
+qualname = grokcore.view
+propagate = 0
+
 
 [filter:translogger]
 use = egg:Paste#translogger

@@ -4,6 +4,18 @@ Changes
 1.0.4 (unreleased)
 ------------------
 
+* Add logger ``grok`` in ``debug.ini`` and ``deploy.ini``
+  templates. This logger logs warning messages emitted by more recent
+  versions of grokcore.view template registry (and has no effect
+  with older grok versions).
+
+  By default warning messages are displayed in ``debug.ini`` and
+  disabled in ``deploy.ini``.
+
+  To change settings, edit section ``[logger_grok]`` in
+  ``etc/debug.ini.in`` and ``etc/deploy.ini.in`` respectively and
+  rerun buildout afterwards.
+
 * Use a new "version information" layout on http://grok.zope.org/releaseinfo.
 
   More specifically, the "bundlemaker" or "eggbasket" feature is no longer
