@@ -1,11 +1,10 @@
 Changes
 =======
 
-2.1 (unreleased)
-----------------
+2.0.1 (2010-05-30)
+------------------
 
-- Nothing changed yet.
-
+- Make sure the otherwise empty log and extends-cache directories exist.
 
 2.0 (2010-05-30)
 ----------------
