@@ -28,28 +28,13 @@ site-definition $${site_zcml:output}
 </zodb>
 
 <eventlog>
-  # This sets up logging to a file.
-  # The "path" setting can be a relative or absolute
-  # filesystem path.
-
-  <logfile>
-    path $${zope_conf:logfiles}/z3.log
-    formatter zope.exceptions.log.Formatter
-  </logfile>
-
-  # This sets up logging to to standard output.
-  # The "path" setting can be the tokens STDOUT or STDERR
-  
-#  <logfile>
-#    path STDOUT
-#    formatter zope.exceptions.log.Formatter
-#  </logfile>
+# logfiles are setup in the debug.ini and deploy.ini files.
 </eventlog>
 
 # Comment this line to disable developer mode.  This should be done in
 # production
 devmode on
 
-# Extra configuration lines can be added to zope_conf's extra option. Put for 
+# Extra configuration lines can be added to zope_conf's extra option. Put for
 # instance productconf sections in here.
 $${zope_conf:extra}

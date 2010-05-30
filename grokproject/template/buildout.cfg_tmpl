@@ -38,15 +38,19 @@ eggs = ${egg}
        PasteDeploy
 interpreter = python-console
 
-[debug_ini]
-recipe = collective.recipe.template
-input = etc/debug.ini.in
-output = $${buildout:parts-directory}/etc/debug.ini
-
 [deploy_ini]
 recipe = collective.recipe.template
 input = etc/deploy.ini.in
 output = $${buildout:parts-directory}/etc/deploy.ini
+host = 127.0.0.1
+port = 8080
+
+[debug_ini]
+recipe = collective.recipe.template
+input = etc/debug.ini.in
+output = $${buildout:parts-directory}/etc/debug.ini
+host = 127.0.0.1
+port = 8080
 
 # this section named so that the i18n scripts are called bin/i18n...
 [i18n]
