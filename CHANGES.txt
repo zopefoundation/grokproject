@@ -1,8 +1,8 @@
 Changes
 =======
 
-1.0.4 (unreleased)
-------------------
+2.0 (2010-05-30)
+----------------
 
 * Use a pipeline for setting up the application.
 
