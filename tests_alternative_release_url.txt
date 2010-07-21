@@ -55,6 +55,7 @@ Let's check the contents:
     buildout.cfg
     etc
     extends-cache
+    log
     setup.py
     src
 

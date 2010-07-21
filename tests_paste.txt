@@ -43,6 +43,7 @@ Let's check the contents:
     develop-eggs
     etc
     extends-cache
+    log
     parts
     setup.py
     src
@@ -240,26 +241,18 @@ first:
     >>> output = read_sh(cmd)
     >>> print output
     Develop: '...'
+    ...
     Updating app.
-    Generated script '...'.
-    Generated interpreter '...'.
-    Updating site_zcml.
-    Updating zope_conf.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
     i18n: setting up i18n tools
-    Generated script '...'.
-    Generated script '...'.
-    Generated script '...'.
-    Generated script '...'.
+    Updating site_zcml.
+    Updating zope_conf.
     Updating mkdirs.
     Updating test.
-    Generated script '...'.
     Updating zpasswd.
-    Generated script '...'.
     Updating interactive_debugger.
-    Generated script '...'.
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
