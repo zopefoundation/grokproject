@@ -242,17 +242,17 @@ first:
     >>> print output
     Develop: '...'
     ...
-    Updating app.
+    Updating app...
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
-    i18n: setting up i18n tools
+    i18n: setting up i18n tools...
     Updating site_zcml.
     Updating zope_conf.
     Updating mkdirs.
-    Updating test.
-    Updating zpasswd.
-    Updating interactive_debugger.
+    Updating test...
+    Updating zpasswd...
+    Updating interactive_debugger...
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
