@@ -122,7 +122,7 @@ def run_buildout(verbose=False):
 	# TODO Explore wholesale upgrades to buildout 1.5.x to take advantage of improvements that allow isolation from 
 	# the system site-packages, essentially eliminating the need for the virtualenv step in installation.
         setuptools.command.easy_install.main(extra_args +
-                                             ['-mNxd', tmpdir, 'zc.buildout==1.4.3'])
+                                             ['-mNxd', tmpdir, 'zc.buildout==1.5.1'])
 
         # Add downloaded buildout to PYTHONPATH by requiring it
         # through setuptools (this dance is necessary because the
