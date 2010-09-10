@@ -24,7 +24,13 @@ versions = versions
 # (see .buildout/default.cfg in your home directory)
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
-extensions = buildout.dumppickedversions
+extensions = buildout.dumppickedversions mr.developer
+
+sources = sources
+auto-checkout = z3c.recipe.i18n
+
+[sources]
+z3c.recipe.i18n = svn http://svn.zope.org/repos/main/z3c.recipe.i18n/branches/gary-0.8.0 
 
 [versions]
 # Override versions here.
