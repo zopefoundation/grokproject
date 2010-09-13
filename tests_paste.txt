@@ -12,15 +12,27 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
-    >>> grokversion = ['--grokversion=1.1rc1']
+    >>> grokversion = ['--grokversion=1.1.1']
     >>> sh(executable + opts + grokversion + ['GrokExample'])
     ['...grokproject', '--user=a', '--passwd=a',
     '--eggs-dir=...grokproject-test-eggs',
-    '--grokversion=1.1rc1', 'GrokExample']
+    '--grokversion=1.1.1', 'GrokExample']
     Creating directory ./GrokExample...
     Invoking zc.buildout...
     *************** PICKED VERSIONS ****************
     [versions]
+    megrok.layout = 1.1.0
+    mr.developer = 1.15
+    z3c.recipe.scripts = 1.0.1
+    zope.testrunner = 4.0.0b5
+    <BLANKLINE>
+    #Required by:
+    #mr.developer 1.15
+    argparse = 1.1
+    <BLANKLINE>
+    #Required by:
+    #grokui.base 0.2.2
+    megrok.menu = 0.4
     <BLANKLINE>
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
@@ -30,13 +42,14 @@ Let's check the contents:
     >>> package_dir = os.path.join(testdir, 'GrokExample')
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
-    extends = http://grok.zope.org/releaseinfo/1.1rc1/versions.cfg
+    extends = http://grok.zope.org/releaseinfo/1.1.1/versions.cfg
     extends-cache = extends-cache
-    find-links = http://grok.zope.org/releaseinfo/1.1rc1/eggs/
+    find-links = http://grok.zope.org/releaseinfo/1.1.1/eggs/
     ...
 
     >>> ls(package_dir)
     .installed.cfg
+    .mr.developer.cfg
     bin
     bootstrap.py
     buildout.cfg
@@ -63,6 +76,7 @@ Let's check the contents:
     >>> bin_dir = os.path.join(package_dir, 'bin')
     >>> ls(bin_dir)
     buildout
+    develop
     i18ncompile
     i18nextract
     i18nmergeall
@@ -97,7 +111,9 @@ buildout files to support offline building. We know what the filename of the
 cached versions file for 1.1rc1 will look like:
 
     >>> ls(os.path.join(package_dir, 'extends-cache'))
-    000739fbb1c7d540a2861c7476c5ec2d
+    88b340ec4af18fb0fa1c291abec96f41
+    9326cd9f1963d5644740a5e9633aed66
+    ab59a3ebe2a4eb1281c0534117f4d091
 
 We used a projectname with uppercase letters. This is respected by
 configuration files:
@@ -194,7 +210,7 @@ We modify the translation to give some more interesting results:
     >>> po_file = po_file.replace('"name"\nmsgstr ""',
     ...                           '"name"\nmsgstr "Name"')
     >>> open(po_file_path, 'wb').write(po_file)
-
+    
 We can merge all translations with bin/i18nmergeall:
 
     >>> cmd = os.path.join(bin_dir, 'i18nmergeall')
@@ -212,6 +228,7 @@ We can see the status of translations calling bin/i18nstats:
     de              3       1           1        1     33.33 %
 
 
+
 Using the generated `test` script
 ---------------------------------
 
@@ -220,6 +237,7 @@ We can run tests:
     >>> cmd = os.path.join(bin_dir, 'test')
     >>> output = read_sh(cmd)
     >>> print output
+    /...
     Running tests at level 1
     Running grokexample.FunctionalLayer tests:
       Set up grokexample.FunctionalLayer in ... seconds.
@@ -240,6 +258,8 @@ first:
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
     >>> print output
+    mr.developer: Queued 'z3c.recipe.i18n' for checkout.
+    mr.developer: Skipped checkout of existing package 'z3c.recipe.i18n'.
     Develop: '...'
     ...
     Updating app...
@@ -257,6 +277,21 @@ first:
     Updating log.
     *************** PICKED VERSIONS ****************
     [versions]
+    megrok.layout = 1.1.0
+    mr.developer = 1.15
+    z3c.recipe.scripts = 1.0.1
+    <BLANKLINE>
+    #Required by:
+    #mr.developer 1.15
+    argparse = 1.1
+    <BLANKLINE>
+    #Required by:
+    #grokui.base 0.2.2
+    megrok.menu = 0.4
+    <BLANKLINE>
+    #Required by:
+    #zc.recipe.testrunner 1.4.0
+    zope.testrunner = 4.0.0b5
     <BLANKLINE>
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
@@ -277,11 +312,10 @@ We can influence the version of grok to be installed by using the
     '--eggs-dir=...grokproject-test-eggs',
     '--grokversion=1.1a2', 'GrokExample2']
     Creating directory ./GrokExample2...
+    The version, 3.9.3, is not consistent with the requirement, 'zope.publisher>=3.12'.
     While:
       Installing app.
-    Error: There is a version conflict.
-    We already have: zope.publisher 3.9.3
-    but zope.app.container 3.8.2 requires 'zope.publisher>=3.12'...
+    Error: Bad version 3.9.3...
 
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
