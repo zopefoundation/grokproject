@@ -119,7 +119,9 @@ def run_buildout(verbose=False):
         tmpdir = tempfile.mkdtemp()
         sys.path.append(tmpdir)
         setuptools.command.easy_install.main(
-            extra_args + ['-mNxd', tmpdir, 'zc.buildout'])
+            extra_args + ['-mNxd', tmpdir, 'zc.buildout==1.5.1'])
+        setuptools.command.easy_install.main(
+            extra_args + ['-mNxd', tmpdir, 'setuptools==0.6c11'])
 
         # Add downloaded buildout to PYTHONPATH by requiring it
         # through setuptools (this dance is necessary because the
@@ -127,6 +129,7 @@ def run_buildout(verbose=False):
         ws = pkg_resources.working_set
         ws.add_entry(tmpdir)
         ws.require('zc.buildout')
+        ws.require('setuptools')
 
         import zc.buildout.buildout
         zc.buildout.buildout.main(extra_args + ['bootstrap'])
