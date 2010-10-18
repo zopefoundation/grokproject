@@ -30,7 +30,7 @@ extensions = buildout.dumppickedversions
 # Override versions here.
 
 [app]
-recipe = zc.recipe.egg
+recipe = z3c.recipe.scripts
 eggs = ${egg}
        z3c.evalexception>=2.0
        Paste
@@ -91,18 +91,18 @@ extra =
 # This section is named so that the zpasswd utility is
 # called `zpasswd`
 [zpasswd]
-recipe = z3c.recipe.dev:script
+recipe = z3c.recipe.scripts
 eggs =
   ${egg}
   zope.password
-module = zope.password.zpasswd
-method = main
+entry-points =
+    zpasswd=zope.password.zpasswd:main
 
 [interactive_debugger]
-recipe = z3c.recipe.dev:script
+recipe = z3c.recipe.scripts
 eggs = ${egg}
-module = grokcore.startup.startup
-method = interactive_debug_prompt
+entry-points =
+    interactive_debugger=grokcore.startup.startup:interactive_debug_prompt
 arguments = zope_conf="$${zope_conf:output}"
 
 # The [data] and [log] parts are still in here to instruct buildout to not

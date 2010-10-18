@@ -118,11 +118,8 @@ def run_buildout(verbose=False):
         import setuptools.command.easy_install
         tmpdir = tempfile.mkdtemp()
         sys.path.append(tmpdir)
-	# Temporarily pinning zc.buildout to version 1.4.3 to fix a version conflict as ZTK and GTK are pinned to 1.4.3
-	# TODO Explore wholesale upgrades to buildout 1.5.x to take advantage of improvements that allow isolation from 
-	# the system site-packages, essentially eliminating the need for the virtualenv step in installation.
-        setuptools.command.easy_install.main(extra_args +
-                                             ['-mNxd', tmpdir, 'zc.buildout==1.4.3'])
+        setuptools.command.easy_install.main(
+            extra_args + ['-mNxd', tmpdir, 'zc.buildout'])
 
         # Add downloaded buildout to PYTHONPATH by requiring it
         # through setuptools (this dance is necessary because the

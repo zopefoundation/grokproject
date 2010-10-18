@@ -1,11 +1,10 @@
 Changes
 =======
 
-2.0.2 (unreleased)
+2.1 (unreleased)
 ------------------
 
 - Nothing changed yet.
-
 
 2.0.1 (2010-05-30)
 ------------------
