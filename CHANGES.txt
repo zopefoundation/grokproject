@@ -4,7 +4,19 @@ Changes
 2.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- The newly created project will use the test layer and test browser from
+  ``zope.app.wsgi.testlayer``.
+
+- Delegate bootstrapping a newly created project to the project's
+  ``bootstrap.py`` and the project's ``bin/buildout``. This isolates the
+  bootstrapping from grokproject and prevents potential zc.buildout version
+  conflicts.
+
+- Update to use z3c.recipe.scripts as part of the upgrade to zc.buildout-
+  1.5.2.
+
+**NOTE: As a result of these changes, ``grokproject`` will no longer
+support building projects based on Grok versions earlier than 1.2!**
 
 2.0.1 (2010-05-30)
 ------------------

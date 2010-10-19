@@ -1,8 +1,24 @@
 from setuptools import setup, find_packages
 
-long_description = (open('README.txt').read()
-                    + '\n\n' +
-                    open('CHANGES.txt').read())
+description = '''
+===========
+Grokproject
+===========
+
+Grokproject provides an easy way to get started with a `Grok
+<http://pypi.python.org/pypi/grok>`_ web application
+
+.. contents::
+
+Description
+===========
+'''
+long_description = (
+    description +
+    open('README.txt').read() +
+    '\n' +
+    open('CHANGES.txt').read()
+    )
 
 setup(
     name='grokproject',
