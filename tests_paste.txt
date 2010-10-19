@@ -12,17 +12,53 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
-    >>> grokversion = ['--grokversion=1.1rc1']
+    >>> grokversion = ['--grokversion=1.2b']
     >>> sh(executable + opts + grokversion + ['GrokExample'])
-    ['...grokproject', '--user=a', '--passwd=a',
-    '--eggs-dir=...grokproject-test-eggs',
-    '--grokversion=1.1rc1', 'GrokExample']
-    Creating directory ./GrokExample...
-    Invoking zc.buildout...
+    ['...grokproject',
+     '--user=a',
+     '--passwd=a',
+     '--eggs-dir=...grokproject-test-eggs',
+     '--grokversion=1.2b',
+     'GrokExample']
+    Downloading ...
+    Creating directory '...bin'.
+    Creating directory '...parts'.
+    Creating directory '...develop-eggs'.
+    Generated script '...buildout'.
+    Develop: '...GrokExample...'
+    ...
+    Generated script '...paster'.
+    Generated interpreter '...python-console'.
+    Installing debug_ini.
+    Installing deploy_ini.
+    Installing i18n.
+    i18n: setting up i18n tools
+    Generated script '...i18nextract'.
+    Generated script '...i18nmergeall'.
+    Generated script '...i18nstats'.
+    Generated script '...i18ncompile'.
+    Installing site_zcml.
+    Installing zope_conf.
+    Installing mkdirs.
+    mkdirs: created path: ...var
+    mkdirs: created path: ...filestorage
+    mkdirs: created path: ...log
+    mkdirs: created path: ...blobstorage
+    Installing test.
+    Generated script '...test'.
+    Installing zpasswd.
+    Generated script '...zpasswd'.
+    Installing interactive_debugger.
+    Generated script '...interactive_debugger'.
+    Installing data.
+    Installing log.
     *************** PICKED VERSIONS ****************
     [versions]
     <BLANKLINE>
     *************** /PICKED VERSIONS ***************
+    Creating directory ...GrokExample
+    Running ...bootstrap.py...
+    Running ...buildout...
     <BLANKLINE>
 
 Let's check the contents:
@@ -30,9 +66,9 @@ Let's check the contents:
     >>> package_dir = os.path.join(testdir, 'GrokExample')
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
-    extends = http://grok.zope.org/releaseinfo/1.1rc1/versions.cfg
+    extends = http://grok.zope.org/releaseinfo/1.2b/versions.cfg
     extends-cache = extends-cache
-    find-links = http://grok.zope.org/releaseinfo/1.1rc1/eggs/
+    find-links = http://grok.zope.org/releaseinfo/1.2b/eggs/
     ...
 
     >>> ls(package_dir)
@@ -94,10 +130,12 @@ The eggs dir is filled now:
 
 The extends-cache directive results in cached versions of the referenced
 buildout files to support offline building. We know what the filename of the
-cached versions file for 1.1rc1 will look like:
+cached versions file for 1.2b will look like:
 
     >>> ls(os.path.join(package_dir, 'extends-cache'))
-    000739fbb1c7d540a2861c7476c5ec2d
+    0857a87803d0c8a371e867bd7d58a782
+    1cd99c06b44977edcb9281133f31007b
+    f74256c0d403a6bb45c38b9ce42c783c
 
 We used a projectname with uppercase letters. This is respected by
 configuration files:
@@ -219,15 +257,18 @@ We can run tests:
 
     >>> cmd = os.path.join(bin_dir, 'test')
     >>> output = read_sh(cmd)
-    >>> print output
+    >>> print 'Test:\n' + output
+    Test:
+    ...
     Running tests at level 1
-    Running grokexample.FunctionalLayer tests:
-      Set up grokexample.FunctionalLayer in ... seconds.
+    Running grokexample.BrowserLayer tests:
+      Set up grokexample.BrowserLayer in ... seconds.
       Running:
     ...
       Ran 3 tests with 0 failures and 0 errors in ... seconds.
     Tearing down left over layers:
-      Tear down grokexample.FunctionalLayer ... not supported
+      Tear down grokexample.BrowserLayer in ... seconds.
+    <BLANKLINE>
 
 Using the generated `buildout` script
 -------------------------------------
@@ -240,19 +281,18 @@ first:
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
     >>> print output
-    Develop: '...'
-    ...
-    Updating app...
+    Develop: ...
+    Updating app.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
-    i18n: setting up i18n tools...
+    i18n: setting up i18n tools
     Updating site_zcml.
     Updating zope_conf.
     Updating mkdirs.
-    Updating test...
-    Updating zpasswd...
-    Updating interactive_debugger...
+    Updating test.
+    Updating zpasswd.
+    Updating interactive_debugger.
     Updating data.
     Updating log.
     *************** PICKED VERSIONS ****************
@@ -260,35 +300,3 @@ first:
     <BLANKLINE>
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
-
-We can influence the version of grok to be installed by using the
-``grokversion`` parameter.
-
-    >>> cd(testdir)
-    >>> package_dir = os.path.join(testdir, 'GrokExample2')
-    >>> grokversion = ['--grokversion=1.1a2']
-
-    >>> # WARNING: We know that running the buildout of grok 1.1a2 has
-    >>> # a buildout failure. That's OK for this test, as we just want
-    >>> # to show that we can point to a different version.
-
-    >>> sh(executable + opts + grokversion + ['GrokExample2'])
-    ['...grokproject', '--user=a', '--passwd=a',
-    '--eggs-dir=...grokproject-test-eggs',
-    '--grokversion=1.1a2', 'GrokExample2']
-    Creating directory ./GrokExample2...
-    While:
-      Installing app.
-    Error: There is a version conflict.
-    We already have: zope.publisher 3.9.3
-    but zope.app.container 3.8.2 requires 'zope.publisher>=3.12'...
-
-    >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
-    [buildout]
-    extends = http://grok.zope.org/releaseinfo/1.1a2/versions.cfg
-    extends-cache = extends-cache
-    find-links = http://grok.zope.org/releaseinfo/1.1a2/eggs/
-    ...
-
-    >>> ls(os.path.join(package_dir, 'extends-cache'))
-    eb77a071fb78a2da37cbe18aff8b2a5a

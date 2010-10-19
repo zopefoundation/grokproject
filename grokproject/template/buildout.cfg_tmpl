@@ -77,7 +77,7 @@ output = $${buildout:parts-directory}/etc/site.zcml
 [test]
 recipe = zc.recipe.testrunner
 eggs = ${egg}
-defaults = ['--tests-pattern', '^f?tests$$', '-v']
+defaults = ['-v']
 
 [zope_conf]
 recipe = collective.recipe.template
