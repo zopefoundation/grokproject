@@ -102,7 +102,7 @@ def run_buildout(verbose=False, use_distribute=False):
     print 'Running %s...' % cmd
     subprocess.call(cmd, shell=True)
     # Then, run the project's buildout.
-    cmd = os.path.join(os.getcwd(), 'bin', 'buildout')
+    cmd = os.path.join('bin', 'buildout')
     if verbose:
         cmd += ' -v'
     print 'Running %s...' % cmd
