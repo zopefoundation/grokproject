@@ -1,6 +1,7 @@
 from base64 import urlsafe_b64encode
 from paste.script.templates import var
 from random import randint
+import subprocess
 import codecs
 import logging
 import os
@@ -89,70 +90,20 @@ def get_boolean_value_for_option(vars, option):
         value = option.default
     return value
 
-
 def exist_buildout_default_file():
     default_cfg = os.path.join(HOME, '.buildout', 'default.cfg')
     return os.path.isfile(default_cfg)
 
-
-def run_buildout(verbose=False):
-    """Run a buildout.
-
-    This will download zc.buildout if it's not available. Then it will
-    bootstrap the buildout scripts and finally launch the buildout
-    installation routine.
-
-    Note that this function expects the buildout directory to be the
-    current working directory.
-    """
-    extra_args = []
-    if not verbose:
-        extra_args.append('-q')
-
-    try:
-        import zc.buildout.buildout
-    except ImportError:
-        print "Downloading zc.buildout..."
-
-        # Install buildout into a temporary location
-        import setuptools.command.easy_install
-        tmpdir = tempfile.mkdtemp()
-        sys.path.append(tmpdir)
-        setuptools.command.easy_install.main(
-            extra_args + ['-mNxd', tmpdir, 'zc.buildout==1.5.1'])
-        setuptools.command.easy_install.main(
-            extra_args + ['-mNxd', tmpdir, 'setuptools==0.6c11'])
-
-        # Add downloaded buildout to PYTHONPATH by requiring it
-        # through setuptools (this dance is necessary because the
-        # temporary installation was done as multi-version).
-        ws = pkg_resources.working_set
-        ws.add_entry(tmpdir)
-        ws.require('zc.buildout')
-        ws.require('setuptools')
-
-        import zc.buildout.buildout
-        zc.buildout.buildout.main(extra_args + ['bootstrap'])
-        remove_old_logger_handlers()
-        shutil.rmtree(tmpdir)
-    else:
-        zc.buildout.buildout.main(extra_args + ['bootstrap'])
-        remove_old_logger_handlers()
-
-    print "Invoking zc.buildout..."
-
-    # Now do the rest of the install.
-    zc.buildout.buildout.main(extra_args + ['install'])
-    remove_old_logger_handlers()
-
-
-def remove_old_logger_handlers():
-    # zc.buildout installs a new log stream on every call of
-    # main(). We remove any leftover handlers to avoid multiple output
-    # of same content (doubled lines etc.)
-    root_logger = logging.getLogger()
-    if 'zc.buildout' in root_logger.manager.loggerDict.keys():
-        logger = logging.getLogger('zc.buildout')
-        for handler in logger.handlers:
-            logger.removeHandler(handler)
-    return
+def run_buildout(verbose=False, use_distribute=False):
+    # Run the project's bootstrap.
+    cmd = sys.executable + ' bootstrap.py'
+    if use_distribute:
+        cmd += ' --distribute'
+    print 'Running %s...' % cmd
+    subprocess.call(cmd, shell=True)
+    # Then, run the project's buildout.
+    cmd = os.path.join(os.getcwd(), 'bin', 'buildout')
+    if verbose:
+        cmd += ' -v'
+    print 'Running %s...' % cmd
+    subprocess.call(cmd, shell=True)

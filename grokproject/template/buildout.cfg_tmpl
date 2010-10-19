@@ -97,13 +97,13 @@ eggs =
   ${egg}
   zope.password
 entry-points =
-    zpasswd=zope.password.zpasswd:main
+  zpasswd=zope.password.zpasswd:main
 
 [interactive_debugger]
 recipe = z3c.recipe.scripts
 eggs = ${egg}
 entry-points =
-    interactive_debugger=grokcore.startup.startup:interactive_debug_prompt
+  interactive_debugger=grokcore.startup.startup:interactive_debug_prompt
 arguments = zope_conf="$${zope_conf:output}"
 
 # The [data] and [log] parts are still in here to instruct buildout to not

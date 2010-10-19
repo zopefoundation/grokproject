@@ -32,6 +32,10 @@ class GrokProject(templates.Template):
                 "After creating the project area, run the buildout.",
                 default=True, should_ask=False,
                 getter=get_boolean_value_for_option),
+        ask_var('use_distribute',
+                "Use Distribute instead of setuptools for this project.",
+                default=False, should_ask=False,
+                getter=get_boolean_value_for_option),
         ask_var('eggs_dir',
                 'Location where zc.buildout will look for and place packages',
                 default='', should_ask=False),
@@ -128,5 +132,5 @@ class GrokProject(templates.Template):
             return
         original_dir = os.getcwd()
         os.chdir(vars['project'])
-        run_buildout(command.verbose)
+        run_buildout(command.verbose, vars['use_distribute'])
         os.chdir(original_dir)
