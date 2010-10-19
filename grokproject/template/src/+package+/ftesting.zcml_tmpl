@@ -15,26 +15,21 @@
       id="zope.anybody"
       title="Unauthenticated User"
       />
-  <unauthenticatedGroup 
+  <unauthenticatedGroup
       id="zope.Anybody"
-      title="Unauthenticated Users" 
+      title="Unauthenticated Users"
       />
-  <authenticatedGroup 
+  <authenticatedGroup
       id="zope.Authenticated"
-      title="Authenticated Users" 
+      title="Authenticated Users"
       />
-  <everybodyGroup 
+  <everybodyGroup
       id="zope.Everybody"
       title="All Users"
       />
 
-  <grant 
+  <grant
       permission="zope.View"
-      principal="zope.Everybody"
-      />
-
-  <grant 
-      permission="zope.app.dublincore.view"
       principal="zope.Everybody"
       />
 

@@ -1,14 +1,14 @@
 Do a functional doctest test on the app.
 ========================================
 
-:Test-Layer: functional
+.. :doctest:
+.. :layer: ${package}.tests.browser_layer
 
 Let's first create an instance of ${app_class_name} at the top level:
 
-   >>> from ${package}.app import ${app_class_name}
-   >>> root = getRootFolder()
-   >>> root['app'] = ${app_class_name}()
-
+    >>> from ${package}.app import ${app_class_name}
+    >>> root = getRootFolder()
+    >>> root['app'] = ${app_class_name}()
 
 Run tests in the testbrowser
 ----------------------------
@@ -20,13 +20,27 @@ information, see http://pypi.python.org/pypi/zope.testbrowser.
 
 Create a browser and visit the instance you just created:
 
-   >>> from zope.testbrowser.testing import Browser
-   >>> browser = Browser()
-   >>> browser.open('http://localhost/app')
+    >>> from zope.app.wsgi.testlayer import Browser
+    >>> browser = Browser()
+    >>> browser.open('http://localhost/app')
 
 Check some basic information about the page you visit:
 
-   >>> browser.url
-   'http://localhost/app'
-   >>> browser.headers.get('Status').upper()
-   '200 OK'
+    >>> browser.url
+    'http://localhost/app'
+
+    >>> print browser.contents
+    <html>
+    <head>
+    <base href="http://localhost/app/@@index" />
+    <BLANKLINE>
+    </head>
+    <body>
+      <h1>Congratulations!</h1>
+    <BLANKLINE>
+      <p>Your Grok application is up and running.
+      Edit <code>${package}/app_templates/index.pt</code> to change
+      this page.</p>
+    </body>
+    </html>
+    <BLANKLINE>
