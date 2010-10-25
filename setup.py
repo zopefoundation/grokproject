@@ -1,38 +1,38 @@
 from setuptools import setup, find_packages
 
-description = '''
-===========
-Grokproject
-===========
+_description = (
+    "Script that creates a Grok project directory, installs Grok, the Grok "
+    "Toolkit and the Zope Toolkit and sets up a complete skeleton for "
+    "a new Grok web application."
+    )
 
-Grokproject provides an easy way to get started with a `Grok
-<http://pypi.python.org/pypi/grok>`_ web application
-
-.. contents::
-
-Description
-===========
-'''
 long_description = (
-    description +
+    "===========\n"
+    "Grokproject\n"
+    "===========\n"
+    "\n"
+    "%s\n"
+    "\n"
+    ".. contents::\n"
+    "\n"
+    "Description\n"
+    "===========\n"
+    "\n" +
     open('README.txt').read() +
     '\n' +
     open('CHANGES.txt').read()
-    )
+    ) % _description
 
 setup(
     name='grokproject',
     version='2.0.2dev',
     author='Grok Team',
     author_email='grok-dev@zope.org',
-    url='https://launchpad.net/grok',
+    url='http://grok.zope.org',
     download_url='http://pypi.python.org/pypi/grokproject',
-    description="""
-    Script that sets up a grok project directory, installs Zope 3 and grok and
-    creates a template for a grok application.""",
+    description=_description,
     long_description=long_description,
     license='ZPL',
-
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
@@ -40,6 +40,6 @@ setup(
     extras_require=dict(tests=['zope.testing',]),
     test_suite='tests.test_suite',
     entry_points={
-    'console_scripts': ['grokproject = grokproject:main'],
-    'paste.paster_create_template': ['grok = grokproject:GrokProject']},
+        'console_scripts': ['grokproject = grokproject:main'],
+        'paste.paster_create_template': ['grok = grokproject:GrokProject']},
     )
