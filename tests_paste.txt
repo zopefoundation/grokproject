@@ -250,7 +250,7 @@ We can see the status of translations calling bin/i18nstats:
     >>> print output
     Language    Total    Done    Not Done    Fuzzy      Done %
     ==========================================================
-    de              2       1           1        0     50.00 %
+    de              3       1           1        1     33.33 %
 
 
 Using the generated `test` script
