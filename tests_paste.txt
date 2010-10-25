@@ -236,8 +236,6 @@ We modify the translation to give some more interesting results:
     ...                           '"name"\nmsgstr "Name"')
     >>> open(po_file_path, 'wb').write(po_file)
 
-    >>> print po_file
-
 We can merge all translations with bin/i18nmergeall:
 
     >>> cmd = os.path.join(bin_dir, 'i18nmergeall')
