@@ -12,19 +12,22 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
-    >>> grokversion = ['--grokversion=1.2b']
-    >>> sh(executable + opts + grokversion + ['GrokExample'])
+    >>> version = [
+    ... '--version-url=http://grok.zope.org/releaseinfo/1.2b/versions.cfg']
+    >>> sh(executable + opts + version + ['GrokExample'])
     ['...grokproject',
      '--user=a',
      '--passwd=a',
      '--eggs-dir=...grokproject-test-eggs',
-     '--grokversion=1.2b',
+     '--version-url=http://grok.zope.org/releaseinfo/1.2b/versions.cfg',
      'GrokExample']
     Downloading ...
     Creating directory '...bin'.
     Creating directory '...parts'.
     Creating directory '...develop-eggs'.
+    ...
     Generated script '...buildout'.
+    ...
     Develop: '...GrokExample...'
     ...
     Generated script '...paster'.
@@ -68,7 +71,9 @@ Let's check the contents:
     [buildout]
     extends = http://grok.zope.org/releaseinfo/1.2b/versions.cfg
     extends-cache = extends-cache
-    find-links = http://grok.zope.org/releaseinfo/1.2b/eggs/
+    find-links =
+    include-site-packages = false
+    develop = .
     ...
 
     >>> ls(package_dir)

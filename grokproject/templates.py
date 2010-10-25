@@ -12,8 +12,7 @@ from grokproject.utils import get_ssha_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
-GROK_RELEASE_URL_DEFAULT = 'http://grok.zope.org/releaseinfo/'
-
+GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -21,28 +20,31 @@ class GrokProject(templates.Template):
     required_templates = []
 
     vars = [
-        ask_var('user', 'Name of an initial administrator user',
-                default=NoDefault),
-        ask_var('passwd', 'Password for the initial administrator user',
-                default=NoDefault, should_echo=False),
-        ask_var('newest', 'Check for newer versions of packages',
-                default='false', should_ask=False,
-                getter=get_boolean_value_for_option),
-        ask_var('run_buildout',
-                "After creating the project area, run the buildout.",
-                default=True, should_ask=False,
-                getter=get_boolean_value_for_option),
-        ask_var('use_distribute',
-                "Use Distribute instead of setuptools for this project.",
-                default=False, should_ask=False,
-                getter=get_boolean_value_for_option),
-        ask_var('eggs_dir',
-                'Location where zc.buildout will look for and place packages',
-                default='', should_ask=False),
-        ask_var('grok_release_url',
-                "URL where grokproject will look up grok version and "
-                "release information.",
-                should_ask=False),
+        ask_var(
+            'user', 'Name of an initial administrator user',
+            default=NoDefault),
+        ask_var(
+            'passwd', 'Password for the initial administrator user',
+            default=NoDefault, should_echo=False),
+        ask_var(
+            'newest', 'Check for newer versions of packages',
+            default='false', should_ask=False,
+            getter=get_boolean_value_for_option),
+        ask_var(
+            'run_buildout', (
+            "After creating the project area, run the buildout. "
+            "Defaults to true"),
+            default=True, should_ask=False,
+            getter=get_boolean_value_for_option),
+        ask_var(
+            'use_distribute',
+            "Use Distribute instead of setuptools for this project.",
+            default=False, should_ask=False,
+            getter=get_boolean_value_for_option),
+        ask_var(
+            'eggs_dir',
+            'Location where zc.buildout will look for and place packages',
+            default='', should_ask=False),
         ]
 
     def check_vars(self, vars, cmd):
@@ -54,8 +56,6 @@ class GrokProject(templates.Template):
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
-        grok_release_url = vars.get('grok_release_url',
-                                    GROK_RELEASE_URL_DEFAULT)
 
         skipped_vars = {}
         for var in list(self.vars):
@@ -74,19 +74,20 @@ class GrokProject(templates.Template):
         vars['app_class_name'] = vars['project'].capitalize()
 
         # Handling the version.cfg file.
-        version = vars.get('grokversion')
-        if version is None:
+        version_url = vars.get('version_url')
+        find_links_url = ''
+        if version_url is None:
             print "Determining current grok version..."
-            # if no version was specified, we look up the current version first
-            current_info_url = urlparse.urljoin(grok_release_url, 'current')
+            # If no version URL was specified, we look up the current
+            # version first and construct a URL.
+            current_info_url = urlparse.urljoin(GROK_RELEASE_URL, 'current')
             version = self.download(current_info_url).strip().replace(
                     'grok-', '').replace('.cfg', '')
+            version_url = GROK_RELEASE_URL + version + '/versions.cfg'
+            find_links_url = GROK_RELEASE_URL + version + '/eggs'
 
-        if not grok_release_url.endswith('/'):
-            grok_release_url += '/'
-        base = grok_release_url + version + '/'
-        vars['version_info_url'] = base + 'versions.cfg'
-        vars['find_links_url'] = base + 'eggs/'
+        vars['find_links_url'] = find_links_url
+        vars['version_info_url'] = version_url
 
         buildout_default = exist_buildout_default_file()
         if explicit_eggs_dir:

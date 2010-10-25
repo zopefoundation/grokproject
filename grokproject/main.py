@@ -10,18 +10,22 @@ project_name_re=re.compile('[a-zA-Z_][a-zA-Z0-9_]*')
 def main():
     usage = "usage: %prog [options] PROJECT"
     parser = optparse.OptionParser(usage=usage)
-    parser.add_option('--svn-repository', dest="repos", default=None,
-                      help="Import project to given repository location (this "
-                      "will also create the standard trunk/ tags/ branches/ "
-                      "hierarchy).")
-    parser.add_option('--grokversion', dest="grokversion", default=None,
-                      help="Specify the Grok version to use. GROKVERSION is "
-                      "a string like 0.14.1, 1.0a1 or similar. If not given, "
-                      "the latest version found on the grok website is used.")
-    parser.add_option('-v', '--verbose', action="store_true", dest="verbose",
-                      default=False, help="Be verbose.")
-    parser.add_option('--version', action="store_true", dest="version",
-                      default=False, help="Show grokproject version.")
+    parser.add_option(
+        '--svn-repository', dest="repos", default=None, help=(
+        "Import project to given repository location (this "
+        "will also create the standard trunk/ tags/ branches/ "
+        "hierarchy)."))
+    parser.add_option(
+        '--version-url', dest="version_url", default=None, help=(
+        "Specify the URL to a buildout file defining package versions. "
+        "If not given, the latest version info found on the grok website is "
+        "used."))
+    parser.add_option(
+        '-v', '--verbose', action="store_true", dest="verbose", default=False,
+        help="Be verbose.")
+    parser.add_option(
+        '--version', action="store_true", dest="version", default=False,
+        help="Show grokproject version.")
 
     # Options that override the interactive part of filling the templates.
     for var in GrokProject.vars:
@@ -60,10 +64,10 @@ def main():
         supplied_value = getattr(options, var.name)
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
-    if options.grokversion:
-        extra_args.append('grokversion=%s' % options.grokversion)
+    if options.version_url:
+        extra_args.append('version_url=%s' % options.version_url)
 
-    # Assert that the project name is a valid Python identifier
+    # Assert that the project name is a valid Python identifier.
     if not (project_name_re.match(project).group() == project):
         print
         print "Error: The chosen project name is not a valid " \
@@ -71,9 +75,8 @@ def main():
         print "Please choose a different project name."
         sys.exit(1)
 
-    # Create the project
-    exit_code = runner.run(option_args + ['-t', 'grok', project]
-                           + extra_args)
+    # Create the project.
+    exit_code = runner.run(option_args + ['-t', 'grok', project] + extra_args)
     sys.exit(exit_code)
 
 def get_version():
