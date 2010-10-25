@@ -96,13 +96,13 @@ def exist_buildout_default_file():
 
 def run_buildout(verbose=False, use_distribute=False):
     # Run the project's bootstrap.
-    cmd = sys.executable + ' bootstrap.py'
+    cmd = sys.executable + ' -S ' + os.path.join(os.getcwd(), 'bootstrap.py')
     if use_distribute:
         cmd += ' --distribute'
     print 'Running %s...' % cmd
     subprocess.call(cmd, shell=True)
     # Then, run the project's buildout.
-    cmd = os.path.join('bin', 'buildout')
+    cmd = os.path.join(os.getcwd(), 'bin', 'buildout')
     if verbose:
         cmd += ' -v'
     print 'Running %s...' % cmd
