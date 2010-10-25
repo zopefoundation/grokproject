@@ -4,13 +4,13 @@ Changes
 2.1 (unreleased)
 ------------------
 
-**NOTE: As a result of these changes, ``grokproject`` will no longer
-support building projects based on Grok versions earlier than 1.2!**
+- **NOTE: As a result of these changes, ``grokproject`` will no longer
+  support building projects based on Grok versions earlier than 1.2!**
 
-- Remove the ``--grokversion`` and ``--grok-release-url`` commandline options,
-  in favor of the ``-version-url`` option. This URL should point to a buildout
-  ``*.cfg`` file containing version "pins" for all the packages involved. The
-  default URL is still looked up by way of
+- Removed the ``--grokversion`` and ``--grok-release-url`` commandline
+  options, in favor of the ``-version-url`` option. This URL should point to a
+  buildout ``*.cfg`` file containing version "pins" for all the packages
+  involved. The default URL is still looked up by way of
   http://grok.zope.org/releaseinfo/current.
 
 - The newly created project will use the test layer and test browser from
@@ -18,8 +18,8 @@ support building projects based on Grok versions earlier than 1.2!**
 
 - Delegate bootstrapping a newly created project to the project's
   ``bootstrap.py`` and the project's ``bin/buildout``. This isolates the
-  bootstrapping from grokproject and prevents potential zc.buildout version
-  conflicts.
+  bootstrapping from grokproject itself and prevents potential zc.buildout
+  version conflicts.
 
 - Update to use z3c.recipe.scripts instead of zc.recipe.egg as part of the
   upgrade to zc.buildout-1.5.2.
