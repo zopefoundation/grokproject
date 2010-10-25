@@ -101,7 +101,6 @@ def doc_suite(package_dir):
     tests = [os.path.join(package_dir, filename)
             for filename in [
                 'tests_paste.txt',
-                'tests_alternative_release_url.txt'
                 ]]
     globs = {
         'ls': ls,
