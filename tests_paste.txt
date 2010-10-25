@@ -26,8 +26,6 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     Creating directory '...parts'.
     Creating directory '...develop-eggs'.
     ...
-    Generated script '...buildout'.
-    ...
     Develop: '...GrokExample...'
     ...
     Generated script '...paster'.
@@ -230,13 +228,15 @@ In this directory we create a copy of the original .pot file:
 
 We modify the translation to give some more interesting results:
 
-    >>> po_file = po_file.replace('translatable.py:6\n',
-    ...                           'translatable.py:6\n#, fuzzy\n')
+    >>> po_file = po_file.replace('translatable.py:7\n',
+    ...                           'translatable.py:7\n#, fuzzy\n')
     >>> po_file = po_file.replace('"mytitle"\nmsgstr ""',
     ...                           '"mytitle"\nmsgstr "Mein Titel"')
     >>> po_file = po_file.replace('"name"\nmsgstr ""',
     ...                           '"name"\nmsgstr "Name"')
     >>> open(po_file_path, 'wb').write(po_file)
+
+    >>> print po_file
 
 We can merge all translations with bin/i18nmergeall:
 
@@ -252,7 +252,7 @@ We can see the status of translations calling bin/i18nstats:
     >>> print output
     Language    Total    Done    Not Done    Fuzzy      Done %
     ==========================================================
-    de              3       1           1        1     33.33 %
+    de              2       1           1        0     50.00 %
 
 
 Using the generated `test` script
