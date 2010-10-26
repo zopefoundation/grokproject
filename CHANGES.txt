@@ -1,8 +1,8 @@
 Changes
 =======
 
-2.1 (unreleased)
-------------------
+2.1 (2010-10-26)
+----------------
 
 - **NOTE: As a result of these changes, ``grokproject`` will no longer
   support building projects based on Grok versions earlier than 1.2!**
