@@ -261,8 +261,7 @@ We can run tests:
     >>> cmd = os.path.join(bin_dir, 'test')
     >>> output = read_sh(cmd)
     >>> print 'Test:\n' + output
-    Test:
-    ...
+    Test...
     Running tests at level 1
     Running grokexample.BrowserLayer tests:
       Set up grokexample.BrowserLayer in ... seconds.
