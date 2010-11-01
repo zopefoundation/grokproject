@@ -4,6 +4,7 @@ extends-cache = extends-cache
 find-links = ${find_links_url}
 include-site-packages = false
 develop = .
+unzip = true
 parts =
     app
     debug_ini

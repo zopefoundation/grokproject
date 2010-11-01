@@ -1,10 +1,10 @@
 Changes
 =======
 
-2.2 (unreleased)
+3.0 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- `unzip=true` default behavior in buildout.cfg.
 
 
 2.1 (2010-10-26)
