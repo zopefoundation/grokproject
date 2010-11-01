@@ -6,6 +6,8 @@ Changes
 
 - `unzip=true` default behavior in buildout.cfg.
 
+- Added 'daemon' part to the newly created buildout.cfg.
+
 
 2.1 (2010-10-26)
 ----------------

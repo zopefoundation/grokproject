@@ -29,7 +29,7 @@ To start the application server, execute::
 
 Start/stop it in daemon mode::
 
-  $ bin/paster serve parts/etc/deploy.ini --daemon
+  $ bin/daemon start/stop
 
 There is also an Ajax enabled debugger (point your browser to
 http://localhost:8080/@@login.html when using this)::

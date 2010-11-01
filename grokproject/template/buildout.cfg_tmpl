@@ -7,6 +7,7 @@ develop = .
 unzip = true
 parts =
     app
+    daemon
     debug_ini
     deploy_ini
     i18n
@@ -40,17 +41,24 @@ eggs = ${egg}
        PasteDeploy
 interpreter = python-console
 
-[deploy_ini]
-recipe = collective.recipe.template
-input = etc/deploy.ini.in
-output = $${buildout:parts-directory}/etc/deploy.ini
-host = 127.0.0.1
-port = 8080
+[daemon]
+recipe = collective.recipe.scriptgen
+cmd = $${buildout:bin-directory}/paster
+arguments = serve $${buildout:parts-directory}/etc/deploy.ini
+    --daemon --pid-file=$${buildout:directory}/var/daemon.pid
+    --log-file=$${buildout:directory}/log/daemon.log
 
 [debug_ini]
 recipe = collective.recipe.template
 input = etc/debug.ini.in
 output = $${buildout:parts-directory}/etc/debug.ini
+host = 127.0.0.1
+port = 8080
+
+[deploy_ini]
+recipe = collective.recipe.template
+input = etc/deploy.ini.in
+output = $${buildout:parts-directory}/etc/deploy.ini
 host = 127.0.0.1
 port = 8080
 
