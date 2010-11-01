@@ -30,6 +30,8 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     ...
     Generated script '...paster'.
     Generated interpreter '...python-console'.
+    Installing daemon.
+    Generated script '...daemon'.
     Installing debug_ini.
     Installing deploy_ini.
     Installing i18n.
@@ -102,6 +104,7 @@ Let's check the contents:
     >>> bin_dir = os.path.join(package_dir, 'bin')
     >>> ls(bin_dir)
     buildout
+    daemon
     i18ncompile
     i18nextract
     i18nmergeall
@@ -285,6 +288,7 @@ first:
     >>> print output
     Develop: ...
     Updating app.
+    Updating daemon.
     Updating debug_ini.
     Updating deploy_ini.
     Updating i18n.
