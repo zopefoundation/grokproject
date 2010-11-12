@@ -1,0 +1,7 @@
+from hurry.resource import Library, ResourceInclusion
+
+foo = Library('foo', 'browser/resources/foo')
+
+style = ResourceInclusion(foo, 'style.css')
+
+hello = ResourceInclusion(foo, 'hello.js')

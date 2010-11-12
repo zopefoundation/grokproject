@@ -123,7 +123,7 @@ class GrokProject(templates.Template):
             sys.exit(1)
         except IOError, e:
             # Some serious problem: no connect to server...
-            print "Error: cannot download required %s" % version_info_url
+            print "Error: cannot download required %s" % url
             print "Server may be down.  Please try again later."
             sys.exit(1)
         return contents
