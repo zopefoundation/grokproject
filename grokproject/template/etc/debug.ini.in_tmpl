@@ -7,13 +7,16 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = accesslogging evalexception grok
+pipeline = accesslogging evalexception resource_injection grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
 
 [filter:evalexception]
 use = egg:z3c.evalexception#ajax
+
+[filter:resource_injection]
+use = egg:hurry.resource#inject
 
 [app:grok]
 use = egg:grokcore.startup#debug
