@@ -8,6 +8,6 @@
   Edit <code>${package}/app_templates/index.pt</code> to change
   this page.</p>
 
-  <img tal:attributes="src context/++resource++/evencaveman.jpg"/>
+  <img tal:attributes="src context/++resource++foo/evencaveman.jpg"/>
 </body>
 </html>
