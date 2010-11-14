@@ -6,14 +6,26 @@ use = egg:Paste#http
 host = $${:host}
 port = $${:port}
 
-[pipeline:main]
-pipeline = gzip grok
+[composite:main]
+use = egg:Paste#urlmap
+/ = pipeline_grok
+/resources = resource_publisher
+
+[pipeline:pipeline_grok]
+pipeline = gzip resource_injection grok
+
+[filter:gzip]
+use = egg:Paste#gzip
+
+[filter:resource_injection]
+use = egg:hurry.resource#inject
+publisher_prefix = /resources
 
 [app:grok]
 use = egg:grokcore.startup
 
-[filter:gzip]
-use = egg:Paste#gzip
+[app:resource_publisher]
+use = egg:hurry.resource#publisher
 
 # Logging configuration
 

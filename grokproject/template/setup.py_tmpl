@@ -22,7 +22,7 @@ ${long_description|nothing}""",
                         'grok',
                         'grokui.admin',
                         'z3c.testsetup',
-                        'hurry.resource[wsgi]',
+                        'hurry.resource[wsgi,publisher]',
                         'hurry.zoperesource',
                         'grokcore.startup',
                         # Add extra requirements here
