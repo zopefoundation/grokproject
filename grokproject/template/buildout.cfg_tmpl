@@ -32,9 +32,6 @@ extensions = buildout.dumppickedversions
 [versions]
 # Override versions here.
 
-# Once groktoolkit 1.2 is released, remove this line:
-collective.recipe.scriptgen = 0.2
-
 [app]
 recipe = z3c.recipe.scripts
 eggs = ${egg}
