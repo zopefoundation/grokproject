@@ -30,12 +30,10 @@ extensions = buildout.dumppickedversions
              mr.developer
 auto-checkout = hurry.zoperesource
                 hurry.resource
-                zope.app.wsgi
 
 [sources]
 hurry.resource = svn svn+ssh://svn.zope.org/repos/main/hurry.resource/branches/janjaapdriessen-resource-publisher
 hurry.zoperesource = svn svn+ssh://svn.zope.org/repos/main/hurry.zoperesource/branches/janjaapdriessen-wsgi
-zope.app.wsgi = svn svn+ssh://svn.zope.org/repos/main/zope.app.wsgi/trunk
 
 [versions]
 # Override versions here.
