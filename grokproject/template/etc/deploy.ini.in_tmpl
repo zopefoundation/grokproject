@@ -9,10 +9,9 @@ port = $${:port}
 [composite:main]
 use = egg:Paste#urlmap
 / = pipeline_grok
-/resources = resource_publisher
 
 [pipeline:pipeline_grok]
-pipeline = gzip resource_injection grok
+pipeline = gzip resource_publisher resource_injection grok
 
 [filter:gzip]
 use = egg:Paste#gzip
@@ -21,11 +20,11 @@ use = egg:Paste#gzip
 use = egg:hurry.resource#inject
 publisher_prefix = /resources
 
+[filter:resource_publisher]
+use = egg:hurry.resource#publisher
+
 [app:grok]
 use = egg:grokcore.startup
-
-[app:resource_publisher]
-use = egg:hurry.resource#publisher
 
 # Logging configuration
 

@@ -9,10 +9,9 @@ port = $${:port}
 [composite:main]
 use = egg:Paste#urlmap
 / = pipeline_grok
-/resources = resource_publisher
 
 [pipeline:pipeline_grok]
-pipeline = accesslogging evalexception resource_injection grok
+pipeline = accesslogging evalexception resource_publisher resource_injection grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
@@ -24,12 +23,12 @@ use = egg:z3c.evalexception#ajax
 use = egg:hurry.resource#inject
 publisher_prefix = /resources
 
+[filter:resource_publisher]
+use = egg:hurry.resource#publisher
+
 [app:grok]
 use = egg:grokcore.startup#debug
 exempt-exceptions = zope.security.interfaces.IUnauthorized
-
-[app:resource_publisher]
-use = egg:hurry.resource#publisher
 
 # Logging configuration
 
