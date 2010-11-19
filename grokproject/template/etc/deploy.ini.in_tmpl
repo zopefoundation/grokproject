@@ -6,11 +6,7 @@ use = egg:Paste#http
 host = $${:host}
 port = $${:port}
 
-[composite:main]
-use = egg:Paste#urlmap
-/ = pipeline_grok
-
-[pipeline:pipeline_grok]
+[pipeline:main]
 pipeline = gzip resource_publisher resource_injection grok
 
 [filter:gzip]
