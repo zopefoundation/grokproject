@@ -20,6 +20,7 @@ use = egg:hurry.resource#publisher
 
 [filter:resource_injection]
 use = egg:hurry.resource#inject
+devmode = on
 
 [app:grok]
 use = egg:grokcore.startup#debug
