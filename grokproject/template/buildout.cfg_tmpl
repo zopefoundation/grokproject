@@ -104,8 +104,9 @@ output = $${buildout:parts-directory}/etc/zope.conf
 filestorage = $${buildout:directory}/var/filestorage
 blobstorage = $${buildout:directory}/var/blobstorage
 logfiles = $${buildout:directory}/var/log
-extra =
 # 'extra' is copied verbatim. Use it for product config sections and so.
+extra =
+  devmode on
 
 # This section is named so that the zpasswd utility is
 # called `zpasswd`
