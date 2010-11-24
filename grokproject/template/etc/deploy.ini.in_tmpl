@@ -7,17 +7,19 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = gzip resource_publisher resource_injection grok
+pipeline = accesslogging gzip resource_publisher resource_injection grok
+
+[filter:accesslogging]
+use = egg:Paste#translogger
 
 [filter:gzip]
 use = egg:Paste#gzip
 
-[filter:resource_injection]
-use = egg:hurry.resource#inject
-publisher_prefix = /resources
-
 [filter:resource_publisher]
 use = egg:hurry.resource#publisher
+
+[filter:resource_injection]
+use = egg:hurry.resource#inject
 
 [app:grok]
 use = egg:grokcore.startup

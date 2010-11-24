@@ -15,12 +15,11 @@ use = egg:Paste#translogger
 [filter:evalexception]
 use = egg:z3c.evalexception#ajax
 
-[filter:resource_injection]
-use = egg:hurry.resource#inject
-publisher_prefix = /resources
-
 [filter:resource_publisher]
 use = egg:hurry.resource#publisher
+
+[filter:resource_injection]
+use = egg:hurry.resource#inject
 
 [app:grok]
 use = egg:grokcore.startup#debug
