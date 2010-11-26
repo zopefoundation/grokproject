@@ -46,12 +46,21 @@ has_broken_dash_S = bool(int(stdout.strip()))
 # run without site-packages loaded.  This is somewhat tricky, in
 # particular because Python 2.6's distutils imports site, so starting
 # with the -S flag is not sufficient.  However, we'll start with that:
-if not has_broken_dash_S and 'site' in sys.modules:
-    # We will restart with python -S.
-    args = sys.argv[:]
-    args[0:0] = [sys.executable, '-S']
-    args = map(quote, args)
-    os.execv(sys.executable, args)
+
+# XXX There is a difference between 'stock' zc.buildout bootstrap.py and this
+# bootstrap.py.
+# This is a hack around restarting the bootstrap run in order not to restart
+# with '-S', as this raises problems when ran from a virtualenv. As soon as
+# virtualenv and -S play nice again, revert this hack.
+# https://bugs.launchpad.net/virtualenv/+bug/572545
+
+# if not has_broken_dash_S and 'site' in sys.modules:
+#     # We will restart with python -S.
+#     args = sys.argv[:]
+#     args[0:0] = [sys.executable, '-S']
+#     args = map(quote, args)
+#     os.execv(sys.executable, args)
+
 # Now we are running with -S.  We'll get the clean sys.path, import site
 # because distutils will do it later, and then reset the path and clean
 # out any namespace packages from site-packages that might have been

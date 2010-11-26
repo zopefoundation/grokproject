@@ -8,6 +8,8 @@ Changes
 
 - Added 'daemon' part to the newly created buildout.cfg.
 
+- Work around '-S' bug in virtualenv.
+  https://bugs.launchpad.net/virtualenv/+bug/572545
 
 2.1 (2010-10-26)
 ----------------
