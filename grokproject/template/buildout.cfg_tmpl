@@ -31,6 +31,8 @@ extensions = buildout.dumppickedversions
 
 [versions]
 # Override versions here.
+# This version pin can be removed after the next groktoolkit release.
+collective.recipe.scriptgen = 0.2
 
 [app]
 recipe = z3c.recipe.scripts
