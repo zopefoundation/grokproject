@@ -96,7 +96,7 @@ def exist_buildout_default_file():
 
 def run_buildout(verbose=False, use_distribute=False):
     # Run the project's bootstrap.
-    cmd = sys.executable + '' + os.path.join(os.getcwd(), 'bootstrap.py')
+    cmd = sys.executable + ' ' + os.path.join(os.getcwd(), 'bootstrap.py')
     if use_distribute:
         cmd += ' --distribute'
     print 'Running %s...' % cmd
