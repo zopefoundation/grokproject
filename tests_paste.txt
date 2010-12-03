@@ -32,16 +32,19 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     Generated interpreter '...python-console'.
     Installing daemon.
     Generated script '...daemon'.
-    Installing debug_ini.
-    Installing deploy_ini.
+    Installing site_zcml.
+    Installing zope_conf_debug.
+    ...
+    Installing paster_ini_debug.
+    Installing zope_conf_deploy.
+    ...
+    Installing paster_ini_deploy.
     Installing i18n.
     i18n: setting up i18n tools
     Generated script '...i18nextract'.
     Generated script '...i18nmergeall'.
     Generated script '...i18nstats'.
     Generated script '...i18ncompile'.
-    Installing site_zcml.
-    Installing zope_conf.
     Installing mkdirs.
     mkdirs: created path: ...var
     mkdirs: created path: ...filestorage
@@ -71,13 +74,13 @@ Let's check the contents:
     [buildout]
     extends = http://grok.zope.org/releaseinfo/1.2b/versions.cfg
     extends-cache = extends-cache
-    find-links =
     include-site-packages = false
     develop = .
     ...
 
     >>> ls(package_dir)
     .installed.cfg
+    .mr.developer.cfg
     bin
     bootstrap.py
     buildout.cfg
@@ -96,8 +99,10 @@ Let's check the contents:
     app.py
     app.txt
     app_templates
+    browser
     configure.zcml
     ftesting.zcml
+    resource.py
     static
     tests.py
 
@@ -105,6 +110,7 @@ Let's check the contents:
     >>> ls(bin_dir)
     buildout
     daemon
+    develop
     i18ncompile
     i18nextract
     i18nmergeall
@@ -120,11 +126,14 @@ Let's check the contents:
     debug.ini
     deploy.ini
     site.zcml
-    zope.conf
+    zope.debug.conf
+    zope.deploy.conf
 
-In the generated configuration files paths are set to local paths:
+In the generated configuration files paths are set to local paths.
+We used a projectname with uppercase letters. This is respected by
+configuration files:
 
-    >>> cat(etc_dir, 'zope.conf')
+    >>> cat(etc_dir, 'zope.debug.conf')
     # Identify the component configuration used to define the site:
     site-definition /.../GrokExample/parts/etc/site.zcml
     ...
@@ -142,15 +151,6 @@ cached versions file for 1.2b will look like:
     0857a87803d0c8a371e867bd7d58a782
     1cd99c06b44977edcb9281133f31007b
     f74256c0d403a6bb45c38b9ce42c783c
-
-We used a projectname with uppercase letters. This is respected by
-configuration files:
-
-    >>> zope_conf = os.path.join(package_dir, 'parts', 'etc', 'zope.conf')
-    >>> print open(zope_conf, 'rb').read()
-    # Identify the component configuration used to define the site:
-    site-definition ...GrokExample/parts/etc/site.zcml
-    ...
 
 The password given is stored SSHA encoded:
 
@@ -266,13 +266,13 @@ We can run tests:
     >>> print 'Test:\n' + output
     Test...
     Running tests at level 1
-    Running grokexample.BrowserLayer tests:
-      Set up grokexample.BrowserLayer in ... seconds.
+    Running grokexample.FanstaticLayer tests:
+      Set up grokexample.FanstaticLayer in ... seconds.
       Running:
     ...
       Ran 3 tests with 0 failures and 0 errors in ... seconds.
     Tearing down left over layers:
-      Tear down grokexample.BrowserLayer in ... seconds.
+      Tear down grokexample.FanstaticLayer in ... seconds.
     <BLANKLINE>
 
 Using the generated `buildout` script
@@ -285,16 +285,19 @@ first:
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
     >>> output = read_sh(cmd)
-    >>> print output
+    >>> print 'Test\n', output
+    Test
+    ...
     Develop: ...
     Updating app.
     Updating daemon.
-    Updating debug_ini.
-    Updating deploy_ini.
+    Updating site_zcml.
+    Updating zope_conf_debug.
+    Updating paster_ini_debug.
+    Updating zope_conf_deploy.
+    Updating paster_ini_deploy.
     Updating i18n.
     i18n: setting up i18n tools
-    Updating site_zcml.
-    Updating zope_conf.
     Updating mkdirs.
     Updating test.
     Updating zpasswd.

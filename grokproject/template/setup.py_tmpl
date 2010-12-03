@@ -29,6 +29,6 @@ ${long_description|nothing}""",
                         ],
       entry_points={
           'fanstatic.libraries': [
-              'foo = ${project}.resource:library',
+              'foo = ${project_lowercase}.resource:library',
           ]
       })

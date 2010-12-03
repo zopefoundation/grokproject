@@ -32,6 +32,10 @@ Check some basic information about the page you visit:
     >>> print browser.contents
     <html>
     <head>
+      <link rel="stylesheet" type="text/css"
+            href="http://localhost/fanstatic/foo/style.css" />
+      <script type="text/javascript"
+              src="http://localhost/fanstatic/foo/hello.js"></script>
     <base href="http://localhost/app/@@index" />
     <BLANKLINE>
     </head>
@@ -41,6 +45,7 @@ Check some basic information about the page you visit:
       <p>Your Grok application is up and running.
       Edit <code>${package}/app_templates/index.pt</code> to change
       this page.</p>
+      <img src="http://localhost/fanstatic/foo/evencaveman.jpg" />
     </body>
     </html>
     <BLANKLINE>

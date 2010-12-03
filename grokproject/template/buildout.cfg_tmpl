@@ -37,6 +37,8 @@ fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
 zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
 
 [versions]
+WebOb = 1.0
+zope.app.wsgi = 3.10.0
 # Override versions here.
 
 # Once groktoolkit 1.2 is released, remove this line:
