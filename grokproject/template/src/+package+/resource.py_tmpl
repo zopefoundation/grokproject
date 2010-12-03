@@ -1,7 +1,7 @@
-from hurry.resource import Library, ResourceInclusion
+from fanstatic import Library, ResourceInclusion
 
-foo = Library('foo', 'browser/resources/foo')
+library = Library('foo', 'browser/resources/foo')
 
-style = ResourceInclusion(foo, 'style.css')
+style = ResourceInclusion(library, 'style.css')
 
-hello = ResourceInclusion(foo, 'hello.js')
+hello = ResourceInclusion(library, 'hello.js')

@@ -22,13 +22,13 @@ ${long_description|nothing}""",
                         'grok',
                         'grokui.admin',
                         'z3c.testsetup',
-                        'hurry.resource[wsgi,publisher]',
-                        'hurry.zoperesource',
+                        'fanstatic',
+                        'zope.fanstatic',
                         'grokcore.startup',
                         # Add extra requirements here
                         ],
       entry_points={
-          'hurry.resource.libraries': [
-              'foo = ${project}.resource:foo',
+          'fanstatic.libraries': [
+              'foo = ${project}.resource:library',
           ]
       })
