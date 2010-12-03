@@ -1,5 +1,5 @@
 [DEFAULT]
-zope_conf = %(here)s/zope.conf
+zope_conf = %(here)s/zope.debug.conf
 
 [server:main]
 use = egg:Paste#http
@@ -7,7 +7,7 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = accesslogging evalexception resource_publisher resource_injection grok
+pipeline = accesslogging evalexception fanstatic grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
@@ -15,12 +15,10 @@ use = egg:Paste#translogger
 [filter:evalexception]
 use = egg:z3c.evalexception#ajax
 
-[filter:resource_publisher]
-use = egg:hurry.resource#publisher
-
-[filter:resource_injection]
-use = egg:hurry.resource#inject
-devmode = on
+[filter:fanstatic]
+use = egg:fanstatic#fanstatic
+devmode = $${zope_conf_debug:devmode}
+hashing = true
 
 [app:grok]
 use = egg:grokcore.startup#debug

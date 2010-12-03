@@ -31,6 +31,8 @@ site-definition $${site_zcml:output}
 # logfiles are setup in the debug.ini and deploy.ini files.
 </eventlog>
 
+devmode $${devmode}
+
 # Extra configuration lines can be added to zope_conf's extra option. Put for
 # instance productconf sections in here.
 $${zope_conf:extra}

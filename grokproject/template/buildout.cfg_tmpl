@@ -7,13 +7,14 @@ unzip = true
 parts =
     app
     daemon
-    debug_ini
-    deploy_ini
+    paster_ini_debug
+    paster_ini_deploy
     i18n
     mkdirs
     site_zcml
     test
-    zope_conf
+    zope_conf_debug
+    zope_conf_deploy
     zpasswd
     interactive_debugger
 # For backward compatibility, telling buildout not to throw away
@@ -28,12 +29,12 @@ versions = versions
 ${eggs_dir}
 extensions = buildout.dumppickedversions
              mr.developer
-auto-checkout = hurry.zoperesource
-                hurry.resource
+auto-checkout = fanstatic
+                zope.fanstatic
 
 [sources]
-hurry.resource = svn svn+ssh://svn.zope.org/repos/main/hurry.resource/branches/janjaapdriessen-resource-publisher
-hurry.zoperesource = svn svn+ssh://svn.zope.org/repos/main/hurry.zoperesource/branches/janjaapdriessen-wsgi
+fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
+zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
 
 [versions]
 # Override versions here.
@@ -57,14 +58,14 @@ arguments = serve $${buildout:parts-directory}/etc/deploy.ini
     --daemon --pid-file=$${buildout:directory}/var/daemon.pid
     --log-file=$${buildout:directory}/log/daemon.log
 
-[debug_ini]
+[paster_ini_debug]
 recipe = collective.recipe.template
 input = etc/debug.ini.in
 output = $${buildout:parts-directory}/etc/debug.ini
 host = 127.0.0.1
 port = 8080
 
-[deploy_ini]
+[paster_ini_deploy]
 recipe = collective.recipe.template
 input = etc/deploy.ini.in
 output = $${buildout:parts-directory}/etc/deploy.ini
@@ -98,15 +99,24 @@ eggs = ${egg}
 defaults = ['-v']
 
 [zope_conf]
-recipe = collective.recipe.template
 input = etc/zope.conf.in
-output = $${buildout:parts-directory}/etc/zope.conf
 filestorage = $${buildout:directory}/var/filestorage
 blobstorage = $${buildout:directory}/var/blobstorage
 logfiles = $${buildout:directory}/var/log
 # 'extra' is copied verbatim. Use it for product config sections and so.
 extra =
-  devmode on
+
+[zope_conf_debug]
+<= zope_conf
+recipe = collective.recipe.template
+output = $${buildout:parts-directory}/etc/zope.debug.conf
+devmode = on
+
+[zope_conf_deploy]
+<= zope_conf
+recipe = collective.recipe.template
+output = $${buildout:parts-directory}/etc/zope.deploy.conf
+devmode = off
 
 # This section is named so that the zpasswd utility is
 # called `zpasswd`
@@ -123,7 +133,7 @@ recipe = z3c.recipe.scripts
 eggs = ${egg}
 entry-points =
   interactive_debugger=grokcore.startup.startup:interactive_debug_prompt
-arguments = zope_conf="$${zope_conf:output}"
+arguments = zope_conf="$${zope_conf_debug:output}"
 
 # The [data] and [log] parts are still in here to instruct buildout to not
 # unintentionally throw away the parts/data and parts/log subdirectories
