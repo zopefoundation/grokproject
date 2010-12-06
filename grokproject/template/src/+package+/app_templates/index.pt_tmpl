@@ -8,6 +8,11 @@
   Edit <code>${package}/app_templates/index.pt</code> to change
   this page.</p>
 
-  <img tal:attributes="src context/++resource++foo/evencaveman.jpg"/>
+  <h2>In-template rendering of resources</h2>
+  <p>By using the name under which the library has been registered:</p>
+  <img tal:attributes="src context/++resource++${project_lowercase}/evencaveman.jpg"/>
+
+  <p>By using the 'static' directory:</p>
+  <img tal:attributes="src static/evencaveman.jpg"/>
 </body>
 </html>
