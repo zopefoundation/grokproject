@@ -1,6 +1,6 @@
 from fanstatic import Library, ResourceInclusion
 
-library = Library('foo', 'browser/resources/foo')
+library = Library('${project_lowercase}', 'static')
 
 style = ResourceInclusion(library, 'style.css')
 
