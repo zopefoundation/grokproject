@@ -31,10 +31,14 @@ extensions = buildout.dumppickedversions
              mr.developer
 auto-checkout = fanstatic
                 zope.fanstatic
+                grokcore.view
+                grokui.base
 
 [sources]
 fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
 zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
+grokcore.view = svn http://svn.zope.org/repos/main/grokcore.view/branches/1.13.5-without-static
+grokui.base = svn http://svn.zope.org/repos/main/grokui.base/branches/0.4.1-fanstatic
 
 [versions]
 WebOb = 1.0
