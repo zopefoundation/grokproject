@@ -29,6 +29,7 @@ versions = versions
 ${eggs_dir}
 extensions = buildout.dumppickedversions
              mr.developer
+always-checkout = true
 auto-checkout = fanstatic
                 zope.fanstatic
                 grokcore.view
