@@ -1,7 +1,7 @@
-from fanstatic import Library, ResourceInclusion
+from fanstatic import Library, Resource
 
 library = Library('${project_lowercase}', 'static')
 
-style = ResourceInclusion(library, 'style.css')
+style = Resource(library, 'style.css')
 
-hello = ResourceInclusion(library, 'hello.js')
+hello = Resource(library, 'hello.js')
