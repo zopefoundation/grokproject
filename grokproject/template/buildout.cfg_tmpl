@@ -2,7 +2,7 @@
 extends = ${version_info_url}
 extends-cache = extends-cache
 find-links = ${find_links_url}
-include-site-packages = false
+include-site-packages = ${include_site_packages}
 develop = .
 unzip = true
 parts =

@@ -23,7 +23,7 @@
       <!-- Replace the following directive if you do not want
            public access -->
       <grant permission="zope.View"
-             principal="zope.Everybody" />
+             principal="zope.Everybody" />${additional_grants|nothing}
       <role id="zope.Manager" title="Site Manager" />
       <role id="zope.Member" title="Site Member" />
       <grantAll role="zope.Manager" />

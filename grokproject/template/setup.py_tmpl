@@ -22,7 +22,7 @@ ${long_description|nothing}""",
                         'grok',
                         'grokui.admin',
                         'z3c.testsetup',
-                        'grokcore.startup',
+                        'grokcore.startup',${install_requires|nothing}
                         # Add extra requirements here
                         ],
       )

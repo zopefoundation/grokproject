@@ -4,8 +4,8 @@ Changes
 2.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Added include_site_packages, install_requires, and additional_grants
+  variables in the template for use in dolmenproject.
 
 2.2 (2010-11-26)
 ----------------

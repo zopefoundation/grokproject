@@ -104,6 +104,7 @@ class GrokProject(templates.Template):
 
         vars['package_directory'] = os.path.abspath(os.path.join(
                 os.getcwd(), vars['project']))
+        vars['include_site_packages'] = 'false'
 
         return vars
 
