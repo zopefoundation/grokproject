@@ -7,7 +7,7 @@ from grokproject import GrokProject
 
 project_name_re=re.compile('[a-zA-Z_][a-zA-Z0-9_]*')
 
-def main():
+def main(vars=GrokProject.vars, template_name='grok'):
     usage = "usage: %prog [options] PROJECT"
     parser = optparse.OptionParser(usage=usage)
     parser.add_option(
@@ -28,7 +28,7 @@ def main():
         help="Show grokproject version.")
 
     # Options that override the interactive part of filling the templates.
-    for var in GrokProject.vars:
+    for var in vars:
         option_name = '--'+var.name.replace('_', '-')
         if not parser.has_option(option_name):
             parser.add_option(
@@ -60,7 +60,7 @@ def main():
     # Process the options that override the interactive part of filling
     # the templates.
     extra_args = []
-    for var in GrokProject.vars:
+    for var in vars:
         supplied_value = getattr(options, var.name)
         if supplied_value is not None:
             extra_args.append('%s=%s' % (var.name, supplied_value))
@@ -76,7 +76,7 @@ def main():
         sys.exit(1)
 
     # Create the project.
-    exit_code = runner.run(option_args + ['-t', 'grok', project] + extra_args)
+    exit_code = runner.run(option_args + ['-t', template_name, project] + extra_args)
     sys.exit(exit_code)
 
 def get_version():

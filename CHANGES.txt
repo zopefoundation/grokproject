@@ -6,6 +6,8 @@ Changes
 
 - Added include_site_packages, install_requires, and additional_grants
   variables in the template for use in dolmenproject.
+  Use vars and template_main parameters in main function so it can be reused
+  in dolmenproject.
 
 2.2 (2010-11-26)
 ----------------
