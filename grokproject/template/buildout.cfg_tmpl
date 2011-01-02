@@ -1,5 +1,6 @@
 [buildout]
 extends = ${version_info_url}
+extends = http://svn.zope.org/repos/main/groktoolkit/trunk/grok.cfg
 extends-cache = extends-cache
 include-site-packages = false
 develop = .
@@ -33,13 +34,23 @@ always-checkout = true
 auto-checkout = fanstatic
                 zope.fanstatic
                 grokcore.view
+                grok
+                grokcore.site
+                grokcore.rest
+                grokcore.xmlrpc
+                grokcore.traverser
+                grokui.admin
                 grokui.base
 
 [sources]
 fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
 zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
-grokcore.view = svn http://svn.zope.org/repos/main/grokcore.view/branches/1.13.5-without-static
-grokui.base = svn http://svn.zope.org/repos/main/grokui.base/branches/0.4.1-fanstatic
+grok = svn http://svn.zope.org/repos/main/grok/trunk
+grokcore.view = svn http://svn.zope.org/repos/main/grokcore.view/trunk
+grokcore.site = svn http://svn.zope.org/repos/main/grokcore.site/trunk
+grokcore.rest = svn http://svn.zope.org/repos/main/grokcore.rest/trunk
+grokcore.xmlrpc = svn http://svn.zope.org/repos/main/grokcore.xmlrpc/trunk
+grokcore.traverser = svn http://svn.zope.org/repos/main/grokcore.traverser/trunk
 
 [versions]
 WebOb = 1.0
