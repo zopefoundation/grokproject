@@ -1,5 +1,5 @@
 [DEFAULT]
-zope_conf = %(here)s/zope.conf
+zope_conf = %(here)s/zope.deploy.conf
 
 [server:main]
 use = egg:Paste#http
@@ -7,13 +7,24 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = gzip grok
+pipeline = accesslogging gzip fanstatic grok
 
-[app:grok]
-use = egg:grokcore.startup
+[filter:accesslogging]
+use = egg:Paste#translogger
 
 [filter:gzip]
 use = egg:Paste#gzip
+
+[filter:fanstatic]
+use = egg:fanstatic#fanstatic
+devmode = $${zope_conf_deploy:devmode}
+bottom = true
+hashing = true
+mode = minified
+rollup = true
+
+[app:grok]
+use = egg:grokcore.startup
 
 # Logging configuration
 
