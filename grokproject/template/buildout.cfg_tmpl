@@ -27,7 +27,7 @@ versions = versions
 # (see .buildout/default.cfg in your home directory)
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
-extensions = buildout.dumppickedversions
+extensions += buildout.dumppickedversions
 
 [versions]
 # Override versions here.
