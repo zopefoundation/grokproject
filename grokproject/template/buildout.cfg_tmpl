@@ -49,6 +49,7 @@ grokcore.view = svn http://svn.zope.org/repos/main/grokcore.view/trunk
 WebOb = 1.0
 zope.app.wsgi = 3.10.0
 martian = 0.14
+megrok.layout = 1.2
 grokcore.json = 1.1
 grokcore.component = 2.2
 grokcore.content = 1.1
