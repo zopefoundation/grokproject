@@ -98,7 +98,6 @@ Let's check the contents:
     app.py
     app.txt
     app_templates
-    browser
     configure.zcml
     ftesting.zcml
     resource.py
