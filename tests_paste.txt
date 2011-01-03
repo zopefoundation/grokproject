@@ -13,13 +13,13 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> version = [
-    ... '--version-url=http://grok.zope.org/releaseinfo/1.2b/versions.cfg']
+    ... '--version-url=http://grok.zope.org/releaseinfo/1.2.1/versions.cfg']
     >>> sh(executable + opts + version + ['GrokExample'])
     ['...grokproject',
      '--user=a',
      '--passwd=a',
      '--eggs-dir=...grokproject-test-eggs',
-     '--version-url=http://grok.zope.org/releaseinfo/1.2b/versions.cfg',
+     '--version-url=http://grok.zope.org/releaseinfo/1.2.1/versions.cfg',
      'GrokExample']...
     Creating directory '...bin'.
     Creating directory '...parts'.
@@ -71,7 +71,7 @@ Let's check the contents:
     >>> package_dir = os.path.join(testdir, 'GrokExample')
     >>> print open(os.path.join(package_dir, 'buildout.cfg')).read()
     [buildout]
-    extends = http://grok.zope.org/releaseinfo/1.2b/versions.cfg
+    extends = http://grok.zope.org/releaseinfo/1.2.1/versions.cfg
     extends-cache = extends-cache
     include-site-packages = false
     develop = .
@@ -143,12 +143,12 @@ The eggs dir is filled now:
 
 The extends-cache directive results in cached versions of the referenced
 buildout files to support offline building. We know what the filename of the
-cached versions file for 1.2b will look like:
+cached versions file for 1.2.1 will look like:
 
     >>> ls(os.path.join(package_dir, 'extends-cache'))
-    0857a87803d0c8a371e867bd7d58a782
-    1cd99c06b44977edcb9281133f31007b
-    f74256c0d403a6bb45c38b9ce42c783c
+    1db36734c0226e6f922ac9bb3361f6d8
+    286c4c832f552bec68fcac956a6be5c6
+    2a2cf1415ca2d47decad204083d1482c
 
 The password given is stored SSHA encoded:
 
@@ -264,13 +264,13 @@ We can run tests:
     >>> print 'Test:\n' + output
     Test...
     Running tests at level 1
-    Running grokexample.FanstaticLayer tests:
-      Set up grokexample.FanstaticLayer in ... seconds.
+    Running grokexample.ZopeFanstaticBrowserLayer tests:
+      Set up grokexample.ZopeFanstaticBrowserLayer... in ... seconds.
       Running:
-    ...
-      Ran 3 tests with 0 failures and 0 errors in ... seconds.
+    .
+      Ran 1 tests with 0 failures and 0 errors in ... seconds.
     Tearing down left over layers:
-      Tear down grokexample.FanstaticLayer in ... seconds.
+      Tear down grokexample.ZopeFanstaticBrowserLayer in ... seconds.
     <BLANKLINE>
 
 Using the generated `buildout` script

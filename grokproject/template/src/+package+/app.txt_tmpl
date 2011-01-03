@@ -29,10 +29,6 @@ Check some basic information about the page you visit:
     >>> print browser.contents
     <html>
     <head>
-      <link rel="stylesheet" type="text/css"
-            href="http://localhost/fanstatic/${project_lowercase}/style.css" />
-      <script type="text/javascript"
-              src="http://localhost/fanstatic/${project_lowercase}/hello.js"></script>
     <base href="http://localhost/app/@@index" />
     <BLANKLINE>
     </head>

@@ -1,6 +1,5 @@
 [buildout]
 extends = ${version_info_url}
-extends = http://svn.zope.org/repos/main/groktoolkit/trunk/grok.cfg
 extends-cache = extends-cache
 include-site-packages = ${include_site_packages}
 develop = .
@@ -53,11 +52,16 @@ grokcore.xmlrpc = svn http://svn.zope.org/repos/main/grokcore.xmlrpc/trunk
 grokcore.traverser = svn http://svn.zope.org/repos/main/grokcore.traverser/trunk
 
 [versions]
-WebOb = 1.0
-zope.app.wsgi = 3.10.0
 # Override versions here.
 # This version pin can be removed after the next groktoolkit release.
-collective.recipe.scriptgen = 0.2
+WebOb = 1.0
+zope.app.wsgi = 3.10.0
+martian = 0.14
+grokcore.json = 1.1
+grokcore.component = 2.2
+grokcore.content = 1.1
+grokcore.security = 1.5
+grokcore.viewlet = 1.8
 
 [app]
 recipe = z3c.recipe.scripts
