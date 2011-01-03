@@ -6,5 +6,5 @@ class ${app_class_name}(grok.Application, grok.Container):
     pass
 
 class Index(grok.View):
-    # see app_templates/index.pt
-    pass
+    def update(self):
+        resource.style.need()
