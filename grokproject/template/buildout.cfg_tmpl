@@ -32,7 +32,6 @@ extensions += buildout.dumppickedversions
 always-checkout = true
 auto-checkout = fanstatic
                 zope.fanstatic
-                grokcore.view
                 grok
                 grokui.admin
                 grokui.base
@@ -41,7 +40,6 @@ auto-checkout = fanstatic
 fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
 zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
 grok = svn http://svn.zope.org/repos/main/grok/trunk
-grokcore.view = svn http://svn.zope.org/repos/main/grokcore.view/trunk
 
 [versions]
 # Override versions here.
@@ -55,6 +53,7 @@ grokcore.component = 2.2
 grokcore.content = 1.1
 grokcore.security = 1.5
 grokcore.viewlet = 1.8
+grokcore.view = 2.3
 grokcore.site = 1.5
 grokcore.rest = 1.0
 grokcore.xmlrpc = 1.0
