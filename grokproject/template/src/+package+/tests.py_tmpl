@@ -11,6 +11,10 @@ def test_suite():
     suite = unittest.TestSuite()
 
     app_test = doctest.DocFileSuite('app.txt',
+        optionflags = (
+            doctest.ELLIPSIS +
+            doctest.NORMALIZE_WHITESPACE +
+            doctest.REPORT_NDIFF),
         globs={'getRootFolder': browser_layer.getRootFolder})
     app_test.layer = browser_layer
 
