@@ -7,7 +7,11 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = gzip grok
+pipeline = accesslogging gzip grok
+
+[filter:accesslogging]
+use = egg:Paste#translogger
+setup_console_handler = false
 
 [app:grok]
 use = egg:grokcore.startup

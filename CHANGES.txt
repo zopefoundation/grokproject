@@ -1,6 +1,11 @@
 Changes
 =======
 
+2.2.1 (unreleased)
+------------------
+
+- The accesslogging filter in deploy.ini was lost and refound.
+
 2.2 (2010-11-26)
 ----------------
 
