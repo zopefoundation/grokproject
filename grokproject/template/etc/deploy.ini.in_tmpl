@@ -11,6 +11,7 @@ pipeline = accesslogging gzip fanstatic grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
+setup_console_handler = False
 
 [filter:gzip]
 use = egg:Paste#gzip
