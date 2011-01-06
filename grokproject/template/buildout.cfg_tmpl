@@ -1,5 +1,7 @@
 [buildout]
 extends = ${version_info_url}
+# XXX do not use groktoolkit trunk for release.
+extends = http://svn.zope.org/repos/main/groktoolkit/trunk/grok.cfg
 extends-cache = extends-cache
 include-site-packages = ${include_site_packages}
 develop = .
@@ -30,34 +32,17 @@ ${eggs_dir}
 extensions += buildout.dumppickedversions
              mr.developer
 always-checkout = true
-auto-checkout = fanstatic
-                zope.fanstatic
-                grok
+auto-checkout = grok
                 grokui.admin
                 grokui.base
 
 [sources]
-fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
-zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
 grok = svn http://svn.zope.org/repos/main/grok/trunk
 
 [versions]
 # Override versions here.
 # This version pin can be removed after the next groktoolkit release.
-WebOb = 1.0
-zope.app.wsgi = 3.10.0
-martian = 0.14
-megrok.layout = 1.2
-grokcore.json = 1.1
-grokcore.component = 2.2
-grokcore.content = 1.1
-grokcore.security = 1.5
-grokcore.viewlet = 1.8
 grokcore.view = 2.3
-grokcore.site = 1.5
-grokcore.rest = 1.0
-grokcore.xmlrpc = 1.0
-grokcore.traverser = 1.0
 
 [app]
 recipe = z3c.recipe.scripts
