@@ -21,13 +21,8 @@ ${long_description|nothing}""",
       install_requires=['setuptools',
                         'grok',
                         'grokui.admin',
-                        'fanstatic',
-                        'zope.fanstatic',
+                        'z3c.testsetup',
                         'grokcore.startup',${install_requires|nothing}
                         # Add extra requirements here
                         ],
-      entry_points={
-          'fanstatic.libraries': [
-              '${project_lowercase} = ${project_lowercase}.resource:library',
-          ]
-      })
+      )

@@ -31,7 +31,9 @@ site-definition $${site_zcml:output}
 # logfiles are setup in the debug.ini and deploy.ini files.
 </eventlog>
 
-devmode $${devmode}
+# Comment this line to disable developer mode.  This should be done in
+# production
+devmode on
 
 # Extra configuration lines can be added to zope_conf's extra option. Put for
 # instance productconf sections in here.

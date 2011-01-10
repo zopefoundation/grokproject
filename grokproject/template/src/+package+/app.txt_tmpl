@@ -1,6 +1,9 @@
 Do a functional doctest test on the app.
 ========================================
 
+.. :doctest:
+.. :layer: ${package}.tests.browser_layer
+
 Let's first create an instance of ${app_class_name} at the top level:
 
     >>> from ${package}.app import ${app_class_name}
@@ -29,14 +32,15 @@ Check some basic information about the page you visit:
     >>> print browser.contents
     <html>
     <head>
-    <link rel="stylesheet" type="text/css" href="http://localhost/fanstatic/grokexample/style.css" />
     <base href="http://localhost/app/@@index" />
+    <BLANKLINE>
     </head>
     <body>
       <h1>Congratulations!</h1>
+    <BLANKLINE>
       <p>Your Grok application is up and running.
       Edit <code>${package}/app_templates/index.pt</code> to change
       this page.</p>
-      <img src="http://localhost/fanstatic/${project_lowercase}/evencaveman.jpg" />
     </body>
     </html>
+    <BLANKLINE>

@@ -1,10 +1,14 @@
+from base64 import urlsafe_b64encode
+from paste.script.templates import var
+from random import randint
 import subprocess
 import codecs
+import logging
 import os
+import pkg_resources
+import shutil
 import sys
-from base64 import urlsafe_b64encode
-
-from paste.script.templates import var
+import tempfile
 
 try:
     from hashlib import sha1

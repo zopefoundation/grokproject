@@ -72,7 +72,6 @@ class GrokProject(templates.Template):
             # Escape values that go in site.zcml.
             vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
         vars['app_class_name'] = vars['project'].capitalize()
-        vars['project_lowercase'] = vars['project'].lower()
 
         # Handling the version.cfg file.
         version_url = vars.get('version_url')
@@ -128,7 +127,7 @@ class GrokProject(templates.Template):
             sys.exit(1)
         except IOError, e:
             # Some serious problem: no connect to server...
-            print "Error: cannot download required %s" % url
+            print "Error: cannot download required %s" % version_info_url
             print "Server may be down.  Please try again later."
             sys.exit(1)
         return contents

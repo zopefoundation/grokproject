@@ -36,9 +36,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=[
-        'setuptools',
-        'PasteScript>=1.6'],
+    install_requires=['PasteScript>=1.6'],
     extras_require=dict(tests=['zope.testing',]),
     test_suite='tests.test_suite',
     entry_points={

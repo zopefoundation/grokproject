@@ -1,22 +1,10 @@
-import unittest
-import doctest
-
-from zope.fanstatic.testing import ZopeFanstaticBrowserLayer
+import os.path
+import z3c.testsetup
+from zope.app.wsgi.testlayer import BrowserLayer
 
 import ${package}
 
-browser_layer = ZopeFanstaticBrowserLayer(${package})
+browser_layer = BrowserLayer(${package})
 
-def test_suite():
-    suite = unittest.TestSuite()
-
-    app_test = doctest.DocFileSuite('app.txt',
-        optionflags = (
-            doctest.ELLIPSIS +
-            doctest.NORMALIZE_WHITESPACE +
-            doctest.REPORT_NDIFF),
-        globs={'getRootFolder': browser_layer.getRootFolder})
-    app_test.layer = browser_layer
-
-    suite.addTest(app_test)
-    return suite
+test_suite = z3c.testsetup.register_all_tests(
+    '${package}', globs={'getRootFolder': browser_layer.getRootFolder})
