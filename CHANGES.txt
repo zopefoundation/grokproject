@@ -18,6 +18,11 @@ Changes
   Use vars and template_main parameters in main function so it can be reused
   in dolmenproject.
 
+2.2.1 (2011-01-05)
+------------------
+
+- The accesslogging filter in deploy.ini was lost and refound.
+
 2.2 (2010-11-26)
 ----------------
 
