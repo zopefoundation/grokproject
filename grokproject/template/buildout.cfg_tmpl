@@ -34,7 +34,6 @@ extensions += buildout.dumppickedversions
 always-checkout = true
 auto-checkout = grok
                 grokui.admin
-                grokui.base
 
 [sources]
 grok = svn http://svn.zope.org/repos/main/grok/trunk
@@ -43,6 +42,7 @@ grok = svn http://svn.zope.org/repos/main/grok/trunk
 # Override versions here.
 # This version pin can be removed after the next groktoolkit release.
 grokcore.view = 2.3
+grokui.base = 0.5
 
 [app]
 recipe = z3c.recipe.scripts
