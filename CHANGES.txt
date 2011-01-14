@@ -5,6 +5,7 @@ Changes
 ----------------
 
 - z3c.testsetup has been removed in favor of manual registration of tests.
+  Tests have been moved to 'tests' subdirectory.
   See tests.py for more information on how to register tests.
 
 - The 'static' directory is no longer grokked and registered as a
@@ -28,6 +29,20 @@ Changes
   setup.py. If you are using z3c.autoinclude in your configure.zcml, the
   registrations of zope.fanstatic will be picked up automatically. If you
   do not use z3c.autoinclude, include zope.fanstatic in your configure.zcml.
+
+- Split up zope.conf into zope.debug.conf and zope.deploy.conf, in order to
+  pick these up from the paster configs debug.ini and deploy.ini.
+
+  In debug/devmode, grok picks up changes in page templates and fanstatic
+  recalculates resources URLs.
+
+  In non-dev/deploy mode grok caches page templates and fanstatic caches
+  resource URLs.
+
+  The goal is to quickly see the difference between debug.ini and deploy.ini
+  without having to mess around in parts/etc.
+
+
 
 .. _`fanstatic`: http://fanstatic.org
 
