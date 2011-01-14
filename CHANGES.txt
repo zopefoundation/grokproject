@@ -1,6 +1,36 @@
 Changes
 =======
 
+2.4 (unreleased)
+----------------
+
+- z3c.testsetup has been removed in favor of manual registration of tests.
+  See tests.py for more information on how to register tests.
+
+- The 'static' directory is no longer grokked and registered as a
+  DirectoryResource. It has been superseded by `fanstatic`_.
+
+  In order to update your current grok project to the most recent grokproject,
+  you need to register a fanstatic Library for the `static` directory.
+
+  Include the following code in ``resource.py``::
+
+    from fanstatic import Library
+    library = Library('$name_of_your_project', 'static')
+
+  in the setup.py of your project, add the following entry point::
+
+    'fanstatic.libraries': [
+        '$name_of_your_project = $name_of_your_project.resource:library',
+    ]
+
+  Also add `zope.fanstatic` and `fanstatic` to `install_requires` in your
+  setup.py. If you are using z3c.autoinclude in your configure.zcml, the
+  registrations of zope.fanstatic will be picked up automatically. If you
+  do not use z3c.autoinclude, include zope.fanstatic in your configure.zcml.
+
+.. _`fanstatic`: http://fanstatic.org
+
 2.3 (unreleased)
 ----------------
 
