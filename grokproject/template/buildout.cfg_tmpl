@@ -34,9 +34,11 @@ extensions += buildout.dumppickedversions
 always-checkout = true
 auto-checkout = grok
                 grokui.admin
+                fanstatic
 
 [sources]
 grok = svn http://svn.zope.org/repos/main/grok/trunk
+fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
 
 [versions]
 # Override versions here.

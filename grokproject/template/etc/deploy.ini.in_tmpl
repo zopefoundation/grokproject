@@ -18,11 +18,11 @@ use = egg:Paste#gzip
 
 [filter:fanstatic]
 use = egg:fanstatic#fanstatic
-devmode = $${zope_conf_deploy:devmode}
 bottom = true
 hashing = true
 mode = minified
 rollup = true
+recompute_hashes = false
 
 [app:grok]
 use = egg:grokcore.startup
