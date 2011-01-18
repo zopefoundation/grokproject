@@ -17,7 +17,7 @@ use = egg:z3c.evalexception#ajax
 
 [filter:fanstatic]
 use = egg:fanstatic#fanstatic
-hashing = true
+versioning = true
 recompute_hashes = true
 
 [app:grok]
