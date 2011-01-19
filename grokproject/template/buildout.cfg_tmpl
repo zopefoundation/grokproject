@@ -34,17 +34,18 @@ extensions += buildout.dumppickedversions
 always-checkout = true
 auto-checkout = grok
                 grokui.admin
-                fanstatic
+                zope.errorview
 
 [sources]
 grok = svn http://svn.zope.org/repos/main/grok/trunk
-fanstatic = hg http://bitbucket.org/fanstatic/fanstatic
+zope.errorview = svn http://svn.zope.org/repos/main/zope.errorview/trunk
 
 [versions]
 # Override versions here.
 # This version pin can be removed after the next groktoolkit release.
 grokcore.view = 2.3
 grokui.base = 0.5
+fanstatic = 0.10
 
 [app]
 recipe = z3c.recipe.scripts

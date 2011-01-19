@@ -20,7 +20,7 @@ use = egg:Paste#gzip
 use = egg:fanstatic#fanstatic
 bottom = true
 versioning = true
-mode = minified
+minified = true
 rollup = true
 recompute_hashes = false
 
