@@ -1,7 +1,10 @@
 import grok
 
+from ${package} import resource
+
 class ${app_class_name}(grok.Application, grok.Container):
     pass
 
 class Index(grok.View):
-    pass # see app_templates/index.pt
+    def update(self):
+        resource.style.need()
