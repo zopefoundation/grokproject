@@ -34,10 +34,12 @@ extensions += buildout.dumppickedversions
 always-checkout = true
 auto-checkout = grok
                 grokui.admin
+                zope.fanstatic
                 zope.errorview
 
 [sources]
 grok = svn http://svn.zope.org/repos/main/grok/trunk
+zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
 zope.errorview = svn http://svn.zope.org/repos/main/zope.errorview/trunk
 
 [versions]

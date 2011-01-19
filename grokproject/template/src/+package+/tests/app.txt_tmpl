@@ -29,7 +29,7 @@ Check some basic information about the page you visit:
     >>> print browser.contents
     <html>
     <head>
-    <link rel="stylesheet" type="text/css" href="http://localhost/fanstatic/grokexample/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://localhost/fanstatic/${project_lowercase}/style.css" />
     <base href="http://localhost/app/@@index" />
     </head>
     <body>

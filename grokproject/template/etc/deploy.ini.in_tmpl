@@ -1,5 +1,5 @@
 [DEFAULT]
-zope_conf = %(here)s/zope.conf
+zope_conf = %(here)s/zope.deploy.conf
 
 [server:main]
 use = egg:Paste#http
@@ -11,7 +11,10 @@ pipeline = accesslogging gzip fanstatic grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
-setup_console_handler = false
+setup_console_handler = False
+
+[filter:gzip]
+use = egg:Paste#gzip
 
 [filter:fanstatic]
 use = egg:fanstatic#fanstatic
@@ -20,9 +23,6 @@ versioning = true
 minified = true
 rollup = true
 recompute_hashes = false
-
-[filter:gzip]
-use = egg:Paste#gzip
 
 [app:grok]
 use = egg:grokcore.startup

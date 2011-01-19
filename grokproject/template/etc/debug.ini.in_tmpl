@@ -1,5 +1,5 @@
 [DEFAULT]
-zope_conf = %(here)s/zope.conf
+zope_conf = %(here)s/zope.debug.conf
 
 [server:main]
 use = egg:Paste#http
@@ -7,7 +7,7 @@ host = $${:host}
 port = $${:port}
 
 [pipeline:main]
-pipeline = accesslogging fanstatic evalexception grok
+pipeline = accesslogging evalexception fanstatic grok
 
 [filter:accesslogging]
 use = egg:Paste#translogger
