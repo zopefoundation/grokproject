@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.4 (unreleased)
+2.4 (2011-01-20)
 ----------------
 
 - z3c.testsetup has been removed in favor of manual registration of tests.
