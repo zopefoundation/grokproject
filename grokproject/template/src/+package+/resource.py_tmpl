@@ -1,0 +1,5 @@
+from fanstatic import Library, Resource
+
+library = Library('${project_lowercase}', 'static')
+
+style = Resource(library, 'style.css')
