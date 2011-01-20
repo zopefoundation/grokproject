@@ -1,7 +1,5 @@
 [buildout]
 extends = ${version_info_url}
-# XXX do not use groktoolkit trunk for release.
-extends = http://svn.zope.org/repos/main/groktoolkit/trunk/grok.cfg
 extends-cache = extends-cache
 include-site-packages = ${include_site_packages}
 develop = .
@@ -30,24 +28,9 @@ versions = versions
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
 extensions += buildout.dumppickedversions
-             mr.developer
-always-checkout = true
-auto-checkout = grok
-                grokui.admin
-                zope.fanstatic
-                zope.errorview
-
-[sources]
-grok = svn http://svn.zope.org/repos/main/grok/trunk
-zope.fanstatic = svn http://svn.zope.org/repos/main/zope.fanstatic/trunk
-zope.errorview = svn http://svn.zope.org/repos/main/zope.errorview/trunk
 
 [versions]
 # Override versions here.
-# This version pin can be removed after the next groktoolkit release.
-grokcore.view = 2.3
-grokui.base = 0.5
-fanstatic = 0.10
 
 [app]
 recipe = z3c.recipe.scripts
