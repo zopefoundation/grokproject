@@ -11,12 +11,11 @@ Then use paster. Eggs are placed in our freshly created eggs directory:
     >>> # Use a specific grok version, because 'current' will change at some
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
-    >>> opts = ['--use-distribute=True', '--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
+    >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> version = [
     ... '--version-url=http://grok.zope.org/releaseinfo/1.3/versions.cfg']
     >>> sh(executable + opts + version + ['GrokExample'])
     ['...grokproject',
-     '--use-distribute=True',
      '--user=a',
      '--passwd=a',
      '--eggs-dir=...grokproject-test-eggs',
