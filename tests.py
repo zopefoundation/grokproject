@@ -121,7 +121,7 @@ def test_suite():
     suite = []
     suite.append(
         doctest.DocFileSuite(
-            'tests_paste.txt',
+            'tests.txt',
             optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE,
             globs=globs,
             setUp=setup,
