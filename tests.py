@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Grabs the tests in doctest
 
@@ -13,8 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-
-from zope.testing import doctest
+import doctest
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 SHORTTESTFILE = os.path.join(os.path.dirname(__file__), 'shorttests')
@@ -61,10 +59,6 @@ def cat(*args):
     else:
         print 'No file named %s' % filename
 
-def touch(*args, **kwargs):
-    filename = os.path.join(*args)
-    open(filename, 'w').write(kwargs.get('data',''))
-
 def shorttests():
     return os.path.exists(SHORTTESTFILE)
 
@@ -89,40 +83,6 @@ def teardown(test):
     maybe_rmdir(test.globs['eggsdir'])
     shutil.rmtree(test.globs['testdir'])
 
-def doc_suite(package_dir):
-    """Returns a test suite"""
-    suite = []
-    flags = (doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE |
-             doctest.REPORT_ONLY_FIRST_FAILURE)
-
-    if package_dir not in sys.path:
-        sys.path.append(package_dir)
-
-    tests = [os.path.join(package_dir, filename)
-            for filename in [
-                'tests_paste.txt',
-                ]]
-    globs = {
-        'ls': ls,
-        'cd': cd,
-        'cat': cat,
-        'touch': touch,
-        'sh': sh,
-        'read_sh': read_sh,
-        'current_dir': CURRENT_DIR,
-        }
-
-    for test in tests:
-        suite.append(
-            doctest.DocFileSuite(
-                test,
-                optionflags=flags,
-                globs=globs,
-                setUp=setup,
-                tearDown=teardown,
-                module_relative=False
-                ))
-    return unittest.TestSuite(suite)
 
 def show_shorttests_message():
     if shorttests():
@@ -147,9 +107,24 @@ def show_shorttests_message():
         print
 
 def test_suite():
-    """returns the test suite"""
     show_shorttests_message()
-    return doc_suite(CURRENT_DIR)
 
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')
+    globs = {
+        'ls': ls,
+        'cd': cd,
+        'cat': cat,
+        'sh': sh,
+        'read_sh': read_sh,
+        'current_dir': CURRENT_DIR,
+        }
+
+    suite = []
+    suite.append(
+        doctest.DocFileSuite(
+            'tests_paste.txt',
+            optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE,
+            globs=globs,
+            setUp=setup,
+            tearDown=teardown,
+            ))
+    return unittest.TestSuite(suite)
