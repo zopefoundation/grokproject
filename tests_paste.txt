@@ -5,16 +5,15 @@ Go to a fresh test directory:
 
     >>> cd(testdir)
 
-Then use paster. Eggs are placed in our freshly created eggs directory:
+Eggs are placed in our freshly created eggs directory:
 
     >>> import os.path
     >>> # Use a specific grok version, because 'current' will change at some
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
-    >>> version = [
-    ... '--version-url=http://grok.zope.org/releaseinfo/1.3/versions.cfg']
-    >>> sh(executable + opts + version + ['GrokExample'])
+    >>> opts += ['--version-url=http://grok.zope.org/releaseinfo/1.3/versions.cfg']
+    >>> sh(executable + opts + ['GrokExample'])
     ['...grokproject',
      '--user=a',
      '--passwd=a',
@@ -308,3 +307,18 @@ first:
     <BLANKLINE>
     *************** /PICKED VERSIONS ***************
     <BLANKLINE>
+
+Invalid project names
+---------------------
+
+We check for invalid project names:
+
+    >>> sh(executable + opts + ['360profile'])
+    [...]
+    Error: The chosen project name is not a valid package name: 360profile.
+    Please choose a different project name.
+
+    >>> sh(executable + opts + ['profile'])
+    [...]
+    Error: The package 'profile' is already on sys.path.
+    Please choose a different project name.

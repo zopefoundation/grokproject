@@ -4,7 +4,7 @@ Changes
 2.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Better checks and tests for faulty project names.
 
 
 2.4 (2011-01-20)

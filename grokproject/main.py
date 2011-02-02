@@ -5,7 +5,7 @@ import optparse
 import re
 from grokproject import GrokProject
 
-project_name_re=re.compile('[a-zA-Z_][a-zA-Z0-9_]*')
+project_name_re=re.compile('[A-z_][A-z0-9_]*')
 
 def main(vars=GrokProject.vars, template_name='grok'):
     usage = "usage: %prog [options] PROJECT"
@@ -68,10 +68,22 @@ def main(vars=GrokProject.vars, template_name='grok'):
         extra_args.append('version_url=%s' % options.version_url)
 
     # Assert that the project name is a valid Python identifier.
-    if not (project_name_re.match(project).group() == project):
+    if not project_name_re.match(project):
         print
         print "Error: The chosen project name is not a valid " \
               "package name: %s." % project
+        print "Please choose a different project name."
+        sys.exit(1)
+
+    existing = False
+    try:
+        __import__(project)
+        existing = True
+    except ImportError:
+        pass
+    if existing:
+        print
+        print "Error: The package '%s' is already on sys.path." % project
         print "Please choose a different project name."
         sys.exit(1)
 
