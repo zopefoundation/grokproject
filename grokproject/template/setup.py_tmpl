@@ -7,7 +7,7 @@ setup(name=${repr(project)},
       description="${description|nothing}",
       long_description="""\
 ${long_description|nothing}""",
-      # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      # Get strings from http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[],
       keywords=${repr(keywords)|empty},
       author=${repr(author)|empty},
