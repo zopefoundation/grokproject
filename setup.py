@@ -37,7 +37,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['PasteScript>=1.6'],
-    extras_require=dict(tests=['zope.testing',]),
     test_suite='tests.test_suite',
     entry_points={
         'console_scripts': ['grokproject = grokproject:main'],
