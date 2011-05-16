@@ -55,13 +55,13 @@ keys = eventlog, accesslog
 
 [handler_eventlog]
 class = FileHandler
-args = (os.path.join(r'$${buildout:directory}', 'log', 'event.log'), 'a')
+args = (os.path.join(r'$${buildout:directory}', 'var', 'log', 'event.log'), 'a')
 level = NOTSET
 formatter = generic
 
 [handler_accesslog]
 class = FileHandler
-args = (os.path.join(r'$${buildout:directory}', 'log', 'accesslog.log'), 'a')
+args = (os.path.join(r'$${buildout:directory}', 'var', 'log', 'accesslog.log'), 'a')
 level = INFO
 formatter = accesslog
 

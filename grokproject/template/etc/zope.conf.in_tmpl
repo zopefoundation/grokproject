@@ -28,7 +28,9 @@ site-definition $${site_zcml:output}
 </zodb>
 
 <eventlog>
-# logfiles are setup in the debug.ini and deploy.ini files.
+# This section is intentionally left empty as acces logging and error
+# logging are handled by paster. In other words, Grok itself is setup not
+# to do logging. Logfiles are setup in the debug.ini and deploy.ini files.
 </eventlog>
 
 devmode $${devmode}
