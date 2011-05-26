@@ -7,6 +7,12 @@ Changes
 - There was an inconsistency where the various logfiles we placed. Fixed the
   situation by using the intended "{buildout}/var/log" location throughout.
 
+- Remove the ``log`` and ``data`` part stubs that were left for backwards
+  compatibility. Deprecation period is over. NOTE: if you are to update an
+  existing project by replacing your ``buildout.cfg`` with that of a newly
+  generated project, please make sure there is no important data ``data`` and
+  ``log`` subdirectories left!
+s
 2.5 (2011-02-02)
 ----------------
 
