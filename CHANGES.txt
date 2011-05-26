@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.6 (unreleased)
+2.6 (2011-05-26)
 ----------------
 
 - There was an inconsistency where the various logfiles we placed. Fixed the
@@ -12,7 +12,7 @@ Changes
   existing project by replacing your ``buildout.cfg`` with that of a newly
   generated project, please make sure there is no important data ``data`` and
   ``log`` subdirectories left!
-s
+
 2.5 (2011-02-02)
 ----------------
 
