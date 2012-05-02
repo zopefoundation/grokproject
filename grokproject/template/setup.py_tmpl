@@ -23,6 +23,7 @@ ${long_description|nothing}""",
                         'grokui.admin',
                         'fanstatic',
                         'zope.fanstatic',
+                        'grokcore.chameleon',
                         'grokcore.startup',${install_requires|nothing}
                         # Add extra requirements here
                         ],
