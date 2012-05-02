@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.7 (unreleased)
+2.7 (2012-05-02)
 ----------------
 
 - Include grokcore.chameleon. Have the generated index view template be
