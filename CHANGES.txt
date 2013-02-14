@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.8 (unreleased)
+2.8 (2013-02-13)
 ----------------
 
 - Update bootstrap.py (for both the grokproject buildout *and* the project
