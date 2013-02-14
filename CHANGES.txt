@@ -4,8 +4,8 @@ Changes
 2.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Update bootstrap.py (for both the grokproject buildout *and* the project
+  template) to use zc.buildout <2.0dev.
 
 2.7 (2012-05-02)
 ----------------
