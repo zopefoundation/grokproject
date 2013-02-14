@@ -4,8 +4,8 @@ Changes
 2.9 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Fix the brown-paper-bag 2.8 release where not all files necessary for the
+  source distribution were included.
 
 2.8 (2013-02-13)
 ----------------
