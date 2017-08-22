@@ -12,7 +12,8 @@ from grokproject.utils import get_ssha_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
-GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
+GROK_BASE_URL = 'https://raw.githubusercontent.com/prsephton/'
+GROK_RELEASE_URL = GROK_BASE_URL + 'grokproject/master/versions/'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
