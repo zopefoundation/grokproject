@@ -14,10 +14,12 @@ from grokproject.utils import exist_buildout_default_file
 
 #  Retrieve the currently checked out git source from the git configuration
 # and figure out from that from whence we can download our versions.cfg
-base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-base = open(os.path.join(base, '.git', 'config')).read()
-base = base[base.find('url = ')+6:base.find('.git')]
-base = base.replace('github.com', 'raw.githubusercontent.com')
+# base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+# base = open(os.path.join(base, '.git', 'config')).read()
+# base = base[base.find('url = ')+6:base.find('.git')]
+# base = base.replace('github.com', 'raw.githubusercontent.com')
+
+base = 'https://raw.githubusercontent.com/prsephton/grokproject'
 GROK_RELEASE_URL = base + '/master/versions/'
 
 class GrokProject(templates.Template):
