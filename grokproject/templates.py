@@ -12,8 +12,13 @@ from grokproject.utils import get_ssha_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
-GROK_BASE_URL = 'https://raw.githubusercontent.com/prsephton/'
-GROK_RELEASE_URL = GROK_BASE_URL + 'grokproject/master/versions/'
+#  Retrieve the currently checked out git source from the git configuration
+# and figure out from that from whence we can download our versions.cfg
+base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+base = open(os.path.join(base, '.git', 'config')).read()
+base = base[base.find('url = ')+6:base.find('.git')]
+base = base.replace('github.com', 'raw.githubusercontent.com')
+GROK_RELEASE_URL = base + '/master/versions/'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
