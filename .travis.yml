@@ -2,8 +2,7 @@ language: python
 python:
     - 2.7
 install:
-    - virtualenv .
-    - bin/pip install -UIr requirements.txt
+    - python ./bootstrap.py
     - bin/buildout
 script:
     - bin/test -v1
