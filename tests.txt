@@ -287,7 +287,7 @@ first:
 
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
-    >>> output = read_sh(cmd)
+    >>> output = read_sh(cmd, opts=['-s'])
     >>> print output
     Develop: ...
     Updating app.
