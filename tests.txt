@@ -11,9 +11,17 @@ Eggs are placed in our freshly created eggs directory:
     >>> # Use a specific grok version, because 'current' will change at some
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
+
+When we have merged the PR, this will need to change
+
     >>> base = open(os.path.join(current_dir, '.git', 'config')).read()
     >>> base = base[base.find('url = ')+6:base.find('.git')]
     >>> base = base.replace('github.com', 'raw.githubusercontent.com')
+
+We temporarily hard code 'prsephton/grokproject' since the version info does not
+yet exist in 'zopefoundation/grokproject' until after the PR merge
+
+    >>> base = 'https://raw.githubusercontent.com/prsephton/grokproject'
     >>> cver = open(os.path.join(current_dir,'versions','current')).read().strip()
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> opts += ['--version-url='+base+'/master/versions/'+cver+'/versions.cfg']
