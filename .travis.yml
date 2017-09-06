@@ -2,8 +2,10 @@ language: python
 python:
     - 2.7
 install:
+    - virtualenv --no-site-packages env
+    - source env/bin/activate
     - python ./bootstrap.py
-    - bin/buildout
+    - bin/buildout -s
 script:
     - bin/test -v1
 notifications:
