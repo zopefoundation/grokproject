@@ -1,7 +1,16 @@
+from __future__ import print_function
 import sys
 import os
-import urllib2
-import urlparse
+try:
+    import urllib2
+    import urlparse
+    from urlparse import urljoin
+    from urllib2 import HTTPError, urlopen
+except ImportError:
+    import urllib as urllib2
+    from urllib.parse import urlparse, urljoin
+    from urllib.error import HTTPError
+    from urllib.request import urlopen
 import xml.sax.saxutils
 from paste.script import templates
 from paste.script.templates import NoDefault
@@ -57,10 +66,9 @@ class GrokProject(templates.Template):
 
     def check_vars(self, vars, cmd):
         if vars['package'] in ('grok', 'zope'):
-            print
-            print "Error: The chosen project name results in an invalid " \
-                  "package name: %s." % vars['package']
-            print "Please choose a different project name."
+            print("Error: The chosen project name results in an invalid " \
+                              "package name: %s." % vars['package'])
+            print("Please choose a different project name.")
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
@@ -78,7 +86,10 @@ class GrokProject(templates.Template):
         vars['passwd'] = get_ssha_encoded_string(vars['passwd'])
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
-            vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
+            if isinstance(vars[var_name], str):
+                vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
+            else:
+                vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name].decode())
         vars['app_class_name'] = vars['project'].capitalize()
         vars['project_lowercase'] = vars['project'].lower()
 
@@ -86,10 +97,10 @@ class GrokProject(templates.Template):
         version_url = vars.get('version_url')
         find_links_url = ''
         if version_url is None:
-            print "Determining current grok version..."
+            print("Determining current grok version...")
             # If no version URL was specified, we look up the current
             # version first and construct a URL.
-            current_info_url = urlparse.urljoin(GROK_RELEASE_URL, 'current')
+            current_info_url = urljoin(GROK_RELEASE_URL, 'current')
             version = self.download(current_info_url).strip().replace(
                     'grok-', '').replace('.cfg', '')
             version_url = GROK_RELEASE_URL + version + '/versions.cfg'
@@ -128,17 +139,21 @@ class GrokProject(templates.Template):
         """
         contents = None
         try:
-            contents = urllib2.urlopen(url).read()
-        except urllib2.HTTPError:
+            contents = urlopen(url).read()
+        except HTTPError:
             # Some 404 or similar happened...
-            print "Error: cannot download required %s" % url
-            print "Maybe you specified a non-existing version?"
+            print("Error: cannot download required %s" % url)
+            print("Maybe you specified a non-existing version?")
             sys.exit(1)
-        except IOError, e:
+        except IOError as e:
             # Some serious problem: no connect to server...
-            print "Error: cannot download required %s" % url
-            print "Server may be down.  Please try again later."
+            print("Error: cannot download required %s" % url)
+            print("Server may be down.  Please try again later.")
             sys.exit(1)
+        if isinstance(contents, str):
+            contents = xml.sax.saxutils.quoteattr(contents)
+        else:
+            contents = xml.sax.saxutils.quoteattr(contents.decode())
         return contents
 
     def post(self, command, output_dir, vars):

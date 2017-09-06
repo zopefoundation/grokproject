@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 import pkg_resources
 from paste.script import command
@@ -38,7 +39,7 @@ def main(vars=GrokProject.vars, template_name='grok'):
     options, args = parser.parse_args()
 
     if options.version:
-        print get_version()
+        print(get_version())
         return 0
 
     if len(args) != 1:
@@ -70,9 +71,9 @@ def main(vars=GrokProject.vars, template_name='grok'):
     # Assert that the project name is a valid Python identifier.
     if not project_name_re.match(project):
         print
-        print "Error: The chosen project name is not a valid " \
-              "package name: %s." % project
-        print "Please choose a different project name."
+        print("Error: The chosen project name is not a valid " \
+              "package name: %s." % project)
+        print("Please choose a different project name.")
         sys.exit(1)
 
     existing = False
@@ -83,8 +84,8 @@ def main(vars=GrokProject.vars, template_name='grok'):
         pass
     if existing:
         print
-        print "Error: The package '%s' is already on sys.path." % project
-        print "Please choose a different project name."
+        print("Error: The package '%s' is already on sys.path." % project)
+        print("Please choose a different project name.")
         sys.exit(1)
 
     # Create the project.

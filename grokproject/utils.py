@@ -55,10 +55,10 @@ def get_ssha_encoded_string(password):
     cannot depend on that package.
     """
     encoder = codecs.getencoder('utf-8')
-    hash = sha1(encoder(password)[0])
+    _hash = sha1(encoder(password)[0])
     salt = os.urandom(4)
-    hash.update(salt)
-    return '{SSHA}' + urlsafe_b64encode(hash.digest() + salt)
+    _hash.update(salt)
+    return b'{SSHA}' + urlsafe_b64encode(_hash.digest() + salt)
 
 def get_boolean_value_for_option(vars, option):
     value = vars.get(option.name)
@@ -79,8 +79,8 @@ def get_boolean_value_for_option(vars, option):
             else:
                 value = 'false'
         else:
-            print ""
-            print "Error: %s should be true or false." % option.name
+            print("")
+            print("Error: %s should be true or false." % option.name)
             sys.exit(1)
     else:
         value = option.default
@@ -95,11 +95,11 @@ def run_buildout(verbose=False, use_distribute=False):
     cmd = sys.executable + ' ' + os.path.join(os.getcwd(), 'bootstrap.py')
     if use_distribute:
         cmd += ' --distribute'
-    print 'Running %s...' % cmd
+    print('Running %s...' % cmd)
     subprocess.call(cmd, shell=True)
     # Then, run the project's buildout.
     cmd = os.path.join(os.getcwd(), 'bin', 'buildout')
     if verbose:
         cmd += ' -v'
-    print 'Running %s...' % cmd
+    print('Running %s...' % cmd)
     subprocess.call(cmd, shell=True)
