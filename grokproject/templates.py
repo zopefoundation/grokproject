@@ -1,16 +1,9 @@
 from __future__ import print_function
 import sys
 import os
-try:
-    import urllib2
-    import urlparse
-    from urlparse import urljoin
-    from urllib2 import HTTPError, urlopen
-except ImportError:
-    import urllib as urllib2
-    from urllib.parse import urlparse, urljoin
-    from urllib.error import HTTPError
-    from urllib.request import urlopen
+from six.moves.urllib.parse import urljoin           # @UnresolvedImport
+from six.moves.urllib.error import HTTPError         # @UnresolvedImport
+from six.moves.urllib.request import urlopen         # @UnresolvedImport
 import xml.sax.saxutils
 from paste.script import templates
 from paste.script.templates import NoDefault
