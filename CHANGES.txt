@@ -1,10 +1,18 @@
 Changes
 =======
 
-2.10 (unreleased)
+2.11 (Unreleased)
+-----------------
+- Nothing changed
+
+
+2.10 (2017-10-24)
 -----------------
 
-- Nothing changed yet.
+- Fixed improper references to old svn based versions directory for latest 
+  Grok version information.
+- Some minor fixes to test procedures to make tests (and Travis-CI) work again.
+- Some Python-3 prep work.
 
 
 2.9 (2013-02-14)
