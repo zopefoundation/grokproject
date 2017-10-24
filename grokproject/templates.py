@@ -1,7 +1,9 @@
+from __future__ import print_function
 import sys
 import os
-import urllib2
-import urlparse
+from six.moves.urllib.parse import urljoin           # @UnresolvedImport
+from six.moves.urllib.error import HTTPError         # @UnresolvedImport
+from six.moves.urllib.request import urlopen         # @UnresolvedImport
 import xml.sax.saxutils
 from paste.script import templates
 from paste.script.templates import NoDefault
@@ -12,7 +14,15 @@ from grokproject.utils import get_ssha_encoded_string
 from grokproject.utils import create_buildout_default_file
 from grokproject.utils import exist_buildout_default_file
 
-GROK_RELEASE_URL = 'http://grok.zope.org/releaseinfo/'
+#  Retrieve the currently checked out git source from the git configuration
+# and figure out from that from whence we can download our versions.cfg
+# base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+# base = open(os.path.join(base, '.git', 'config')).read()
+# base = base[base.find('url = ')+6:base.find('.git')]
+# base = base.replace('github.com', 'raw.githubusercontent.com')
+
+base = 'https://raw.githubusercontent.com/prsephton/grokproject'
+GROK_RELEASE_URL = base + '/master/versions/'
 
 class GrokProject(templates.Template):
     _template_dir = 'template'
@@ -49,10 +59,9 @@ class GrokProject(templates.Template):
 
     def check_vars(self, vars, cmd):
         if vars['package'] in ('grok', 'zope'):
-            print
-            print "Error: The chosen project name results in an invalid " \
-                  "package name: %s." % vars['package']
-            print "Please choose a different project name."
+            print("Error: The chosen project name results in an invalid " \
+                              "package name: %s." % vars['package'])
+            print("Please choose a different project name.")
             sys.exit(1)
 
         explicit_eggs_dir = vars.get('eggs_dir')
@@ -70,7 +79,10 @@ class GrokProject(templates.Template):
         vars['passwd'] = get_ssha_encoded_string(vars['passwd'])
         for var_name in ['user', 'passwd']:
             # Escape values that go in site.zcml.
-            vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
+            if isinstance(vars[var_name], str):
+                vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name])
+            else:
+                vars[var_name] = xml.sax.saxutils.quoteattr(vars[var_name].decode())
         vars['app_class_name'] = vars['project'].capitalize()
         vars['project_lowercase'] = vars['project'].lower()
 
@@ -78,10 +90,10 @@ class GrokProject(templates.Template):
         version_url = vars.get('version_url')
         find_links_url = ''
         if version_url is None:
-            print "Determining current grok version..."
+            print("Determining current grok version...")
             # If no version URL was specified, we look up the current
             # version first and construct a URL.
-            current_info_url = urlparse.urljoin(GROK_RELEASE_URL, 'current')
+            current_info_url = urljoin(GROK_RELEASE_URL, 'current')
             version = self.download(current_info_url).strip().replace(
                     'grok-', '').replace('.cfg', '')
             version_url = GROK_RELEASE_URL + version + '/versions.cfg'
@@ -120,17 +132,21 @@ class GrokProject(templates.Template):
         """
         contents = None
         try:
-            contents = urllib2.urlopen(url).read()
-        except urllib2.HTTPError:
+            contents = urlopen(url).read()
+        except HTTPError:
             # Some 404 or similar happened...
-            print "Error: cannot download required %s" % url
-            print "Maybe you specified a non-existing version?"
+            print("Error: cannot download required %s" % url)
+            print("Maybe you specified a non-existing version?")
             sys.exit(1)
-        except IOError, e:
+        except IOError as e:
             # Some serious problem: no connect to server...
-            print "Error: cannot download required %s" % url
-            print "Server may be down.  Please try again later."
+            print("Error: cannot download required %s" % url)
+            print("Server may be down.  Please try again later.")
             sys.exit(1)
+        if isinstance(contents, str):
+            contents = xml.sax.saxutils.quoteattr(contents)
+        else:
+            contents = xml.sax.saxutils.quoteattr(contents.decode())
         return contents
 
     def post(self, command, output_dir, vars):

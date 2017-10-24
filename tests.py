@@ -22,9 +22,12 @@ def rmdir(*args):
     if os.path.isdir(dirname):
         shutil.rmtree(dirname)
 
-def read_sh(command, input=None):
+def read_sh(command, input=None, opts=None):
     # XXX check for other platforms too?
     close_fds = not sys.platform.startswith('win')
+    if opts is not None:
+        command = [command]
+        command.extend(opts)
     p = subprocess.Popen(
         command,
         stdin=subprocess.PIPE,
