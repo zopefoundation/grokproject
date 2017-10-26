@@ -143,10 +143,6 @@ class GrokProject(templates.Template):
             print("Error: cannot download required %s" % url)
             print("Server may be down.  Please try again later.")
             sys.exit(1)
-        if isinstance(contents, str):
-            contents = xml.sax.saxutils.quoteattr(contents)
-        else:
-            contents = xml.sax.saxutils.quoteattr(contents.decode())
         return contents
 
     def post(self, command, output_dir, vars):
