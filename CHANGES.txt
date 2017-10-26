@@ -1,15 +1,20 @@
 Changes
 =======
 
-2.11 (Unreleased)
+2.12 (Nothing changed)
 -----------------
-- Nothing changed
+
+
+2.11 (2017-10-26)
+-----------------
+- Corrected an error whereby a change in the way we import urllib in
+  templates.py resulted in an unexpected read() result.
 
 
 2.10 (2017-10-24)
 -----------------
 
-- Fixed improper references to old svn based versions directory for latest 
+- Fixed improper references to old svn based versions directory for latest
   Grok version information.
 - Some minor fixes to test procedures to make tests (and Travis-CI) work again.
 - Some Python-3 prep work.
