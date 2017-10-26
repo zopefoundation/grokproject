@@ -1,13 +1,15 @@
 Changes
 =======
 
-2.11 (unreleased)
+2.12 (Unreleased)
 -----------------
 
-- Nothing changed yet.
+2.11 (2017-10-26)
+-----------------
+- Corrected an error whereby a change in the way we import urllib in
+  templates.py resulted in an unexpected read() result.
 
-
-2.10 (2017-10-26)
+2.10 (2017-10-24)
 -----------------
 
 - Fixed improper references to old svn based versions directory for latest
