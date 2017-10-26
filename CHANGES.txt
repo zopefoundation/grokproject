@@ -1,6 +1,12 @@
 Changes
 =======
 
+2.11 (unreleased)
+-----------------
+
+- Nothing changed yet.
+
+
 2.10 (2017-10-26)
 -----------------
 - Nothing changed
