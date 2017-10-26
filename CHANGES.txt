@@ -9,13 +9,8 @@ Changes
 
 2.10 (2017-10-26)
 -----------------
-- Nothing changed
 
-
-2.10 (2017-10-24)
------------------
-
-- Fixed improper references to old svn based versions directory for latest 
+- Fixed improper references to old svn based versions directory for latest
   Grok version information.
 - Some minor fixes to test procedures to make tests (and Travis-CI) work again.
 - Some Python-3 prep work.
