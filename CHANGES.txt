@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.11 (unreleased)
+2.11 (2017-10-27)
 -----------------
 
 - Corrected an error whereby a change in the way we import urllib in
