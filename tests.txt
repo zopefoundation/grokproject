@@ -32,6 +32,11 @@ yet exist in 'zopefoundation/grokproject' until after the PR merge
      '--eggs-dir=...grokproject-test-eggs',
      '--version-url=.../versions.cfg',
      'GrokExample']...
+
+Lots of stuff follows about installing setuptools
+    ...
+
+Then we get to creating the directory structure
     Creating directory '...bin'.
     Creating directory '...parts'.
     Creating directory '...develop-eggs'.
@@ -106,6 +111,7 @@ Let's check the contents:
     app_templates
     configure.zcml
     resource.py
+    scripts
     static
     tests
 
@@ -295,10 +301,11 @@ first:
 
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
-    >>> output = read_sh(cmd, opts=['-s'])
+    >>> output = read_sh(cmd)
     >>> print output
     Develop: ...
     Updating app.
+    Updating console.
     Updating daemon.
     Updating paster_ini_debug.
     Updating paster_ini_deploy.
@@ -311,10 +318,6 @@ first:
     Updating zope_conf_deploy.
     Updating zpasswd.
     Updating interactive_debugger.
-    *************** PICKED VERSIONS ****************
-    [versions]
-    <BLANKLINE>
-    *************** /PICKED VERSIONS ***************
     <BLANKLINE>
 
 Invalid project names
