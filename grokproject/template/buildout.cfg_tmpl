@@ -10,7 +10,7 @@ parts =
     daemon
     paster_ini_debug
     paster_ini_deploy
-#    i18n
+    i18n
     mkdirs
     site_zcml
     test
