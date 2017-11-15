@@ -1,13 +1,18 @@
 Changes
 =======
 
-2.12 (Unreleased)
+2.12 (unreleased)
 -----------------
 
-2.11 (2017-10-26)
+- Nothing changed yet.
+
+
+2.11 (2017-10-27)
 -----------------
+
 - Corrected an error whereby a change in the way we import urllib in
   templates.py resulted in an unexpected read() result.
+
 
 2.10 (2017-10-24)
 -----------------
