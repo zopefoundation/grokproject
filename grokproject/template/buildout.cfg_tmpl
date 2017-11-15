@@ -30,7 +30,7 @@ show-picked-versions = true
 # Override versions here.
 
 [app]
-recipe = z3c.recipe.scripts
+recipe = zc.recipe.egg
 eggs = ${egg}
        z3c.evalexception>=2.0
        Paste
@@ -117,9 +117,9 @@ entry-points =
 [console]
 recipe = zc.recipe.egg:scripts
 eggs =
-  xxx
+  ${egg}
 entry-points =
-  python-console=xxx.scripts.interpreter:main
+  python-console=${egg}.scripts.interpreter:main
 
 
 [interactive_debugger]
