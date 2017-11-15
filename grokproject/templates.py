@@ -21,7 +21,7 @@ from grokproject.utils import exist_buildout_default_file
 # base = base[base.find('url = ')+6:base.find('.git')]
 # base = base.replace('github.com', 'raw.githubusercontent.com')
 
-base = 'https://raw.githubusercontent.com/zopefoundation/grokproject'
+base = 'https://raw.githubusercontent.com/prsephton/grokproject'
 GROK_RELEASE_URL = base + '/master/versions/'
 
 class GrokProject(templates.Template):
