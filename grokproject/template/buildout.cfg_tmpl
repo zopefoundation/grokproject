@@ -1,9 +1,7 @@
 [buildout]
 extends = ${version_info_url}
 extends-cache = extends-cache
-include-site-packages = ${include_site_packages}
 develop = .
-unzip = true
 parts =
     app
     console
@@ -24,7 +22,9 @@ versions = versions
 # (see .buildout/default.cfg in your home directory)
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
-show-picked-versions = true
+#show-picked-versions = true
+update-versions-file = versions.cfg
+
 
 [versions]
 # Override versions here.

@@ -32,11 +32,7 @@ yet exist in 'zopefoundation/grokproject' until after the PR merge
      '--eggs-dir=...grokproject-test-eggs',
      '--version-url=.../versions.cfg',
      'GrokExample']...
-
-Lots of stuff follows about installing setuptools
     ...
-
-Then we get to creating the directory structure
     Creating directory '...bin'.
     Creating directory '...parts'.
     Creating directory '...develop-eggs'.
@@ -87,7 +83,6 @@ Let's check the contents:
     [buildout]
     extends = .../versions.cfg
     extends-cache = extends-cache
-    include-site-packages = false
     develop = .
     ...
 
@@ -304,6 +299,7 @@ first:
     >>> output = read_sh(cmd)
     >>> print output
     Develop: ...
+    ...
     Updating app.
     Updating console.
     Updating daemon.
