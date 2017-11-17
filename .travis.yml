@@ -6,7 +6,7 @@ install:
     - source env/bin/activate
     - python ./bootstrap.py
     - (bin/buildout || bin/buildout)
-    - bin/text 
+    - (bin/test || true)
 script:
     - bin/test -v1
 notifications:
