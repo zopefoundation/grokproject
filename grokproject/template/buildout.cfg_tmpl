@@ -1,11 +1,10 @@
 [buildout]
 extends = ${version_info_url}
 extends-cache = extends-cache
-include-site-packages = ${include_site_packages}
 develop = .
-unzip = true
 parts =
     app
+    console
     daemon
     paster_ini_debug
     paster_ini_deploy
@@ -23,19 +22,20 @@ versions = versions
 # (see .buildout/default.cfg in your home directory)
 # unless you specify an eggs-directory option here.
 ${eggs_dir}
-extensions += buildout.dumppickedversions
+#show-picked-versions = true
+update-versions-file = versions.cfg
+
 
 [versions]
 # Override versions here.
 
 [app]
-recipe = z3c.recipe.scripts
+recipe = zc.recipe.egg
 eggs = ${egg}
        z3c.evalexception>=2.0
        Paste
        PasteScript
        PasteDeploy
-interpreter = python-console
 
 [daemon]
 recipe = collective.recipe.scriptgen
@@ -106,15 +106,24 @@ devmode = off
 # This section is named so that the zpasswd utility is
 # called `zpasswd`
 [zpasswd]
-recipe = z3c.recipe.scripts
+recipe = zc.recipe.egg:scripts
 eggs =
   ${egg}
   zope.password
 entry-points =
   zpasswd=zope.password.zpasswd:main
 
+
+[console]
+recipe = zc.recipe.egg:scripts
+eggs =
+  ${egg}
+entry-points =
+  python-console=${egg}.scripts.interpreter:main
+
+
 [interactive_debugger]
-recipe = z3c.recipe.scripts
+recipe = zc.recipe.egg:scripts
 eggs = ${egg}
 entry-points =
   interactive_debugger=grokcore.startup.startup:interactive_debug_prompt

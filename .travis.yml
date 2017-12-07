@@ -5,7 +5,8 @@ install:
     - virtualenv --no-site-packages env
     - source env/bin/activate
     - python ./bootstrap.py
-    - bin/buildout -s
+    - (bin/buildout || bin/buildout)
+    - (bin/test || true)
 script:
     - bin/test -v1
 notifications:

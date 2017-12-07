@@ -29,17 +29,20 @@ yet exist in 'zopefoundation/grokproject' until after the PR merge
     ['...grokproject',
      '--user=a',
      '--passwd=a',
-     '--eggs-dir=...grokproject-test-eggs',
+     '--eggs-dir=...eggs',
      '--version-url=.../versions.cfg',
      'GrokExample']...
+    ...
     Creating directory '...bin'.
     Creating directory '...parts'.
     Creating directory '...develop-eggs'.
     ...
     Develop: '...GrokExample...'
     ...
+    Installing app.
     Generated script '...paster'.
-    Generated interpreter '...python-console'.
+    Installing console.
+    Generated script '...python-console'.
     Installing daemon.
     Generated script '...daemon'.
     Installing paster_ini_debug.
@@ -66,10 +69,6 @@ yet exist in 'zopefoundation/grokproject' until after the PR merge
     Generated script '...zpasswd'.
     Installing interactive_debugger.
     Generated script '...interactive_debugger'.
-    *************** PICKED VERSIONS ****************
-    [versions]
-    <BLANKLINE>
-    *************** /PICKED VERSIONS ***************
     Creating directory ...GrokExample
     Running ...bootstrap.py...
     Running ...buildout...
@@ -82,7 +81,6 @@ Let's check the contents:
     [buildout]
     extends = .../versions.cfg
     extends-cache = extends-cache
-    include-site-packages = false
     develop = .
     ...
 
@@ -106,6 +104,7 @@ Let's check the contents:
     app_templates
     configure.zcml
     resource.py
+    scripts
     static
     tests
 
@@ -295,10 +294,12 @@ first:
 
     >>> cd(package_dir)
     >>> cmd = os.path.join(bin_dir, 'buildout')
-    >>> output = read_sh(cmd, opts=['-s'])
+    >>> output = read_sh(cmd)
     >>> print output
     Develop: ...
+    ...
     Updating app.
+    Updating console.
     Updating daemon.
     Updating paster_ini_debug.
     Updating paster_ini_deploy.
@@ -311,10 +312,6 @@ first:
     Updating zope_conf_deploy.
     Updating zpasswd.
     Updating interactive_debugger.
-    *************** PICKED VERSIONS ****************
-    [versions]
-    <BLANKLINE>
-    *************** /PICKED VERSIONS ***************
     <BLANKLINE>
 
 Invalid project names

@@ -77,13 +77,17 @@ def maybe_rmdir(path):
     rmdir(path)
 
 def setup(test):
-    eggsdir = os.path.join(tempfile.gettempdir(), 'grokproject-test-eggs')
-    maybe_mkdir(eggsdir)
+    if CURRENT_DIR.find('/travis/') >= 0:
+        eggsdir = os.path.join(CURRENT_DIR, 'eggs')  # work around buildout bug
+    else:
+        eggsdir = os.path.join(tempfile.gettempdir(), 'grokproject-test-eggs')
+        maybe_mkdir(eggsdir)
     test.globs['eggsdir'] = eggsdir
     test.globs['testdir'] = tempfile.mkdtemp()
 
 def teardown(test):
-    maybe_rmdir(test.globs['eggsdir'])
+    if CURRENT_DIR.find('/travis/') < 0:    # Work around buildout bug,
+        maybe_rmdir(test.globs['eggsdir'])
     shutil.rmtree(test.globs['testdir'])
 
 

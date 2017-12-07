@@ -29,7 +29,7 @@ setup(
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='http://grok.zope.org',
-    download_url='http://pypi.python.org/pypi/grokproject',
+    download_url='https://pypi.python.org/pypi/grokproject',
     description=_description,
     long_description=long_description,
     license='ZPL',
