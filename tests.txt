@@ -11,17 +11,11 @@ Eggs are placed in our freshly created eggs directory:
     >>> # Use a specific grok version, because 'current' will change at some
     >>> # point in the future.
     >>> executable = [os.path.join(current_dir, 'bin', 'grokproject')]
-
-When we have merged the PR, this will need to change
-
     >>> base = open(os.path.join(current_dir, '.git', 'config')).read()
     >>> base = base[base.find('url = ')+6:base.find('.git')]
     >>> base = base.replace('github.com', 'raw.githubusercontent.com')
 
-We temporarily hard code 'prsephton/grokproject' since the version info does not
-yet exist in 'zopefoundation/grokproject' until after the PR merge
-
-    >>> base = 'https://raw.githubusercontent.com/prsephton/grokproject'
+    >>> base = 'https://raw.githubusercontent.com/zopefoundation/grokproject'
     >>> cver = open(os.path.join(current_dir,'versions','current')).read().strip()
     >>> opts = ['--user=a', '--passwd=a', '--eggs-dir=' + eggsdir]
     >>> opts += ['--version-url='+base+'/master/versions/'+cver+'/versions.cfg']
@@ -39,37 +33,6 @@ yet exist in 'zopefoundation/grokproject' until after the PR merge
     ...
     Develop: '...GrokExample...'
     ...
-    Installing app.
-    Generated script '...paster'.
-    Installing console.
-    Generated script '...python-console'.
-    Installing daemon.
-    Generated script '...daemon'.
-    Installing paster_ini_debug.
-    Installing paster_ini_deploy.
-    Installing i18n.
-    i18n: setting up i18n tools
-    Generated script '...i18nextract'.
-    Generated script '...i18nmergeall'.
-    Generated script '...i18nstats'.
-    Generated script '...i18ncompile'.
-    Installing mkdirs.
-    mkdirs: created path: ...var
-    mkdirs: created path: ...log
-    mkdirs: created path: ...filestorage
-    mkdirs: created path: ...blobstorage
-    Installing site_zcml.
-    Installing test.
-    Generated script '...test'.
-    Installing zope_conf_debug.
-    ...
-    Installing zope_conf_deploy.
-    ...
-    Installing zpasswd.
-    Generated script '...zpasswd'.
-    Installing interactive_debugger.
-    Generated script '...interactive_debugger'.
-    Creating directory ...GrokExample
     Running ...bootstrap.py...
     Running ...buildout...
     <BLANKLINE>
@@ -149,11 +112,18 @@ buildout files to support offline building. We know what the filename of the
 cached versions file for 1.3 will look like:
 
     >>> ls(os.path.join(package_dir, 'extends-cache'))
-	53773fe49c1e13bf0a6070f412fac6c9
+    53773fe49c1e13bf0a6070f412fac6c9
+    58a460c85eff2c464848182a698f1a3e
     6dffca5b8937d76ada3ae89aa6abc54c
-    d2e282ad4bee7d736a5a376f9122915c
     dddbbc4b5727b127f12feec1c6a5e258
     f4a1a4dddc7ffd4ccd6276adcff057a7
+
+# version 1.3 signature
+#    53773fe49c1e13bf0a6070f412fac6c9
+#    6dffca5b8937d76ada3ae89aa6abc54c
+#    d2e282ad4bee7d736a5a376f9122915c
+#    dddbbc4b5727b127f12feec1c6a5e258
+#    f4a1a4dddc7ffd4ccd6276adcff057a7
 
 The password given is stored SSHA encoded:
 
@@ -298,20 +268,8 @@ first:
     >>> print output
     Develop: ...
     ...
-    Updating app.
-    Updating console.
-    Updating daemon.
-    Updating paster_ini_debug.
-    Updating paster_ini_deploy.
-    Updating i18n.
     i18n: setting up i18n tools
-    Updating mkdirs.
-    Updating site_zcml.
-    Updating test.
-    Updating zope_conf_debug.
-    Updating zope_conf_deploy.
-    Updating zpasswd.
-    Updating interactive_debugger.
+    ...
     <BLANKLINE>
 
 Invalid project names
