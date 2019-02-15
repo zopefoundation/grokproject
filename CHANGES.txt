@@ -1,18 +1,29 @@
 Changes
 =======
 
-2.12 (unreleased)
+2.13 (unreleased)
 -----------------
 
 - Nothing changed yet.
 
+
+2.12 (2018-01-22)
+-----------------
+
+-  Use latest buildout and adapt tests:
+
+    * Templates refer to zopefoundation/grokproject base again.
+    * Removed unused "use-site-packages" option
+    * Changed tests to be compatible with the new buildout version
+    * Update versions.cfg
+    * Use buildout version 2.11.0
+    * Adapt tests as buildout output is no longer deterministic.
 
 2.11 (2017-10-27)
 -----------------
 
 - Corrected an error whereby a change in the way we import urllib in
   templates.py resulted in an unexpected read() result.
-
 
 2.10 (2017-10-24)
 -----------------
