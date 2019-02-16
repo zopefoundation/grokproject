@@ -1,11 +1,16 @@
 Changes
 =======
 
-2.13 (unreleased)
+2.14 (unreleased)
 -----------------
 
 - Nothing changed yet.
 
+2.13 (2019-02-16)
+-----------------
+
+- Update versions.cfg
+- Pin version of PasteScript in setup.py 
 
 2.12 (2018-01-22)
 -----------------
